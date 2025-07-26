@@ -1,70 +1,30 @@
-# Getting Started with Create React App
+# 🌾 서산책 (Seosanchaek)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**2025 중앙해커톤 - 한서대학교 5팀 (최윤영, 이재형, 이지후, 최지인, 이강현, 한준호)**
 
-## Available Scripts
+서산책은 서산·태안 지역 한정 AI 기반 여행 코스 추천 웹서비스입니다. 사용자의 여행 테마에 맞춘 코스를 제공하고, 해당 코스를 중심으로 지역화폐 사용처인 식당, 카페, 관광지 등을 함께 추천하여 **여행 편의성과 지역경제 활성화**를 동시에 도모하는 서비스입니다.
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## 📌 프로젝트 개요
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **프로젝트명**: 서산책 (Seosanchaek)
+- **참가대회**: 2025 중앙해커톤
+- **소속**: 한서대학교 5팀
+- **팀명**: 서산책
+- **개발영역**: 프론트엔드 (React 기반)
+- **지역기반**: 충남 서산시 · 태안군
+- **주요 키워드**: 여행 추천, AI 코스 설계, 지역화폐 연계, 소상공인 활성화
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## 🛠️ 기술 스택
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- **Frontend Framework**: [React](https://reactjs.org/)
+- **State Management**: Zustand / Context API
+- **Routing**: React Router v6
+- **HTTP 통신**: Axios
+- **UI 스타일링**: CSS Modules, rem 단위 기준 커스터마이징
+- **지도 서비스**: Kakao Map JavaScript API
+- **아이콘**: React Icons
+- **그 외 라이브러리**: Toastify, React Slick 등
