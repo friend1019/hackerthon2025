@@ -1,0 +1,173 @@
+/* ====== 1. 전체 레이아웃/컨테이너 ====== */
+.home-bg {
+  position: relative;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: calc(100vh - 8rem);
+  padding: 1.2rem 0.5rem;
+}
+
+/* ====== 2. 캐러셀 영역 ====== */
+.carousel {
+  position: relative;
+  width: 100vw;
+  aspect-ratio: 16/15.5;
+  max-height: 90vh;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.carousel-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  object-fit: cover;
+  transition: opacity 0.7s;
+  z-index: 1;
+}
+.carousel-img.active {
+  opacity: 1;
+  z-index: 2;
+}
+
+.carousel-header-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 30rem;
+  background: linear-gradient(
+    to bottom,
+    rgba(20, 20, 20, 0.6) 10%,
+    rgba(20, 20, 20, 0.3) 40%,
+    rgba(20, 20, 20, 0.03) 70%
+  );
+  z-index: 4;
+}
+.carousel-content-overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 30rem;
+  background: linear-gradient(
+    to top,
+    rgba(20, 20, 20, 1) 11%,
+    rgba(20, 20, 20, 0.3) 40%,
+    rgba(20, 20, 20, 0.04) 100%
+  );
+  z-index: 4;
+}
+.carousel-content {
+  position: absolute;
+  left: 2rem;
+  right: 2rem;
+  bottom: 6rem;
+  z-index: 5;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+.carousel-text {
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 300;
+  line-height: 1.6;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  margin-left: 1rem;
+  margin-bottom: 0.7rem;
+}
+.carousel-text b {
+  font-weight: 600;
+}
+.carousel-btn {
+  background: rgba(255, 255, 255, 0.25);
+  width: 14.5rem;
+  height: 3.5rem;
+  color: #4bcdfd;
+  font-size: 1.5rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  transition: background 0.2s;
+  backdrop-filter: blur(1rem);
+}
+.carousel-btn:hover {
+  background: rgba(255, 255, 255, 0.45);
+}
+
+/* AI 안내 문구 스타일 */
+.ai-image-info {
+  text-align: right;
+  font-size: 1rem;
+  color: #FFFFFF;
+  margin-top: 1.5rem;
+  margin-right: 0.2rem;
+  font-weight: 100;
+  opacity: 0.5;
+}
+
+.carousel-progress {
+  position: absolute;
+  left: 50%;
+  bottom: 4rem;
+  transform: translateX(-50%);
+  width: 90vw;
+  height: 0.15rem;
+  background: rgba(255, 255, 255, 0.18);
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.carousel-bar {
+  height: 100%;
+  background: #d9d9d9;
+  border-radius: 0.3rem;
+  transition: width 0.4s;
+}
+
+/* ====== 3. 애니메이션 글귀 영역 ====== */
+.home-phrase-container {
+  background-color: #141414;
+  min-height: 15vh;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  z-index: 30;
+  pointer-events: none;
+  padding: 0 2rem;
+  position: relative;
+  margin-top: -2rem;
+  display: block;
+}
+.animated-phrase {
+  font-size: 1.7rem;
+  color: #fff;
+  font-weight: 500;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.3s, transform 0.3s;
+  text-align: left;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  margin: 0;
+}
