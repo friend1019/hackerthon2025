@@ -11,9 +11,6 @@ import nineKyung from "../../IMAGE/9경.svg";
 import nineMi from "../../IMAGE/9미.svg";
 import ninePoom from "../../IMAGE/9품.svg";
 
-import TMap from "../MAPS/TMap";
-import NaverMap from "../MAPS/NaverMap";
-
 const phrases = [
   { text: "🏁 출발지를 입력하고,", style: { fontWeight: 700, color: "#fff" } },
   {
@@ -211,8 +208,6 @@ const Home = () => {
           </button>
         </div>
       </div>
-      <TMap />
-      <NaverMap />
       <Footer />
     </div>
   );
