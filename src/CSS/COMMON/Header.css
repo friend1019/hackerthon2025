@@ -27,8 +27,8 @@
   align-items: center;
   justify-content: flex-start;
   flex: 1;
-  margin-left: 1.5rem;
-  margin-top: 1rem;
+  margin-left: 2rem;
+  margin-top: 3rem;
 }
 
 .logo-link img {
@@ -42,7 +42,7 @@
   align-items: center;
   list-style: none;
   gap: 0.7rem;
-  margin-top: 1rem;
+  margin-top: 3rem;
 }
 
 .nav-item {

@@ -1,6 +1,7 @@
+//일단 필요할까봐 만들어놓았어용
 import React from "react";
 import "../../CSS/COMMON/LoadingSpinner.css";
-import Logo from "../../IMAGE/logo.svg"; // 로딩 스피너 이미지
+import Logo from "../../IMAGE/starfilled.svg"; // 로딩 스피너 이미지
 
 const LoadingSpinner = () => {
   return (

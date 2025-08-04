@@ -1,0 +1,92 @@
+/* 코스 추천중 스피너 전체 배경 */
+.course-spinner-bg {
+  width: 100vw;
+  min-height: 100vh;
+  background: radial-gradient(circle at 10% 80%, #4bcdfd22 0%, transparent 60%),
+    radial-gradient(circle at 90% 10%, #4bcdfd22 0%, transparent 60%),
+    #141414;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 중앙 컨테이너 */
+.course-spinner-center {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 8rem;
+}
+
+/* 별 이미지 */
+.course-spinner-star {
+  width: 90px;
+  height: 90px;
+  filter: drop-shadow(0 0 40px #4bcdfd) brightness(1.2);
+  margin-bottom: 2.5rem;
+}
+
+/* 제목 */
+.course-spinner-title {
+  color: #fff;
+  font-size: 2.1rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 2.2rem;
+}
+
+/* 설명 */
+.course-spinner-desc {
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 300;
+  text-align: center;
+  line-height: 1.7;
+  margin-bottom: 2rem;
+}
+
+/* 태블릿 반응형 */
+@media (min-width: 600px) {
+  .course-spinner-center {
+    max-width: 700px;
+    padding-top: 12rem;
+  }
+  .course-spinner-star {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 3rem;
+  }
+  .course-spinner-title {
+    font-size: 2.5rem;
+    margin-bottom: 2.5rem;
+  }
+  .course-spinner-desc {
+    font-size: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+}
+
+/* PC 반응형 */
+@media (min-width: 1024px) {
+  .course-spinner-center {
+    max-width: 900px;
+    padding-top: 16rem;
+  }
+  .course-spinner-star {
+    width: 160px;
+    height: 160px;
+    margin-bottom: 4rem;
+  }
+  .course-spinner-title {
+    font-size: 3rem;
+    margin-bottom: 3rem;
+  }
+  .course-spinner-desc {
+    font-size: 1.8rem;
+    margin-bottom: 3rem;
+  }
+}

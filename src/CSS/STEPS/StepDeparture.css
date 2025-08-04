@@ -1,0 +1,254 @@
+
+/* motion.div에 적용될 가운데 정렬 및 레이아웃 */
+.step-departure-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+/* 전체 영역 중앙 정렬, 상단 여백 추가 */
+.step-departure-center {
+  width: 100%;
+  min-height: calc(100vh - 5rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: radial-gradient(
+      circle at 110% 35%,
+      rgba(75, 205, 253, 0.2),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at -10% 70%,
+      rgba(75, 205, 253, 0.2),
+      transparent 30%
+    ),
+    #141414;
+    padding-top: 20rem;
+}
+
+/* 별 3개 가운데 정렬, 상단 여백 */
+/* 별 3개 왼쪽 정렬 */
+.step-star-row {
+  display: flex;
+  gap: 1.2rem;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 90%;
+  margin-bottom: 0.5rem;
+}
+
+.step-star-img {
+  width: 3rem;
+  height: 3rem;
+  filter: drop-shadow(0 0 12px #4bcdfd) brightness(1.1);
+}
+
+/* 제목 가운데 정렬, 여백 조정 */
+/* 제목 왼쪽 정렬 */
+.step-title.step-departure-title {
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: left;
+  width: 90%;
+  max-width: 400px;
+  margin-bottom: 0.7rem;
+  margin-left: 1.5rem;
+}
+
+/* 안내문구 가운데 정렬, 여백 조정 */
+/* 안내문구 왼쪽 정렬 */
+.step-desc.step-departure-desc {
+  color: #fff;
+  font-size: 1.3rem;
+  font-weight: 300;
+  text-align: left;
+  width: 90%;
+  max-width: 400px;
+  margin-bottom: 6rem;
+  margin-left: 1.5rem;
+  line-height: 1.7;
+}
+
+/* 깃발 이미지 가운데 정렬, 여백 조정 */
+.step-flag-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2.5rem;
+}
+
+.step-flag-img {
+  width: 12rem;
+  height: 12rem;
+  filter: drop-shadow(0 0 18px #fff) brightness(1.1);
+}
+
+/* 입력박스 가운데 정렬, 여백 조정 */
+.step-input {
+  width: 60%;
+  max-width: 40rem;
+  height: 5rem;
+  border-radius: 1.2rem;
+  border: none;
+  background: #888;
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 500;
+  padding: 0 1.2rem;
+  margin-bottom: 2.5rem;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.13);
+  outline: none;
+}
+.step-input::placeholder {
+  color: #ccc;
+  font-weight: 500;
+}
+
+.step-btn-group.step-departure-btn-group {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: static;
+  margin-top: 2.5rem;
+}
+.step-btn.step-departure-btn {
+  background: #4bcdfd;
+  color: black;
+  font-size: 1.5rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 1.2rem;
+  width: 60%;
+  height: 4rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.18);
+  cursor: pointer;
+  transition: background 0.2s;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 비활성화 상태에서 active가 적용되지 않도록 */
+.step-btn.step-departure-btn:disabled,
+.step-btn.step-departure-btn:disabled:active {
+  background: #bdbdbd;
+  color: #eee;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* 태블릿 (min-width: 600px) */
+@media (min-width: 600px) {
+  .step-departure-center {
+    min-height: calc(100vh);
+    padding: 18.5rem 0 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .step-star-row {
+    margin-top: 1.2rem;
+    margin-bottom: 1.2rem;
+    justify-content: center;
+    align-items: center;
+    gap: 2.2rem;
+    width: 90%;
+    margin-left: -50vw;
+  }
+  .step-star-img {
+    width: 4.2rem;
+    height: 4.2rem;
+  }
+  .step-title.step-departure-title {
+    font-size: 2.2rem;
+    margin-bottom: 1.2rem;
+    text-align: left;
+    margin-left: 1.5rem;
+    width: 90%;
+    max-width: 500px;
+  }
+  .step-desc.step-departure-desc {
+    font-size: 1.7rem;
+    margin-bottom: 2.2rem;
+    text-align: left;
+    margin-left: 1.5rem;
+    width: 90%;
+    max-width: 500px;
+  }
+  .step-flag-img {
+    width: 14rem;
+    height: 14rem;
+  }
+  .step-input {
+    font-size: 1.7rem;
+    max-width: 500px;
+    height: 5.5rem;
+    margin-bottom: 3rem;
+  }
+  .step-btn.step-departure-btn {
+    font-size: 1.7rem;
+    width: 60%;
+    height: 4.2rem;
+  }
+}
+
+/* PC (min-width: 1024px) */
+@media (min-width: 1024px) {
+  .step-departure-center {
+    min-height: calc(100vh);
+    padding: 4rem 0 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .step-star-row {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    width: 90%;
+    margin-left: -40vw;
+    margin-top: 12rem;
+  }
+  .step-star-img {
+    width: 5.2rem;
+    height: 5.2rem;
+  }
+  .step-title.step-departure-title {
+    font-size: 2.7rem;
+    margin-bottom: 1.5rem;
+    text-align: left;
+    margin-left: 1.5rem;
+    width: 90%;
+    max-width: 700px;
+  }
+  .step-desc.step-departure-desc {
+    font-size: 2.1rem;
+    margin-bottom: 2.5rem;
+    text-align: left;
+    margin-left: 1.5rem;
+    width: 90%;
+    max-width: 700px;
+  }
+  .step-flag-img {
+    width: 16rem;
+    height: 16rem;
+  }
+  .step-input {
+    font-size: 2rem;
+    max-width: 700px;
+    height: 6rem;
+    margin-bottom: 3.5rem;
+  }
+  .step-btn.step-departure-btn {
+    font-size: 2rem;
+    width: 60%;
+    height: 4.5rem;
+  }
+}

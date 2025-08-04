@@ -1,0 +1,289 @@
+/* motion.div에 적용될 가운데 정렬 및 레이아웃 */
+.step-interest-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.step-interest-prev-btn {
+  position: static;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  z-index: 20;
+  transition: color 0.2s;
+  padding: 0.2rem 0.7rem;
+  margin-left: 1.2rem;
+  align-self: flex-start;
+  margin-bottom: 1.5rem;
+  margin-top: -7rem;
+}
+.step-interest-prev-btn:hover {
+  color: #4bcdfd;
+}
+
+.step-interest-center {
+  position: relative;
+  width: 100%;
+  min-height: calc(100vh);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(
+      circle at 110% 35%,
+      rgba(75, 205, 253, 0.2),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at -10% 70%,
+      rgba(75, 205, 253, 0.2),
+      transparent 30%
+    ),
+    #141414;
+}
+
+.step-star-row {
+  display: flex;
+  gap: 1.2rem;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 90%;
+  margin-bottom: 0.5rem;
+}
+.step-star-img {
+  width: 3rem;
+  height: 3rem;
+  filter: drop-shadow(0 0 12px #4bcdfd) brightness(1.1);
+}
+
+.step-title.step-interest-title {
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: left;
+  width: 90%;
+  max-width: 400px;
+  margin-bottom: 0.7rem;
+  margin-left: 1.5rem;
+}
+.step-desc.step-interest-desc {
+  color: #fff;
+  font-size: 1.3rem;
+  font-weight: 300;
+  text-align: left;
+  width: 90%;
+  max-width: 400px;
+  margin-bottom: 2.5rem;
+  margin-left: 1.5rem;
+  line-height: 1.7;
+}
+
+.step-interest-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 1.2rem;
+  width: 90vw;
+  max-width: 328px;
+  margin: 0 auto 5rem auto;
+}
+.step-interest-btn {
+  background: none;
+  border: none;
+  border-radius: 1.2rem;
+  overflow: hidden;
+  box-shadow: 0 2px 18px rgba(0, 0, 0, 0.18);
+  cursor: pointer;
+  padding: 0;
+  transition: box-shadow 0.2s, transform 0.2s, opacity 0.2s;
+  opacity: 0.7;
+  position: relative;
+  aspect-ratio: 1/1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+.step-interest-btn.selected {
+  opacity: 1;
+  box-shadow: 0 4px 24px #4bcdfd55;
+  transform: scale(1.04);
+}
+.step-interest-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 1.2rem;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+}
+.step-interest-label {
+  position: relative;
+  z-index: 2;
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin: 0.7rem 1.2rem 1.2rem 0;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  background: rgba(20, 20, 20, 0.18);
+  border-radius: 0.7rem;
+  padding: 0.2rem 0.7rem;
+}
+
+.step-btn-group.step-interest-btn-group {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: static;
+  margin-top: 2.5rem;
+}
+.step-btn.step-interest-btn-next {
+  background: #4bcdfd;
+  color: black;
+  font-size: 1.3rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 1.2rem;
+  width: 60%;
+  height: 4rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.18);
+  cursor: pointer;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.step-btn.step-interest-btn-next:disabled,
+.step-btn.step-interest-btn-next:disabled:active {
+  background: #bdbdbd;
+  color: #eee;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* 태블릿 (min-width: 600px) */
+@media (min-width: 600px) {
+  .step-interest-center {
+    min-height: calc(100vh);
+    padding: 2.5rem 0 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .step-interest-prev-btn {
+    font-size: 2rem;
+    padding: 0.5rem 1.2rem;
+    margin-left: 3rem;
+    margin-top: -12rem;
+    align-self: flex-start;
+    
+  }
+  .step-star-row {
+    margin-top: 1.2rem;
+    margin-bottom: 1.2rem;
+    justify-content: center;
+    align-items: center;
+    gap: 2.2rem;
+    width: 90%;
+    margin-left: -50vw;
+  }
+  .step-star-img {
+    width: 4.2rem;
+    height: 4.2rem;
+  }
+  .step-title.step-interest-title {
+    font-size: 2.2rem;
+    margin-bottom: 1.2rem;
+    text-align: left;
+    margin-left: 1.5rem;
+    width: 90%;
+    max-width: 500px;
+  }
+  .step-desc.step-interest-desc {
+    font-size: 1.7rem;
+    margin-bottom: 2.2rem;
+    text-align: left;
+    margin-left: 1.5rem;
+    width: 90%;
+    max-width: 500px;
+  }
+  .step-interest-list {
+    max-width: 420px;
+    gap: 1.2rem;
+    margin-bottom: 5rem;
+  }
+  .step-interest-btn {
+    border-radius: 1.2rem;
+  }
+  .step-interest-img {
+    border-radius: 1.2rem;
+  }
+}
+
+/* PC (min-width: 1024px) */
+@media (min-width: 1024px) {
+  .step-interest-center {
+    min-height: calc(100vh - 5rem);
+    padding: 4rem 0 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .step-interest-prev-btn {
+    font-size: 2.5rem;
+    padding: 0.7rem 2rem;
+    margin-left: 3rem;
+    margin-top: 3rem;
+    align-self: flex-start;
+    margin-bottom: -8rem;
+  }
+  .step-star-row {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    width: 90%;
+    margin-left: -40vw;
+    margin-top: 12rem;
+  }
+  .step-star-img {
+    width: 5.2rem;
+    height: 5.2rem;
+  }
+  .step-title.step-interest-title {
+    font-size: 2.7rem;
+    margin-bottom: 1.5rem;
+    text-align: left;
+    margin-left: 1.5rem;
+    width: 90%;
+    max-width: 700px;
+  }
+  .step-desc.step-interest-desc {
+    font-size: 2.1rem;
+    margin-bottom: 2.5rem;
+    text-align: left;
+    margin-left: 1.5rem;
+    width: 90%;
+    max-width: 700px;
+  }
+  .step-interest-list {
+    max-width: 520px;
+    gap: 1.5rem;
+    margin-bottom: 7rem;
+  }
+  .step-interest-btn {
+    border-radius: 1.2rem;
+  }
+  .step-interest-img {
+    border-radius: 1.2rem;
+  }
+}

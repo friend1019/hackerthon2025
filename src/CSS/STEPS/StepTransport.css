@@ -1,0 +1,296 @@
+
+/* motion.div에 적용될 가운데 정렬 및 레이아웃 */
+.step-transport-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.step-transport-prev-btn {
+  position: static;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  z-index: 20;
+  transition: color 0.2s;
+  margin-left: 1.2rem;
+  margin-bottom: 1.5rem;
+  align-self: flex-start;
+}
+.step-transport-prev-btn:hover {
+  color: #4bcdfd;
+}
+.step-transport-center {
+  width: 100%;
+  min-height: calc(100vh - 5rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: radial-gradient(
+      circle at 110% 35%,
+      rgba(75, 205, 253, 0.2),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at -10% 70%,
+      rgba(75, 205, 253, 0.2),
+      transparent 30%
+    ),
+    #141414;
+  padding-top: 20rem;
+}
+@media (min-width: 600px) {
+  .step-transport-prev-btn {
+    font-size: 2rem;
+    padding: 0.5rem 1.2rem;
+    margin-left: 3rem;
+    margin-top: 2rem;
+    align-self: flex-start;
+  }
+}
+@media (min-width: 1024px) {
+  .step-transport-prev-btn {
+    font-size: 2.5rem;
+    padding: 0.7rem 2rem;
+    margin-left: 3rem;
+    margin-top: 3rem;
+    align-self: flex-start;
+  }
+}
+
+.step-star-row {
+  display: flex;
+  gap: 1.2rem;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 90%;
+  margin-bottom: 0.5rem;
+}
+.step-star-img {
+  width: 3rem;
+  height: 3rem;
+  filter: drop-shadow(0 0 12px #4bcdfd) brightness(1.1);
+}
+
+.step-title.step-transport-title {
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: left;
+  width: 90%;
+  max-width: 400px;
+  margin-bottom: 0.7rem;
+  margin-left: 1.5rem;
+}
+.step-desc.step-transport-desc {
+  color: #fff;
+  font-size: 1.3rem;
+  font-weight: 300;
+  text-align: left;
+  width: 90%;
+  max-width: 400px;
+  margin-bottom: 2.5rem;
+  margin-left: 1.5rem;
+  line-height: 1.7;
+}
+
+.step-transport-list {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 2.5rem;
+  margin-bottom: 5rem;
+}
+.step-transport-btn {
+  background: none;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.2s, opacity 0.2s;
+  opacity: 0.5;
+}
+.step-transport-btn.selected {
+  opacity: 1;
+  transform: scale(1.08);
+}
+.step-transport-img {
+  width: 10rem;
+  height: 10rem;
+  margin-top: 6rem;
+  margin-bottom: 1.2rem;
+}
+.step-transport-label {
+  color: #fff;
+  font-size: 1.3rem;
+  font-weight: 400;
+  margin-top: 0.5rem;
+  opacity: 0.5;
+  letter-spacing: 0.02em;
+}
+.step-transport-label.selected {
+  opacity: 1;
+  font-weight: 600;
+}
+
+.step-btn-group.step-transport-btn-group {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: static;
+  margin-top: 2.5rem;
+}
+.step-btn.step-transport-btn-next {
+  background: #4bcdfd;
+  color: black;
+  font-size: 1.5rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 1.2rem;
+  width: 60%;
+  height: 4rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.18);
+  cursor: pointer;
+  transition: background 0.2s;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.step-btn.step-transport-btn-next:disabled,
+.step-btn.step-transport-btn-next:disabled:active {
+  background: #bdbdbd;
+  color: #eee;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* 태블릿 (min-width: 600px) */
+@media (min-width: 600px) {
+  .step-transport-center {
+    min-height: calc(100vh);
+    padding: 2.5rem 0 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .step-transport-prev-btn {
+    font-size: 2rem;
+    padding: 0.5rem 1.2rem;
+    margin-left: 3rem;
+    margin-top: 10rem;
+    align-self: flex-start;
+  }
+  .step-star-row {
+    margin-top: 1.2rem;
+    margin-bottom: 1.2rem;
+    justify-content: center;
+    align-items: center;
+    gap: 2.2rem;
+    width: 90%;
+    margin-left: -50vw;
+  }
+  .step-star-img {
+    width: 4.2rem;
+    height: 4.2rem;
+  }
+  .step-title.step-transport-title {
+    font-size: 2.2rem;
+    margin-bottom: 1.2rem;
+    text-align: left;
+    margin-left: 1.5rem;
+    width: 90%;
+    max-width: 500px;
+  }
+  .step-desc.step-transport-desc {
+    font-size: 1.7rem;
+    margin-bottom: 2.2rem;
+    text-align: left;
+    margin-left: 1.5rem;
+    width: 90%;
+    max-width: 500px;
+  }
+  .step-transport-list {
+    max-width: 420px;
+    gap: 1.2rem;
+    margin-bottom: 5rem;
+  }
+  .step-transport-btn {
+    border-radius: 1.2rem;
+  }
+  .step-transport-img {
+    border-radius: 1.2rem;
+    width: 12rem;
+    height: 12rem;
+    margin-top: 4rem;
+  }
+}
+
+/* PC (min-width: 1024px) */
+@media (min-width: 1024px) {
+  .step-transport-center {
+    min-height: calc(100vh);
+    padding: 4rem 0 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .step-transport-prev-btn {
+    font-size: 2.5rem;
+    padding: 0.7rem 2rem;
+    margin-left: 3rem;
+    margin-top: 3rem;
+    align-self: flex-start;
+    margin-bottom: -5rem;
+  }
+  .step-star-row {
+    margin-top: 10.5rem;
+    margin-bottom: 1.5rem;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    width: 90%;
+    margin-left: -40vw;
+    margin-top: 12rem;
+  }
+  .step-star-img {
+    width: 5.2rem;
+    height: 5.2rem;
+  }
+  .step-title.step-transport-title {
+    font-size: 2.7rem;
+    margin-bottom: 1.5rem;
+    text-align: left;
+    margin-left: 1.5rem;
+    width: 90%;
+    max-width: 700px;
+  }
+  .step-desc.step-transport-desc {
+    font-size: 2.1rem;
+    margin-bottom: 2.5rem;
+    text-align: left;
+    margin-left: 1.5rem;
+    width: 90%;
+    max-width: 700px;
+  }
+  .step-transport-list {
+    max-width: 520px;
+    gap: 1.5rem;
+    margin-bottom: 7rem;
+  }
+  .step-transport-btn {
+    border-radius: 1.2rem;
+  }
+  .step-transport-img {
+    border-radius: 1.2rem;
+    width: 14rem;
+    height: 14rem;
+    margin-top: 2rem;
+  }
+}

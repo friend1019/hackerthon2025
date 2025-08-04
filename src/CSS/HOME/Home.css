@@ -104,7 +104,7 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
   cursor: pointer;
   transition: background 0.2s;
-  backdrop-filter: blur(1rem);
+  backdrop-filter: blur(0.7rem);
 }
 .carousel-btn:hover {
   background: rgba(255, 255, 255, 0.45);
@@ -114,7 +114,7 @@
 .ai-image-info {
   text-align: right;
   font-size: 1rem;
-  color: #FFFFFF;
+  color: #ffffff;
   margin-top: 1.5rem;
   margin-right: 0.2rem;
   font-weight: 100;
@@ -155,19 +155,52 @@
   position: relative;
   margin-top: -2rem;
   display: block;
+  font-size: 2rem;
 }
-.animated-phrase {
-  font-size: 1.7rem;
+.category-btn {
+  background: none;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   color: #fff;
+  cursor: pointer;
+  transition: transform 0.2s;
+  padding: 0;
+}
+.category-btn img {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 0.7rem;
+  filter: brightness(0) invert(1);
+}
+
+/* ====== 4. 카테고리 버튼 영역 ====== */
+.category-section {
+  background: #141414;
+  padding: 2rem 0 1.5rem 0;
+  width: 100vw;
+  height: 41rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.category-title {
+  color: #fff;
+  font-size: 1.1rem;
   font-weight: 500;
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 0.3s, transform 0.3s;
-  text-align: left;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-  position: absolute;
-  left: 0;
-  top: 0;
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
   width: 100%;
-  margin: 0;
+  padding-left: 2rem;
+}
+.category-buttons {
+  display: flex;
+  gap: 10vw;
+  justify-content: center;
+  width: 100%;
+  margin-top: 2rem;
 }
