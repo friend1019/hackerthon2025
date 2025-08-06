@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { MdAutoAwesome } from "react-icons/md";
+import { FiChevronDown } from "react-icons/fi";
 import "../../CSS/HOME/Home.css"; 
 import Header from "../COMMON/Header"; 
 import Footer from "../COMMON/Footer"; 
@@ -194,7 +195,9 @@ const Home = () => {
       <div className="category-section">
         <div className="category-title">
           카테고리{" "}
-          <span style={{ fontSize: "1.2rem", marginLeft: "0.3rem" }}>▼</span>
+          <span style={{ fontSize: "2.5rem", marginLeft: "0.3rem", marginTop: "0.75rem" }}>
+            <FiChevronDown />
+          </span>
         </div>
         <div className="category-buttons">
           <button className="category-btn">

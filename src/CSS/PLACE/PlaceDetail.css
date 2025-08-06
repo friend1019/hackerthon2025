@@ -1,0 +1,374 @@
+/* 화면 등장 애니메이션 */
+@keyframes slideInFromRight {
+  0% {
+    opacity: 0;
+    transform: translateX(100vw);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOutToLeft {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-100vw);
+  }
+}
+
+.place-detail-animate-in {
+  animation: slideInFromRight 0.35s ease-out forwards;
+}
+
+.place-detail-animate-out {
+  animation: slideOutToLeft 0.25s ease-in forwards;
+}
+
+
+/* 지도 모달 애니메이션 */
+.place-map-modal-animate {
+  opacity: 0;
+  transform: scale(0.95);
+  animation: placeMapModalFadeIn 0.38s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+@keyframes placeMapModalFadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+/* 모달 닫힐 때 줌아웃 애니메이션 */
+.place-map-modal-animate-out {
+  animation: placeMapModalFadeOut 0.2s ease-in forwards;
+}
+@keyframes placeMapModalFadeOut {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+
+/* 지도 내 장소 카드 스타일 */
+.naver-map-place-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(24,24,24,0.93);
+  border-radius: 1.1rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.45);
+  padding: 0.7rem 1.1rem 0.5rem 1.1rem;
+  min-width: 12rem;
+  max-width: 18rem;
+  z-index: 10;
+}
+.naver-map-place-card-img-wrap {
+  width: 100%;
+  height: 60%;
+  border-radius: 0.7rem;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+.naver-map-place-card-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.naver-map-place-card-name {
+  font-size: 1.08rem;
+  font-weight: 400;
+  color: #fff;
+  text-align: center;
+  margin-top: 0.2rem;
+  letter-spacing: -1px;
+}
+/* 지도 모달 스타일 */
+.place-map-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.place-map-modal-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(20, 20, 20, 0.65);
+  z-index: 1;
+}
+.place-map-modal-content {
+  position: relative;
+  z-index: 2;
+  background: #181818;
+  border-radius: 1.2rem;
+  box-shadow: 0 2px 24px #0008;
+  padding: 2.2rem 2.2rem 1.2rem 2.2rem;
+  min-width: 340px;
+  max-width: 95vw;
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.place-map-modal-close {
+  position: absolute;
+  top: -3.2rem;
+  right: 1.2rem;
+  background: #222;
+  color: #fff;
+  border: none;
+  border-radius: 1.2rem;
+  padding: 0.5rem 1.2rem;
+  font-size: 1.08rem;
+  cursor: pointer;
+  z-index: 3;
+}
+/* 설명(주소, 소개) 2단 레이아웃 */
+.place-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  margin-bottom: 2.1rem;
+}
+.place-label {
+  min-width: 7rem;
+  font-size: 1.5rem;
+  color: #b5b5b5;
+  font-weight: 500;
+  letter-spacing: -0.5px;
+  text-align: left;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+.place-value {
+  font-size: 1.5rem;
+  color: #fff;
+  line-height: 1.7;
+  word-break: keep-all;
+  white-space: pre-line;
+  text-align: left;
+}
+@media (max-width: 600px) {
+  .place-row {
+    gap: 1.1rem;
+    margin-bottom: 1.3rem;
+  }
+  .place-label {
+    min-width: 5rem;
+    font-size: 1.3rem;
+  }
+  .place-value {
+    font-size: 1.2rem;
+  }
+}
+/* 헤더 아래 왼쪽에 뒤로가기 버튼 */
+.place-back-btn {
+  position: absolute;
+  top: 7.2rem;
+  left: 1.2rem;
+  z-index: 100;
+  background: rgba(34, 34, 34, 0.85);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 3rem;
+  height: 3rem;
+  font-size: 1.5rem;
+  box-shadow: 0 2px 12px #0005;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.18s;
+  opacity: 0.9;
+}
+.place-back-btn:hover {
+  background: #222;
+}
+
+/* name 아래 구분선 */
+.place-divider {
+  width: 80%;
+  border: none;
+  border-top: 2px solid #222;
+  opacity: 0.7;
+}
+
+/* 지도 보기 버튼 */
+.place-map-btn {
+  display: block;
+  margin: 0 auto 1.2rem auto;
+  padding: 0.7rem 2.2rem;
+  background: none;
+  color: white;
+  font-size: 1.08rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 1.2rem;
+  box-shadow: 0 2px 12px #0003;
+  cursor: pointer;
+  transition: background 0.18s;
+}
+.place-map-btn:hover {
+  background: #2ca3ce;
+}
+/* 전체 배경 및 레이아웃 */
+.place-detail {
+  background: #141414;
+  min-height: 100vh;
+  color: #fff;
+  font-family: "Pretendard", "Noto Sans KR", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 2rem;
+}
+
+/* 상단 이미지 영역 */
+.place-detail-image {
+  width: 100vw;
+  height: 340px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.place-detail-image img {
+  width: 100vw;
+  height: 340px;
+  object-fit: cover;
+  object-position: center;
+  filter: brightness(0.95);
+}
+
+/* 이미지 위 오버레이(그라데이션) */
+.place-detail-image::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 340px;
+  background: linear-gradient(
+    to bottom,
+    rgba(20, 20, 20, 0) 45%,
+    rgba(20, 20, 20, 0.2) 60%,
+    rgba(20, 20, 20, 0.5) 75%,
+    rgba(20, 20, 20, 1) 98%,
+    #141414 100%
+  );
+  pointer-events: none;
+}
+
+/* 정보 박스 */
+.place-detail-info {
+  width: 90vw;
+  max-width: 540px;
+  margin: 0 auto;
+  background: none;
+  padding: 2.2rem 1.5rem 1.5rem 1.5rem;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 2;
+}
+
+.place-name {
+  font-size: 2.1rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  letter-spacing: -1px;
+  color: #fff;
+  text-align: center;
+  margin-top: -5rem;
+}
+.place-address {
+  font-size: 1.1rem;
+  color: #b5b5b5;
+  margin-bottom: 1.2rem;
+}
+
+.place-description {
+  margin-bottom: 1.7rem;
+  background: rgba(30, 30, 30, 0.7);
+  border-radius: 0.7rem;
+  padding: 1.1rem 1rem 1.1rem 1rem;
+  color: #eaeaea;
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+.place-description strong {
+  display: block;
+  font-size: 1.13rem;
+  font-weight: 600;
+  color: #4bcdfd;
+  margin-bottom: 0.5rem;
+}
+
+.place-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 1.05rem;
+  color: #b5b5b5;
+  margin-bottom: 1.2rem;
+}
+.place-meta strong {
+  color: #4bcdfd;
+  font-weight: 500;
+}
+
+/* 구분선 */
+.place-detail-info hr {
+  border: none;
+  border-top: 1px solid #222;
+  margin: 1.5rem auto;
+}
+
+/* 반응형 */
+@media (max-width: 600px) {
+  .place-detail-image,
+  .place-detail-image img,
+  .place-detail-image::after {
+    height: 40rem;
+    min-height: 22rem;
+    max-height: 40rem;
+  }
+  .place-detail-info {
+    padding: 1.2rem 0.7rem 1.2rem 0.7rem;
+    max-width: 98vw;
+  }
+  .place-name {
+    font-size: 1.3rem;
+  }
+  .place-address {
+    font-size: 0.95rem;
+  }
+  .place-description {
+    font-size: 0.95rem;
+    padding: 0.7rem 0.6rem 0.7rem 0.6rem;
+  }
+  .place-meta {
+    font-size: 0.95rem;
+  }
+}

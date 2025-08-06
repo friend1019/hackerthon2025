@@ -2,21 +2,17 @@ import React from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { MdArrowBack } from "react-icons/md";
 import starfilled from "../../IMAGE/starfilled.svg";
-import natureImg from "../../IMAGE/nature.svg";
-import eatingImg from "../../IMAGE/eating.svg";
-import healingImg from "../../IMAGE/healing.svg";
-import historyImg from "../../IMAGE/history.svg";
+import LandImg from "../../IMAGE/land.svg";
+import OceanImg from "../../IMAGE/ocean.svg";
 import "../../CSS/STEPS/StepInterest.css";
 import Header from "../COMMON/Header";
 
 const interestList = [
-  { key: "nature", label: "", img: natureImg },
-  { key: "food", label: "", img: eatingImg },
-  { key: "healing", label: "", img: healingImg },
-  { key: "history", label: "", img: historyImg },
+  { key: "land", label: "내륙", img: LandImg },
+  { key: "ocean", label: "바다", img: OceanImg },
 ];
 
-const StepInterest = ({ answers, setAnswers, nextStep, prevStep, step }) => {
+const StepTheme = ({ answers, setAnswers, nextStep, prevStep, step }) => {
   const selected = answers.interests || [];
   const toggleInterest = key => {
     setAnswers(a => {
@@ -49,7 +45,7 @@ const StepInterest = ({ answers, setAnswers, nextStep, prevStep, step }) => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="step-title step-interest-title">관심사를 선택해주세요</h2>
+            <h2 className="step-title step-interest-title">테마를 선택해주세요</h2>
             <div className="step-desc step-interest-desc">
               당신의 취향을 담아 코스를 추천할게요. <span style={{color:'#ffd700'}}>🍋</span>
             </div>
@@ -81,4 +77,4 @@ const StepInterest = ({ answers, setAnswers, nextStep, prevStep, step }) => {
   );
 };
 
-export default StepInterest;
+export default StepTheme;

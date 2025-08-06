@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import StepWelcome from "./StepWelcome";
-// import StepDeparture from "./StepDeparture";
-// import StepTransport from "./StepTransport";
 import StepInterest from "./StepInterest";
 import StepResult from "./StepResult";
+import StepTheme from "./StepTheme";
 
 const steps = [
   StepWelcome,
-  // StepDeparture,
-  // StepTransport,
+  StepTheme,
   StepInterest,
   StepResult,
 ];

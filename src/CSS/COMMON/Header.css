@@ -1,3 +1,150 @@
+/* 검색 드롭다운 이미지 스타일 */
+/* 검색 드롭다운 아이템: 이미지 왼쪽, 정보 오른쪽 */
+.header-search-dropdown-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1.1rem;
+  padding: 1.1rem 1.2rem 1.1rem 1.2rem;
+  border-bottom: 1px solid #333;
+  cursor: pointer;
+  transition: background 0.18s;
+}
+.header-search-dropdown-img {
+  width: 2.7rem;
+  height: 2.7rem;
+  object-fit: cover;
+  border-radius: 0.7rem;
+  box-shadow: 0 2px 8px #0002;
+  background: #eee;
+  flex-shrink: 0;
+  margin-right: 0.7rem;
+}
+.header-search-dropdown-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  flex: 1;
+  min-width: 0;
+}
+@media (max-width: 600px) {
+  .header-search-modal-content {
+    margin-top: -80rem;
+    max-width: 80vw;
+    width: 30rem;
+  }
+}
+@media (min-width: 601px) {
+  .header-search-modal-content {
+    margin-top: -50rem;
+    max-width: 80vw;
+    width: 80rem;
+  }
+}
+/* 검색 팝업 모달 전체 배경 */
+.header-search-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 2500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.header-search-modal-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(20, 20, 20, 0.55);
+  z-index: 10;
+}
+.header-search-modal-content {
+  position: relative;
+  z-index: 2502;
+  background: #141414;
+  border-radius: 1.2rem;
+  box-shadow: 0 4px 32px #000a;
+  padding: 0rem 2.2rem 5rem 2.2rem;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+.header-search-modal-close {
+  position: absolute;
+  top: -3rem;
+  right: 0;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.3rem;
+  cursor: pointer;
+  z-index: 2600;
+  padding: 0.7rem 1rem;
+}
+/* 모바일 줌 방지: font-size 16px 이상 */
+.header-search-input {
+  width: 100%;
+  font-size: 1.6rem;
+  padding: 0.7rem 1.2rem;
+  border-radius: 0.8rem;
+  border: none;
+  margin-bottom: 1.2rem;
+  margin-top: 1.5rem;
+  background: #333;
+  color: #fff;
+  outline: none;
+  box-shadow: 0 2px 12px #0003;
+}
+.header-search-btn {
+  width: 100%;
+  background: #4bcdfd;
+  color: #222;
+  font-size: 1.1rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 0.8rem;
+  padding: 0.7rem 0;
+  margin-bottom: 1.2rem;
+  cursor: pointer;
+  box-shadow: 0 2px 12px #0002;
+  transition: background 0.2s;
+}
+.header-search-btn:hover {
+  background: #2ca3ce;
+}
+.header-search-dropdown {
+  width: 100%;
+  background: #222;
+  border-radius: 0.8rem;
+  box-shadow: 0 2px 18px #0005;
+  margin-top: -1rem;
+  max-height: 260px;
+  overflow-y: auto;
+  position: absolute;
+  left: 0;
+  top: 6.2rem;
+  z-index: 1004;
+}
+.header-search-dropdown-item:hover {
+  background: #333;
+}
+.header-search-dropdown-name {
+  color: #4bcdfd;
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+.header-search-dropdown-addr {
+  color: #eee;
+  font-size: 1rem;
+  font-weight: 400;
+}
 .header {
   width: 100%;
   height: 5rem;

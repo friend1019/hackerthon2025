@@ -129,7 +129,7 @@
   width: 90vw;
   height: 0.15rem;
   background: rgba(255, 255, 255, 0.18);
-  z-index: 20;
+  z-index: 5;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -149,9 +149,9 @@
   right: 0;
   bottom: 0;
   width: 100vw;
-  z-index: 30;
+  z-index: 5;
   pointer-events: none;
-  padding: 0 2rem;
+  padding: 0 3rem;
   position: relative;
   margin-top: -2rem;
   display: block;
@@ -169,8 +169,8 @@
   padding: 0;
 }
 .category-btn img {
-  width: 80px;
-  height: 80px;
+  width: 60px;
+  height: 60px;
   margin-bottom: 0.7rem;
   filter: brightness(0) invert(1);
 }
@@ -188,9 +188,10 @@
 }
 .category-title {
   color: #fff;
-  font-size: 1.1rem;
-  font-weight: 500;
+  font-size: 2rem;
+  font-weight: 200;
   margin-bottom: 1.2rem;
+  margin-left: 1.5rem;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -199,7 +200,7 @@
 }
 .category-buttons {
   display: flex;
-  gap: 10vw;
+  gap: 17vw;
   justify-content: center;
   width: 100%;
   margin-top: 2rem;

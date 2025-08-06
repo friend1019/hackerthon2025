@@ -1,8 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://moneyway.cloud/api",
-  withCredentials: true,
+  baseURL: "https://hackerton-seosanbook.onrender.com/api",
 });
 
 export default api;
