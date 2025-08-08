@@ -1,5 +1,7 @@
 import React from "react";
 import star1 from "../../IMAGE/star1.svg";
+import "../../CSS/STEPS/CourseSpinner.css";
+import Header from "../COMMON/Header";
 
 const CourseSpinner = () => {
   // 애니메이션 상태 관리
@@ -10,19 +12,20 @@ const CourseSpinner = () => {
     let timer;
     if (active) {
       timer = setTimeout(() => {
-        setRot(r => r + 90);
+        setRot(r => r + 45);
         setActive(false);
-      }, 1000);
+      }, 50);
     } else {
       timer = setTimeout(() => {
         setActive(true);
-      }, 1000);
+      }, 500);
     }
     return () => clearTimeout(timer);
   }, [active]);
 
   return (
     <div className="course-spinner-bg">
+      <Header />
       <div className="course-spinner-center">
         <img
           src={star1}

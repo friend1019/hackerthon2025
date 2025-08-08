@@ -2,12 +2,88 @@
 .course-spinner-bg {
   width: 100vw;
   min-height: 100vh;
-  background: radial-gradient(circle at 10% 80%, #4bcdfd22 0%, transparent 60%),
-    radial-gradient(circle at 90% 10%, #4bcdfd22 0%, transparent 60%),
+  background: radial-gradient(
+      circle at 110% 35%,
+      rgba(75, 205, 253, var(--spinner-alpha, 0.2)),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at -10% 70%,
+      rgba(75, 205, 253, var(--spinner-alpha, 0.2)),
+      transparent 30%
+    ),
     #141414;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  animation: spinner-alpha-move 2.5s ease-in-out infinite;
+}
+
+@keyframes spinner-alpha-move {
+  0% {
+    --spinner-alpha: 0.2;
+  }
+  5% {
+    --spinner-alpha: 0.21;
+  }
+  10% {
+    --spinner-alpha: 0.22;
+  }
+  15% {
+    --spinner-alpha: 0.23;
+  }
+  20% {
+    --spinner-alpha: 0.24;
+  }
+  25% {
+    --spinner-alpha: 0.25;
+  }
+  30% {
+    --spinner-alpha: 0.26;
+  }
+  35% {
+    --spinner-alpha: 0.28;
+  }
+  40% {
+    --spinner-alpha: 0.3;
+  }
+  45% {
+    --spinner-alpha: 0.32;
+  }
+  50% {
+    --spinner-alpha: 0.34;
+  }
+  55% {
+    --spinner-alpha: 0.36;
+  }
+  60% {
+    --spinner-alpha: 0.38;
+  }
+  65% {
+    --spinner-alpha: 0.4;
+  }
+  70% {
+    --spinner-alpha: 0.38;
+  }
+  75% {
+    --spinner-alpha: 0.36;
+  }
+  80% {
+    --spinner-alpha: 0.34;
+  }
+  85% {
+    --spinner-alpha: 0.32;
+  }
+  90% {
+    --spinner-alpha: 0.3;
+  }
+  95% {
+    --spinner-alpha: 0.28;
+  }
+  100% {
+    --spinner-alpha: 0.2;
+  }
 }
 
 /* 중앙 컨테이너 */
@@ -19,7 +95,11 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding-top: 8rem;
+  min-height: 60vh;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 /* 별 이미지 */

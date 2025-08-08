@@ -4,7 +4,7 @@ import "../../CSS/COMMON/Header.css";
 import Logo from "../../IMAGE/logo.svg";
 import { FiSearch, FiMenu } from "react-icons/fi";
 import api from "../../API/axios";
-import DefaultStoreImg from "../../IMAGE/starfilled.svg";
+import DefaultStoreImg from "../../IMAGE/defaultImage.svg";
 
 function Header() {
   const navigate = useNavigate();

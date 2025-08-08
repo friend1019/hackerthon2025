@@ -1,25 +1,154 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { MdAutoAwesome } from "react-icons/md";
-import { FiChevronDown } from "react-icons/fi";
-import "../../CSS/HOME/Home.css"; 
-import Header from "../COMMON/Header"; 
-import Footer from "../COMMON/Footer"; 
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import "../../CSS/HOME/Home.css";
+
+import Header from "../COMMON/Header";
+import Footer from "../COMMON/Footer";
+
 import main1 from "../../IMAGE/main1.svg";
 import main2 from "../../IMAGE/main2.svg";
 import main3 from "../../IMAGE/main3.svg";
+
 import nineKyung from "../../IMAGE/9경.svg";
 import nineMi from "../../IMAGE/9미.svg";
 import ninePoom from "../../IMAGE/9품.svg";
+import festival from "../../IMAGE/festival.svg";
+import aramegil from "../../IMAGE/aramegil.svg";
+
+const categoryList = [
+  { img: nineKyung, label: "서산 9경", link: "9kyung" },
+  { img: nineMi, label: "서산 9미", link: "9mi" },
+  { img: ninePoom, label: "서산 9품", link: "9pum" },
+  { img: festival, label: "서산 페스티벌", link: "festival" },
+  { img: aramegil, label: "서산 아래매길", link: "aramegil" },
+];
+
+const visibleCount = 3;
+
+const CategorySlider = () => {
+  const navigate = useNavigate();
+  const [idx, setIdx] = useState(0);
+  const [dragX, setDragX] = useState(0); // 드래그 실시간 이동값
+  const [isDragging, setIsDragging] = useState(false);
+  const [cardWidth, setCardWidth] = useState(0);
+  const maxIdx = categoryList.length - visibleCount;
+  const touchStartX = useRef(null);
+  const lastDragX = useRef(0);
+  const cardRef = useRef(null);
+
+  useEffect(() => {
+    // 카드 wrapper의 실제 width(px) 측정
+    if (cardRef.current) {
+      setCardWidth(cardRef.current.offsetWidth + 17 * 16); // 카드+gap
+    }
+  }, []);
+
+  const handlePrev = () => setIdx((i) => Math.max(0, i - 1));
+  const handleNext = () => setIdx((i) => Math.min(maxIdx, i + 1));
+
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX;
+    lastDragX.current = 0;
+    setIsDragging(true);
+  };
+
+  const handleTouchMove = (e) => {
+    if (!isDragging || touchStartX.current === null) return;
+    const moveX = e.touches[0].clientX - touchStartX.current;
+    setDragX(moveX);
+    lastDragX.current = moveX;
+  };
+
+  const handleTouchEnd = () => {
+    setIsDragging(false);
+    // 카드 실제 width 기준으로 idx 계산
+    const threshold = cardWidth / 3;
+    let nextIdx = idx;
+    if (lastDragX.current > threshold && idx > 0) {
+      nextIdx = idx - 1;
+    } else if (lastDragX.current < -threshold && idx < maxIdx) {
+      nextIdx = idx + 1;
+    }
+    setIdx(nextIdx);
+    setDragX(0);
+    touchStartX.current = null;
+    lastDragX.current = 0;
+  };
+
+  // 트랜지션 적용: 드래그 중엔 즉시, 드래그 끝나면 부드럽게
+  const trackStyle = {
+    transform: `translateX(calc(-${idx * cardWidth}px + 2rem + ${dragX}px))`,
+    transition: isDragging ? "none" : "transform 0.4s cubic-bezier(.7,.2,.3,1)",
+    cursor: isDragging ? "grabbing" : "grab",
+  };
+
+  return (
+    <div
+      className="category-slider-wrap"
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+    >
+      <div className="category-slider-header">
+        <div className="category-slider-title"></div>
+        <div className="category-slider-arrows">
+          <button
+            className="category-arrow"
+            onClick={handlePrev}
+            disabled={idx === 0}
+          >
+            <FiChevronLeft size={24} />
+          </button>
+          <button
+            className="category-arrow"
+            onClick={handleNext}
+            disabled={idx === maxIdx}
+          >
+            <FiChevronRight size={24} />
+          </button>
+        </div>
+      </div>
+
+      <div className="category-slider-window">
+        <div className="category-slider-track" style={trackStyle}>
+          {categoryList.map((cat, i) => (
+            <div
+              className="category-card-wrapper"
+              key={cat.label}
+              ref={i === 0 ? cardRef : undefined}
+              onClick={() => navigate(`/${cat.link}`)}
+            >
+              <div className="category-card">
+                <div className="category-card-imgbox">
+                  <img
+                    src={cat.img}
+                    alt={cat.label}
+                    className="category-card-img"
+                  />
+                </div>
+              </div>
+              <div className="category-card-label">{cat.label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const phrases = [
-  { text: "🏁 출발지를 입력하고,", style: { fontWeight: 700, color: "#fff" } },
   {
-    text: "🚗 이동할 수단을 정해요,",
+    text: "⛰️🌊 원하는 테마를 선택하고",
     style: { fontWeight: 500, color: "#fff" },
   },
   {
-    text: "🏷️ 그리고 관심 있는 태그를 골라주세요",
+    text: "🏷️ 관심 있는 태그를 골라주세요!",
+    style: { fontWeight: 500, color: "#fff" },
+  },
+  {
+    text: "🧑‍🤝‍🧑 누구와 함께하는 여행인가요?",
     style: { fontWeight: 500, color: "#fff" },
   },
   {
@@ -34,8 +163,7 @@ const AnimatedPhrase = () => {
   const lineHeight = 3.2;
 
   useEffect(() => {
-    let timeouts = [];
-    // 한 줄씩 사라지게
+    const timeouts = [];
     phrases.forEach((_, idx) => {
       timeouts.push(
         setTimeout(() => {
@@ -47,20 +175,17 @@ const AnimatedPhrase = () => {
         }, 1500 + idx * 1700)
       );
     });
-    // 모든 줄이 사라진 후 다시 전체 등장
     timeouts.push(
       setTimeout(() => {
         setHideArr(Array(phrases.length).fill(false));
         setCycle((prev) => prev + 1);
-      }, 1500 + phrases.length * 1700 + 1000)
+      }, 1500 + phrases.length * 1700 + 500)
     );
-    return () => {
-      timeouts.forEach(clearTimeout);
-    };
+    return () => timeouts.forEach(clearTimeout);
   }, [cycle]);
 
-  // 아래에 있는 문구일수록 더 진하게 보이도록
   const opacityArr = [1, 0.7, 0.5, 0.3, 0.1];
+
   return (
     <div
       style={{
@@ -100,11 +225,35 @@ const images = [main1, main2, main3];
 
 const Home = () => {
   const [current, setCurrent] = useState(0);
+  const [barProgress, setBarProgress] = useState(0); // 0~1
   const timeoutRef = useRef(null);
-  const SLIDE_INTERVAL = 4000;
+  const intervalRef = useRef(null);
   const navigate = useNavigate();
+  const SLIDE_INTERVAL = 4000;
+  const TOTAL_DURATION = SLIDE_INTERVAL * images.length;
 
-  // 자동 슬라이드
+  // Progress bar 애니메이션 (한 바퀴 전체)
+  useEffect(() => {
+    let start = Date.now();
+    function update() {
+      const elapsed = Date.now() - start;
+      let progress = elapsed / TOTAL_DURATION;
+      if (progress > 1) progress = 1;
+      setBarProgress(progress);
+      if (progress < 1) {
+        intervalRef.current = requestAnimationFrame(update);
+      } else {
+        setBarProgress(0);
+        setCurrent(0);
+        start = Date.now();
+        intervalRef.current = requestAnimationFrame(update);
+      }
+    }
+    intervalRef.current = requestAnimationFrame(update);
+    return () => cancelAnimationFrame(intervalRef.current);
+  }, [TOTAL_DURATION]); // ✅ 의존성 추가
+
+  // 슬라이드 자동 전환
   useEffect(() => {
     timeoutRef.current = setTimeout(() => {
       setCurrent((prev) => (prev + 1) % images.length);
@@ -112,7 +261,6 @@ const Home = () => {
     return () => clearTimeout(timeoutRef.current);
   }, [current]);
 
-  // 터치 슬라이드
   const startX = useRef(null);
   const handleTouchStart = (e) => {
     startX.current = e.touches[0].clientX;
@@ -128,9 +276,6 @@ const Home = () => {
     startX.current = null;
   };
 
-  // 진행 막대 너비 계산
-  const progress = ((current + 1) / images.length) * 100;
-
   return (
     <div className="home-bg">
       <Header />
@@ -139,7 +284,6 @@ const Home = () => {
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >
-        {/* 이미지 슬라이드 */}
         {images.map((img, idx) => (
           <img
             key={idx}
@@ -149,11 +293,8 @@ const Home = () => {
             draggable={false}
           />
         ))}
-        {/* 헤더 영역 오버레이 */}
         <div className="carousel-header-overlay" />
-        {/* 글귀/버튼 영역 오버레이 */}
         <div className="carousel-content-overlay" />
-        {/* 글귀랑 버튼 */}
         <div className="carousel-content">
           <div className="carousel-text">
             <span>
@@ -182,35 +323,24 @@ const Home = () => {
             </div>
           </div>
         </div>
-        {/* 진행 바 */}
         <div className="carousel-progress">
-          <div className="carousel-bar" style={{ width: `${progress}%` }} />
+          <div
+            className="carousel-bar"
+            style={{ transform: `scaleX(${barProgress})` }}
+          />
         </div>
       </div>
-      {/* 아래쪽 애니메이션 글귀 */}
+
       <div className="home-phrase-container">
         <AnimatedPhrase />
       </div>
-      {/* 카테고리 버튼 영역 */}
+
       <div className="category-section">
-        <div className="category-title">
-          카테고리{" "}
-          <span style={{ fontSize: "2.5rem", marginLeft: "0.3rem", marginTop: "0.75rem" }}>
-            <FiChevronDown />
-          </span>
-        </div>
-        <div className="category-buttons">
-          <button className="category-btn">
-            <img src={nineKyung} alt="서산 9경" />
-          </button>
-          <button className="category-btn">
-            <img src={nineMi} alt="서산 9미" />
-          </button>
-          <button className="category-btn">
-            <img src={ninePoom} alt="서산 9품" />
-          </button>
-        </div>
+        <div className="category-title">카테고리</div>{" "}
+        {/* 반드시 여기에 있어야 함 */}
+        <CategorySlider />
       </div>
+
       <Footer />
     </div>
   );

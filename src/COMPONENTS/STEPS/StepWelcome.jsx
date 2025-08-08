@@ -37,7 +37,7 @@ const StepWelcome = ({ answers, setAnswers, nextStep, prevStep }) => {
                   nextStep();
                 }}
               >
-                시작 →
+                시작하기
               </button>
             </div>
           </div>

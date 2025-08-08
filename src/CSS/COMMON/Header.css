@@ -29,14 +29,14 @@
 }
 @media (max-width: 600px) {
   .header-search-modal-content {
-    margin-top: -80rem;
+    margin-top: -70rem;
     max-width: 80vw;
     width: 30rem;
   }
 }
 @media (min-width: 601px) {
   .header-search-modal-content {
-    margin-top: -50rem;
+    margin-top: -100rem;
     max-width: 80vw;
     width: 80rem;
   }
@@ -229,3 +229,4 @@
   font-weight: 500;
   vertical-align: middle;
 }
+

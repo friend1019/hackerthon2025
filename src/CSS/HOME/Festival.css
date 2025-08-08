@@ -1,0 +1,120 @@
+/* 월 숫자와 영어 월명 사이 구분선 */
+.month-divider {
+  display: inline-block;
+  width: 2.2rem; /* 가로로 눕힌 길이 */
+  height: 1px; /* 세로 두께 */
+  background: #141414;
+  opacity: 0.3;
+  margin: 0.7rem 0.7rem;
+  border-radius: 2px;
+  vertical-align: middle;
+}
+.festival-container {
+  padding: 2rem 0 0 0;
+  background: #0d0d0d;
+  color: white;
+  min-height: 100vh;
+}
+
+.festival-title {
+  font-size: 2rem;
+  font-weight: 500;
+  color: #fff;
+  margin-left: 3rem;
+  margin-top: 8rem;
+}
+
+.month-slider {
+  display: flex;
+  overflow-x: auto;
+  gap: 2.7rem;
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
+  margin-top: 4rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+.month-button {
+  padding: 1.5rem 1.5rem;
+  display: flex;
+  flex-direction: column; /* 세로 배치 */
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 2.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  cursor: pointer;
+  text-align: center;
+}
+
+.month-button.active {
+  background: #dff6ff;
+  color: #141414;
+  font-weight: 400;
+}
+
+.festival-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+.festival-card {
+  width: 90%;
+  height: 30vh;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto; /* 가운데 정렬 */
+}
+
+.festival-img {
+  width: 97%;
+  height: 150px;
+  object-fit: cover;
+  margin: 0.6rem auto;
+  border-radius: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.festival-info {
+  padding: 0 1.5rem;
+  margin-top: -0.5rem;
+}
+
+.festival-info h3 {
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+  margin-top: 0.7rem;
+}
+
+.subtitle {
+  font-weight: normal;
+  font-size: 1rem;
+  color: #ccc;
+  margin-left: 0.5rem;
+}
+
+.status-tag {
+  background: #0099ff;
+  padding: 0.2rem 0.6rem;
+  margin-left: 1rem;
+  border-radius: 0.6rem;
+  font-size: 0.9rem;
+  color: white;
+}
+
+.festival-meta {
+  margin-top: 1rem;
+  list-style: none;
+  padding: 0;
+}
+
+.festival-meta li {
+  margin-bottom: 0.5rem;
+}

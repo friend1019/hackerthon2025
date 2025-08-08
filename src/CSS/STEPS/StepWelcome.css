@@ -16,7 +16,7 @@
       transparent 30%
     ),
     #141414;
-    padding-top: 20rem;
+  padding-top: 25rem;
 }
 
 .step-star-wrap {
@@ -24,6 +24,7 @@
   justify-content: center;
   align-items: center;
   margin-bottom: 2.5rem;
+  margin-top: 8rem;
 }
 .step-star-img-one {
   width: 90px;
@@ -52,26 +53,23 @@
   display: flex;
   justify-content: center;
   position: static;
-  margin-top: 2.5rem;
 }
 /* 시작 버튼 width 줄임 */
 .step-btn.step-welcome-btn {
-  background: #4bcdfd;
+  background-color: #4BCDFD;
   color: black;
-  font-size: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 1.3rem;
   font-weight: 500;
   border: none;
   border-radius: 1.2rem;
   width: 60%;
   height: 4rem;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.18);
   cursor: pointer;
   transition: background 0.2s;
 
   display: flex;
   align-items: center;
   justify-content: center;
-}
-.step-btn.step-welcome-btn:hover {
-  background: #2ca3ce;
+  margin-top: 27vh;
 }

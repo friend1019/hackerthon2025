@@ -5,7 +5,7 @@ import "../../CSS/PLACE/PlaceDetail.css";
 import api from "../../API/axios";
 import { FiChevronLeft } from "react-icons/fi";
 import NaverMap from "../MAPS/NaverMap";
-import DefaultStoreImg from "../../IMAGE/starfilled.svg";
+import DefaultStoreImg from "../../IMAGE/defaultImage.svg";
 
 function PlaceDetail() {
   const params = useParams();
@@ -75,11 +75,13 @@ function PlaceDetail() {
           <img src={imageSrc} alt={place.name} />
         </div>
         <div className="place-detail-info">
-          <h2 className="place-name">{place.name}</h2>
-          <hr className="place-divider" />
-          <button className="place-map-btn" onClick={() => setShowMap(true)}>
-            지도 보기 &gt;
-          </button>
+          <div className="place-titlebox">
+            <h2 className="place-name">{place.name}</h2>
+            <hr className="place-divider" />
+            <button className="place-map-btn" onClick={() => setShowMap(true)}>
+              지도 보기 &gt;
+            </button>
+          </div>
           <div className="place-row">
             <div className="place-label">주소</div>
             <div className="place-value">
@@ -87,6 +89,14 @@ function PlaceDetail() {
               {place.detailAddress ? ` (${place.detailAddress})` : ""}
             </div>
           </div>
+          {place.location && (
+            <div className="place-row">
+              <div className="place-label">행정동</div>
+              <div className="place-value">
+                {place.location}
+              </div>
+            </div>
+          )}
           {place.description && (
             <div className="place-row">
               <div className="place-label">소개</div>

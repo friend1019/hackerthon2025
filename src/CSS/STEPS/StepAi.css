@@ -1,0 +1,138 @@
+/* 중앙 전체 레이아웃 */
+.step-ai-container {
+  width: 100%;
+  min-height: calc(100vh - 5rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: radial-gradient(
+      circle at 110% 35%,
+      rgba(75, 205, 253, 0.2),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at -10% 70%,
+      rgba(75, 205, 253, 0.2),
+      transparent 30%
+    ),
+    #141414;
+  padding-top: 25rem;
+}
+
+/* 상단 중앙 이미지 */
+.step-ai-image-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -3rem;
+  margin-bottom: 3rem;
+}
+
+.step-ai-star1-img {
+  width: 120px;
+  height: auto;
+  filter: drop-shadow(0 0 30px #4bcdfd) brightness(1.2);
+}
+
+/* 별 줄 - 위치 조정 (이전 버튼 아래 5rem) */
+.step-ai-star-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5rem;
+  margin-bottom: 3rem;
+  column-gap: 2rem;
+}
+
+.step-ai-star-img {
+  width: 40px;
+  height: 40px;
+  filter: drop-shadow(0 0 20px #4bcdfd) brightness(1.1);
+}
+
+/* 제목 텍스트 */
+.step-ai-title {
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+/* 부제 설명 */
+.step-ai-desc {
+  color: #fff;
+  font-size: 1.3rem;
+  font-weight: 300;
+  text-align: center;
+  margin-bottom: 3rem;
+  line-height: 1.7;
+}
+
+/* 입력창 영역 */
+.step-ai-input-wrap {
+  width: 60%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.step-ai-input {
+  width: 100%;
+  height: 3.8rem;
+  border-radius: 1.2rem;
+  border: none;
+  padding: 0 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 400;
+  background: rgba(255, 255, 255, 0.9);
+  color: #141414;
+}
+
+/* 입력 버튼 그룹 */
+.step-ai-btn-group {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 5rem;
+}
+/* 버튼 스타일 */
+.step-ai-btn-submit {
+  background: #4bcdfd;
+  color: black;
+  font-size: 1.5rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 1.2rem;
+  width: 60%;
+  height: 4rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.18);
+  cursor: pointer;
+  transition: background 0.2s;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 비활성화 시 */
+.step-ai-btn-submit.disabled {
+  background-color: rgba(223, 246, 255, 0.2);
+  color: rgb(255, 255, 255);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: not-allowed;
+}
+
+/* 이전 버튼 */
+.step-ai-prev-btn {
+  position: absolute;
+  top: 12rem;
+  left: 2rem;
+  background: none;
+  color: white;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
