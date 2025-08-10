@@ -1,13 +1,14 @@
 // RecommendCourse.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import StepWelcome from "./StepWelcome";
 import StepTheme from "./StepTheme";
 import StepInterest from "./StepInterest";
 import StepAi from "./StepAi";
 import api from "../../API/axios";
 import CourseSpinner from "./CourseSpinner";
 
-const steps = [StepTheme, StepInterest, StepAi];
+const steps = [StepWelcome, StepTheme, StepInterest, StepAi];
 
 const RecommendCourse = () => {
   const [step, setStep] = useState(0);

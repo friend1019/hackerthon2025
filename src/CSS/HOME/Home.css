@@ -1,46 +1,40 @@
-/* ====== 1. 전체 레이아웃/컨테이너 ====== */
+@media (max-width: 600px) {
+  .category-bottom-btns {
+    margin-bottom: 8.5rem;
+  }
+}
+/* ===================== 1. 전체 레이아웃 ===================== */
 .home-bg {
   position: relative;
   width: 100vw;
   overflow: hidden;
+  min-height: 100vh;
 }
 
-.home-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  min-height: calc(100vh - 8rem);
-  padding: 1.2rem 0.5rem;
-}
-
-/* ====== 2. 캐러셀 영역 ====== */
+/* ===================== 2. 캐러셀(메인 이미지) ===================== */
 .carousel {
   position: relative;
   width: 100vw;
-  aspect-ratio: 16/15.5;
+  aspect-ratio: 20/17;
   max-height: 90vh;
   overflow: hidden;
   margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-
 .carousel-img {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  opacity: 0;
   object-fit: cover;
-  transition: opacity 0.7s;
+  opacity: 1;
   z-index: 1;
 }
-.carousel-img.active {
-  opacity: 1;
-  z-index: 2;
-}
 
+/* ===================== 3. 오버레이(그라데이션) ===================== */
 .carousel-header-overlay {
   position: absolute;
   top: 0;
@@ -69,111 +63,231 @@
   );
   z-index: 4;
 }
-.carousel-content {
-  position: absolute;
-  left: 2rem;
-  right: 2rem;
-  bottom: 6rem;
-  z-index: 5;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 1.5rem;
-}
-.carousel-text {
-  color: #fff;
-  font-size: 2rem;
-  font-weight: 300;
-  line-height: 1.6;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-  margin-left: 1rem;
-  margin-bottom: 0.7rem;
-}
-.carousel-text b {
-  font-weight: 600;
-}
-.carousel-btn {
-  background: rgba(255, 255, 255, 0.25);
-  width: 14.5rem;
-  height: 3.5rem;
-  color: #4bcdfd;
-  font-size: 1.5rem;
-  font-weight: 500;
-  border: none;
-  border-radius: 0.5rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-  cursor: pointer;
-  transition: background 0.2s;
-  backdrop-filter: blur(0.7rem);
-}
-.carousel-btn:hover {
-  background: rgba(255, 255, 255, 0.45);
-}
 
-/* AI 안내 문구 스타일 */
-.ai-image-info {
-  text-align: right;
-  font-size: 1rem;
-  color: #ffffff;
-  margin-top: 1.5rem;
-  margin-right: 0.2rem;
-  font-weight: 100;
-  opacity: 0.5;
-}
-
-.carousel-progress {
+/* ===================== 4. 중앙 텍스트 ===================== */
+.carousel-main-center {
   position: absolute;
+  top: 45%;
   left: 50%;
-  bottom: 4rem;
-  transform: translateX(-50%);
-  width: 90vw;
-  height: 0.15rem;
-  background: rgba(255, 255, 255, 0.18);
-  z-index: 5;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-size: 1.8rem;
+  font-weight: 400;
+  text-align: center;
+  line-height: 1.2;
+  text-shadow: 0 2px 16px rgba(0,0,0,0.35);
+  z-index: 1;
+  max-width: 90vw;
+  white-space: nowrap;
+}
+.carousel-main-center b {
+  font-weight: 700;
+}
+
+/* ===================== 5. 사진 왼쪽 아래 AnimatedPhrase ===================== */
+.carousel-animated-phrase {
+  position: absolute;
+  left: 2.5rem;
+  bottom: 2rem;
+  z-index: 1;
+  width: 40vw;
+  max-width: 500px;
+  min-width: 220px;
+  pointer-events: none;
+  font-size: 1.7rem;
+  color: #fff;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.25);
+}
+
+/* ===================== 6. 하단 고정 버튼 (StepInterest 스타일) ===================== */
+.carousel-bottom-btn {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 7rem;
+  background: #3D4143;
+  color: #4BCDFD;
+  font-size: 1.8rem;
+  font-weight: 400;
+  border: none;
+  border-radius: 0;
+  box-shadow: 0 -2px 12px rgba(0,0,0,0.08);
+  cursor: pointer;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 0.7rem;
+  transition: background 0.2s;
 }
-.carousel-bar {
-  width: 100vw;
-  height: 100%;
-  background: #d9d9d9;
-  border-radius: 0.3rem;
-  transform-origin: left;
-  transition: transform 0.2s linear;
+.carousel-bottom-btn:active {
+  background: linear-gradient(90deg, #2b90d9 0%, #4bcdfd 100%);
 }
 
-/* ====== 3. 애니메이션 글귀 영역 ====== */
-.home-phrase-container {
-  background-color: #141414;
-  min-height: 12vh;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100vw;
-  z-index: 5;
-  pointer-events: none;
-  padding: 0 3rem;
-  position: relative;
-  margin-top: -2rem;
-  display: block;
-  font-size: 2rem;
-}
-
-/* ====== 4. 카테고리 슬라이더 영역 ====== */
+/* ===================== 7. 카테고리 슬라이더 ===================== */
+/* ===================== 7. 카테고리 섹션(탭/카드/버튼) ===================== */
 .category-section {
   background: #141414;
-  padding: 2rem 1.5rem;
+  padding: 2.2rem 0rem 1.5rem 2.2rem;
   width: 100vw;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: 1rem;
+  gap: 0.5rem;
   margin-top: -2rem;
-  min-height: 43.5vh;
+  min-height: 47vh;
+  border-radius: 0 0 32px 32px;
 }
 
+.category-tabs {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1.2rem;
+  border-bottom: 1px solid #23242a;
+  padding-bottom: 0.7rem;
+}
+.category-tab {
+  background: none;
+  border: none;
+  color: #bfc6d0;
+  font-size: 2rem;
+  font-weight: 500;
+  padding: 0.4rem 1.5rem;
+  cursor: pointer;
+  border-radius: 3rem;
+  transition: background 0.18s, color 0.18s;
+  position: relative;
+}
+
+.category-tab:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  right: -1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 1rem;
+  background: #5E5E5E;
+  opacity: 0.5;
+}
+.category-tab.active {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #8BC0D3;
+}
+
+.category-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.1rem;
+  margin-top: 1rem;
+}
+.category-title-main {
+  font-size: 2rem;
+  font-weight: 400;
+  color: #fff;
+}
+.category-more-btn {
+  background: none;
+  border: none;
+  color: #bfc6d0;
+  font-size: 1.6rem;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  cursor: pointer;
+  transition: color 0.18s;
+  margin-right: 1rem;
+}
+.category-more-btn:hover {
+  color: #4bcdfd;
+}
+
+.category-place-cards {
+  display: flex;
+  gap: 1.3rem;
+  margin-bottom: 1.2rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  padding-right: 2rem;
+  scrollbar-width: none; /* Firefox */
+}
+.category-place-cards::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+.category-place-card {
+  background: #23242a;
+  border-radius: 18px;
+  overflow: hidden;
+  width: 20rem;
+  height: 20rem;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.13);
+  position: relative;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: flex-end;
+}
+.category-place-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.category-place-label {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 0.7rem 1rem 0.6rem 1rem;
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: #fff;
+  background: linear-gradient(0deg, rgba(20,20,20,0.4) 80%, rgba(20,20,20,0.3) 90%, rgba(20,20,20,0.01) 100%);
+  text-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  box-sizing: border-box;
+}
+
+.category-desc {
+  font-size: 2rem;
+  color: #fff;
+  font-weight: 500;
+  margin-bottom: 3rem;
+  margin-left: 0.2rem;
+  margin-top: 3rem;
+}
+
+.category-bottom-btns {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  margin-top: 0.2rem;
+  padding: 0 3rem;
+}
+.category-bottom-btn {
+  background: #23242a;
+  border: 1.5px solid #35363c;
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 500;
+  border-radius: 3rem;
+  padding: 1rem 3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, border 0.18s;
+}
+.category-bottom-btn:hover {
+  background: #4bcdfd;
+  color: #fff;
+  border: 1.5px solid #4bcdfd;
+}
 .category-card-wrapper {
   display: flex;
   flex-direction: column;
@@ -181,27 +295,22 @@
   gap: 0.6rem;
   width: 10rem;
 }
-
-
 .category-slider-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
 }
-
 .category-title {
   font-size: 2rem;
   font-weight: 400;
   color: white;
   margin-left: 1rem;
 }
-
 .category-slider-arrows {
   display: flex;
   gap: 0.8rem;
 }
-
 .category-arrow {
   background: none;
   border: none;
@@ -216,24 +325,19 @@
   opacity: 0.3;
   cursor: default;
 }
-
 .category-slider-window {
   overflow: hidden;
-  width: 100%; /* 혹은 100vw */
+  width: 100%;
 }
-
 .category-slider-track {
   display: flex;
   gap: 17rem;
   padding-left: 5rem;
   will-change: transform;
 }
-
-
 .category-card:hover {
   transform: scale(1.05);
 }
-
 .category-card-imgbox {
   width: 23rem;
   height: 23rem;
@@ -242,13 +346,11 @@
   justify-content: center;
   margin-bottom: 0.8rem;
 }
-
 .category-card-img {
   width: 100%;
   height: 100%;
   object-fit: contain;
 }
-
 .category-card-label {
   font-size: 1.9rem;
   font-weight: 300;

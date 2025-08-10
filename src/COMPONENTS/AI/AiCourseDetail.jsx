@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import { useParams, useNavigate } from "react-router-dom";
 import {
   MdKeyboardArrowRight,
   MdKeyboardArrowLeft,
-  MdKeyboardArrowDown,
 } from "react-icons/md";
 import "../../CSS/AI/AiCourseDetail.css";
 import Header from "../COMMON/Header";
@@ -65,7 +65,12 @@ const AiCourseDetail = () => {
   if (!course) return null; // 데이터 로딩 전에는 아무것도 표시 안 함
 
   return (
-    <div className="ai-course-detail-wrapper">
+    <motion.div
+      className="ai-course-detail-wrapper"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
       <Header />
       <div style={{ marginLeft: "2rem", marginBottom: "0.5rem" }}>
         <MdKeyboardArrowLeft
@@ -79,7 +84,7 @@ const AiCourseDetail = () => {
       </div>
 
       <h2 className="ai-course-detail-title">
-        AI 추천 코스 {id === "0" ? "A" : id === "1" ? "B" : id === "2" ? "C" : ""} <MdKeyboardArrowDown />
+        AI 추천 코스 {id === "0" ? "A" : id === "1" ? "B" : id === "2" ? "C" : ""} 
       </h2>
       <p className="ai-course-detail-sub">
         {course.summary}
@@ -143,7 +148,7 @@ const AiCourseDetail = () => {
       </div>
 
       <button className="ai-course-detail-mapbtn">지도 보기</button>
-    </div>
+    </motion.div>
   );
 };
 

@@ -1,29 +1,39 @@
+/* StepAi 입력창 placeholder 색상 지정 */
+.step-ai-input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
 /* motion.div에 적용될 가운데 정렬 및 레이아웃 */
 .step-interest-content {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 900px;
+  margin: 0 auto;
 }
 .step-interest-prev-btn {
-  position: static;
-  background: none;
+  position: absolute;
+  top: 10rem;
+  left: 2rem;
+  z-index: 10;
+  width: 3rem;
+  height: 3rem;
+  background: rgba(255, 255, 255, 0.2);
   border: none;
-  color: #fff;
-  font-size: 1.25rem;
-  font-weight: 500;
+  border-radius: 50%;
+  color: #e3eafc;
+  font-size: 2rem;
+  cursor: pointer;
   display: flex;
   align-items: center;
-  cursor: pointer;
-  z-index: 20;
-  transition: color 0.2s;
-  padding: 0.2rem 0.7rem;
-  margin-left: 1.2rem;
-  align-self: flex-start;
-  margin-bottom: 8vh;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  transition: background 0.2s;
+  outline: none;
 }
 .step-interest-prev-btn:hover {
-  color: #4bcdfd;
+  background: linear-gradient(135deg, #2a2d3e 80%, #181a20 100%);
+  color: #fff;
 }
 
 .step-interest-center {
@@ -45,53 +55,89 @@
       transparent 30%
     ),
     #141414;
+  top: -1rem;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 .step-star-row {
   display: flex;
   gap: 1.2rem;
-  align-items: flex-start;
-  justify-content: flex-start;
-  width: 90%;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
   margin-bottom: 0.5rem;
-  margin-left: 1.5rem;
+  margin-left: 0;
 }
 .step-star-img {
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 3rem;
+  height: 3rem;
   filter: drop-shadow(0 0 12px #4bcdfd) brightness(1.1);
 }
 
 .step-title.step-interest-title {
   color: #fff;
   font-size: 2.5rem;
-  font-weight: 600;
-  text-align: left;
-  width: 90%;
-  max-width: 400px;
-  margin-bottom: 0.7rem;
-  margin-left: 1.5rem;
+  font-weight: 400;
+  text-align: center;
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 1.2rem;
+  margin-left: 0;
+  align-self: center;
 }
 .step-desc.step-interest-desc {
   color: #fff;
-  font-size: 1.5rem;
+  font-size: 1.7rem;
   font-weight: 300;
-  text-align: left;
-  width: 90%;
-  max-width: 400px;
-  margin-bottom: 2.5rem;
-  margin-left: 1.5rem;
+  text-align: center;
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 3rem;
+  margin-left: 0;
   line-height: 1.7;
+  align-self: center;
 }
 
 .step-interest-list {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 1.2rem;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 2rem;
   width: 90vw;
-  max-width: 328px;
-  margin: 0 auto 5rem auto;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+@media (min-width: 900px) {
+  .step-interest-list {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 3rem 4rem;
+    width: 100%;
+    margin-bottom: 6rem;
+  }
+  .step-interest-btn {
+    aspect-ratio: 1/1;
+    min-width: 220px;
+    max-width: 260px;
+    min-height: 220px;
+    max-height: 260px;
+    font-size: 1.3rem;
+  }
+  .step-interest-label {
+    font-size: 1.3rem;
+    margin: 1rem 1.5rem 1.5rem 0;
+    padding: 0.3rem 1rem;
+  }
+  .step-title.step-interest-title {
+    font-size: 3.2rem;
+    max-width: 700px;
+  }
+  .step-desc.step-interest-desc {
+    font-size: 2rem;
+    max-width: 700px;
+  }
 }
 .step-interest-btn {
   background: none;
@@ -105,6 +151,8 @@
   opacity: 0.7;
   position: relative;
   aspect-ratio: 1/1;
+  min-width: 160px;
+  min-height: 160px;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -138,152 +186,72 @@
   padding: 0.2rem 0.7rem;
 }
 
+/* 하단 전체가 클릭 영역이 되도록 버튼을 덮는 스타일 */
 .step-btn-group.step-interest-btn-group {
-  width: 100%;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  background: #4bcdfd;
+  padding: 0;
   display: flex;
   justify-content: center;
-  position: static;
-  margin-bottom: -0.5rem;
+  z-index: 10;
+  box-shadow: 0 -2px 16px rgba(0, 0, 0, 0.12);
+  height: 7rem;
 }
+
 .step-btn.step-interest-btn-next {
-  background: #4bcdfd;
-  color: black;
-  font-size: 1.3rem;
-  font-weight: 500;
+  width: 100vw;
+  height: 7rem;
+  font-size: 1.8rem;
+  color: #222;
+  background: none;
   border: none;
-  border-radius: 1.2rem;
-  width: 60%;
-  height: 4rem;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.18);
+  font-weight: 500;
+  letter-spacing: 0.02em;
   cursor: pointer;
-  transition: background 0.2s;
+  padding: 0;
+  transition: opacity 0.2s;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 7rem;
 }
-.step-btn.step-interest-btn-next:disabled,
-.step-btn.step-interest-btn-next:disabled:active {
-  background-color: rgba(223, 246, 255, 0.2);
-  color: rgb(255, 255, 255);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+.step-btn.step-interest-btn-next:not(:disabled) {
+  background: #4bcdfd;
+  color: black;
+  border-radius: 0;
+  box-shadow: none;
+  transition: background 0.2s, color 0.2s;
+}
+.step-btn.step-interest-btn-next:disabled {
+  background: rgba(223, 246, 255, 0.1);
+  color: white;
+  opacity: 1;
   cursor: not-allowed;
 }
 
-/* 태블릿 (min-width: 600px) */
-@media (min-width: 600px) {
-  .step-interest-center {
-    min-height: calc(100vh);
-    padding: 2.5rem 0 0 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .step-interest-prev-btn {
-    font-size: 2rem;
-    padding: 0.5rem 1.2rem;
-    margin-left: 3rem;
-    margin-top: -12rem;
-    align-self: flex-start;
-  }
-  .step-star-row {
-    margin-top: 1.2rem;
-    margin-bottom: 1.2rem;
-    justify-content: center;
-    align-items: center;
-    gap: 2.2rem;
-    width: 90%;
-    margin-left: -50vw;
-  }
-  .step-star-img {
-    width: 4.2rem;
-    height: 4.2rem;
-  }
-  .step-title.step-interest-title {
-    font-size: 2.2rem;
-    margin-bottom: 1.2rem;
-    text-align: left;
-    margin-left: 1.5rem;
-    width: 90%;
-    max-width: 500px;
-  }
-  .step-desc.step-interest-desc {
-    font-size: 1.7rem;
-    margin-bottom: 2.2rem;
-    text-align: left;
-    margin-left: 1.5rem;
-    width: 90%;
-    max-width: 500px;
-  }
-  .step-interest-list {
-    max-width: 420px;
-    gap: 1.2rem;
-    margin-bottom: 5rem;
-  }
-  .step-interest-btn {
-    border-radius: 1.2rem;
-  }
-  .step-interest-img {
-    border-radius: 1.2rem;
-  }
+.step-btn-group.step-interest-btn-group:has(.step-btn.step-interest-btn-next:disabled) {
+  background: rgba(223, 246, 255, 0.1) !important;
 }
 
-/* PC (min-width: 1024px) */
-@media (min-width: 1024px) {
-  .step-interest-center {
-    min-height: calc(100vh - 5rem);
-    padding: 4rem 0 0 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .step-interest-prev-btn {
-    font-size: 2.5rem;
-    padding: 0.7rem 2rem;
-    margin-left: 3rem;
-    margin-top: 3rem;
-    align-self: flex-start;
-    margin-bottom: -8rem;
-  }
-  .step-star-row {
-    margin-top: 1.5rem;
-    margin-bottom: 1.5rem;
-    justify-content: center;
-    align-items: center;
-    gap: 3rem;
-    width: 90%;
-    margin-left: -40vw;
-    margin-top: 12rem;
-  }
-  .step-star-img {
-    width: 5.2rem;
-    height: 5.2rem;
-  }
-  .step-title.step-interest-title {
-    font-size: 2.7rem;
-    margin-bottom: 1.5rem;
-    text-align: left;
-    margin-left: 1.5rem;
-    width: 90%;
-    max-width: 700px;
-  }
-  .step-desc.step-interest-desc {
-    font-size: 2.1rem;
-    margin-bottom: 2.5rem;
-    text-align: left;
-    margin-left: 1.5rem;
-    width: 90%;
-    max-width: 700px;
-  }
-  .step-interest-list {
-    max-width: 520px;
-    gap: 1.5rem;
-    margin-bottom: 7rem;
-  }
-  .step-interest-btn {
-    border-radius: 1.2rem;
-  }
-  .step-interest-img {
-    border-radius: 1.2rem;
-  }
+/* 체크 오버레이 추가 */
+.step-interest-check-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40%;
+  height: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 2;
 }
+
+.step-interest-btn.selected .step-interest-img {
+  filter: brightness(0.7);
+}
+

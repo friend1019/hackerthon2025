@@ -6,6 +6,7 @@ import api from "../../API/axios";
 import { FiChevronLeft } from "react-icons/fi";
 import NaverMap from "../MAPS/NaverMap";
 import DefaultStoreImg from "../../IMAGE/defaultImage.svg";
+import { motion, AnimatePresence } from "framer-motion";
 
 function PlaceDetail() {
   const params = useParams();
@@ -15,7 +16,7 @@ function PlaceDetail() {
   const [place, setPlace] = useState(null);
   const [showMap, setShowMap] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
-  const [isExiting, setIsExiting] = useState(false);
+  const [shouldRender, setShouldRender] = useState(true);
 
   useEffect(() => {
     const fetchPlace = async () => {
@@ -36,10 +37,7 @@ function PlaceDetail() {
   }, [id, isStore]);
 
   const handleBack = () => {
-    setIsExiting(true);
-    setTimeout(() => {
-      window.history.back();
-    }, 250);
+    setShouldRender(false);
   };
 
   const handleCloseMap = () => {
@@ -50,14 +48,12 @@ function PlaceDetail() {
     }, 200);
   };
 
-  if (!place) return <div>존재하지 않는 장소입니다.</div>;
-
   const coordinates =
-    place.latitude && place.longitude
+    place?.latitude && place?.longitude
       ? `${place.latitude},${place.longitude}`
       : null;
 
-  const imageSrc = place.imageUrl || place.image || DefaultStoreImg;
+  const imageSrc = place?.imageUrl || place?.image || DefaultStoreImg;
 
   return (
     <>
@@ -66,62 +62,76 @@ function PlaceDetail() {
         <FiChevronLeft size={50} />
       </button>
 
-      <div
-        className={`place-detail ${
-          isExiting ? "place-detail-animate-out" : "place-detail-animate-in"
-        }`}
-      >
-        <div className="place-detail-image">
-          <img src={imageSrc} alt={place.name} />
-        </div>
-        <div className="place-detail-info">
-          <div className="place-titlebox">
-            <h2 className="place-name">{place.name}</h2>
-            <hr className="place-divider" />
-            <button className="place-map-btn" onClick={() => setShowMap(true)}>
-              지도 보기 &gt;
-            </button>
-          </div>
-          <div className="place-row">
-            <div className="place-label">주소</div>
-            <div className="place-value">
-              {place.address}
-              {place.detailAddress ? ` (${place.detailAddress})` : ""}
-            </div>
-          </div>
-          {place.location && (
-            <div className="place-row">
-              <div className="place-label">행정동</div>
-              <div className="place-value">
-                {place.location}
+      <div className="place-detail">
+        <AnimatePresence
+          mode="wait"
+          onExitComplete={() => {
+            window.history.back();
+          }}
+        >
+          {shouldRender && place && (
+            <motion.div
+              key="place-content"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4 }}
+            >
+              <div className="place-detail-image">
+                <img src={imageSrc} alt={place.name} />
               </div>
-            </div>
+              <div className="place-detail-info">
+                <div className="place-titlebox">
+                  <h2 className="place-name">{place.name}</h2>
+                  <hr className="place-divider" />
+                  <button
+                    className="place-map-btn"
+                    onClick={() => setShowMap(true)}
+                  >
+                    지도 보기 &gt;
+                  </button>
+                </div>
+                <div className="place-row">
+                  <div className="place-label">주소</div>
+                  <div className="place-value">
+                    {place.address}
+                    {place.detailAddress ? ` (${place.detailAddress})` : ""}
+                  </div>
+                </div>
+                {place.location && (
+                  <div className="place-row">
+                    <div className="place-label">행정동</div>
+                    <div className="place-value">{place.location}</div>
+                  </div>
+                )}
+                {place.description && (
+                  <div className="place-row">
+                    <div className="place-label">소개</div>
+                    <div className="place-value">{place.description}</div>
+                  </div>
+                )}
+                {place.category && (
+                  <div className="place-row">
+                    <div className="place-label">카테고리</div>
+                    <div className="place-value">{place.category}</div>
+                  </div>
+                )}
+                {place.type && (
+                  <div className="place-row">
+                    <div className="place-label">유형</div>
+                    <div className="place-value">{place.type}</div>
+                  </div>
+                )}
+                {place.finalType && (
+                  <div className="place-row">
+                    <div className="place-label">유형</div>
+                    <div className="place-value">{place.finalType}</div>
+                  </div>
+                )}
+              </div>
+            </motion.div>
           )}
-          {place.description && (
-            <div className="place-row">
-              <div className="place-label">소개</div>
-              <div className="place-value">{place.description}</div>
-            </div>
-          )}
-          {place.category && (
-            <div className="place-row">
-              <div className="place-label">카테고리</div>
-              <div className="place-value">{place.category}</div>
-            </div>
-          )}
-          {place.type && (
-            <div className="place-row">
-              <div className="place-label">유형</div>
-              <div className="place-value">{place.type}</div>
-            </div>
-          )}
-          {place.finalType && (
-            <div className="place-row">
-              <div className="place-label">유형</div>
-              <div className="place-value">{place.finalType}</div>
-            </div>
-          )}
-        </div>
+        </AnimatePresence>
       </div>
 
       {showMap && (
@@ -142,8 +152,8 @@ function PlaceDetail() {
               height={400}
               zoom={14}
               placeCard={{
-                imageUrl: place.imageUrl || DefaultStoreImg,
-                name: place.name,
+                imageUrl: imageSrc,
+                name: place?.name,
               }}
             />
           </div>

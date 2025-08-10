@@ -1,4 +1,5 @@
 import React from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import "../../CSS/HOME/9kyung.css";
 import Header from "../COMMON/Header";
@@ -24,7 +25,7 @@ const img9 =
 
 const kyungList = [
   {
-    id: 1,
+    id: 88,
     number: 1,
     title: "해미읍성",
     subtitle: "Haemieupseong Fortress",
@@ -32,7 +33,7 @@ const kyungList = [
     img: img1,
   },
   {
-    id: 21,
+    id: 107,
     number: 2,
     title: "서산 용현리 마애여래삼존상",
     subtitle: "Rock-carved Buddha of Yonghyeon-ri",
@@ -40,7 +41,7 @@ const kyungList = [
     img: img2,
   },
   {
-    id: 56,
+    id: 136,
     number: 3,
     title: "간월암",
     subtitle: "Ganworam Hermitage",
@@ -48,7 +49,7 @@ const kyungList = [
     img: img3,
   },
   {
-    id: 44,
+    id: 127,
     number: 4,
     title: "개심사",
     subtitle: "Gaesimsa Temple",
@@ -56,7 +57,7 @@ const kyungList = [
     img: img4,
   },
   {
-    id: 37,
+    id: 121,
     number: 5,
     title: "팔봉산",
     subtitle: "Palbongsan Mountain",
@@ -64,7 +65,7 @@ const kyungList = [
     img: img5,
   },
   {
-    id: 49,
+    id: 130,
     number: 6,
     title: "가야산",
     subtitle: "Gayasan Mountain",
@@ -72,7 +73,7 @@ const kyungList = [
     img: img6,
   },
   {
-    id: 32,
+    id: 117,
     number: 7,
     title: "황금산",
     subtitle: "Hwanggeumsan Mountain",
@@ -80,7 +81,7 @@ const kyungList = [
     img: img7,
   },
   {
-    id: 64,
+    id: 142,
     number: 8,
     title: "서산한우목장",
     subtitle: "Seosan Hanwoo Ranch",
@@ -88,7 +89,7 @@ const kyungList = [
     img: img8,
   },
   {
-    id: 27,
+    id: 112,
     number: 9,
     title: "삼길포항",
     subtitle: "Samgilpo Port",
@@ -126,8 +127,14 @@ const KyungCard = ({ item }) => {
 
 const KyungList = () => {
   return (
-    <>
-      <div className="kyung-list-all">
+    <AnimatePresence mode="wait">
+      <motion.div
+        className="kyung-list-all"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.5 }}
+      >
         <Header />
         <h1 className="kyung-list-title">서산 9경</h1>
         <div className="kyung-list-wrap">
@@ -135,8 +142,8 @@ const KyungList = () => {
             <KyungCard key={item.id} item={item} />
           ))}
         </div>
-      </div>
-    </>
+      </motion.div>
+    </AnimatePresence>
   );
 };
 

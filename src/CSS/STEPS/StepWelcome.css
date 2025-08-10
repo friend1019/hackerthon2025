@@ -1,10 +1,12 @@
 /* StepWelcome 중앙 레이아웃 */
 .step-welcome-center {
   width: 100%;
-  min-height: calc(100vh - 5rem);
+  min-height: 100vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   background: radial-gradient(
       circle at 110% 35%,
       rgba(75, 205, 253, 0.2),
@@ -16,7 +18,8 @@
       transparent 30%
     ),
     #141414;
-  padding-top: 25rem;
+  padding-top: 0;
+  box-sizing: border-box;
 }
 
 .step-star-wrap {
@@ -24,7 +27,7 @@
   justify-content: center;
   align-items: center;
   margin-bottom: 2.5rem;
-  margin-top: 8rem;
+  margin-top: -16rem;
 }
 .step-star-img-one {
   width: 90px;
@@ -49,27 +52,52 @@
 }
 /* 버튼 그룹을 화면 아래에서 10rem 위로 올림 */
 .step-btn-group.step-welcome-btn-group {
-  width: 100%;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  background: #4bcdfd;
+  padding: 0;
   display: flex;
   justify-content: center;
-  position: static;
+  z-index: 10;
+  box-shadow: 0 -2px 16px rgba(0, 0, 0, 0.12);
 }
 /* 시작 버튼 width 줄임 */
 .step-btn.step-welcome-btn {
-  background-color: #4BCDFD;
-  color: black;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  font-size: 1.3rem;
-  font-weight: 500;
+  width: 100vw;
+  height: 7rem;
+  font-size: 1.8rem;
+  color: #222;
+  background: none;
   border: none;
-  border-radius: 1.2rem;
-  width: 60%;
-  height: 4rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
   cursor: pointer;
-  transition: background 0.2s;
+  padding: 0;
+  transition: opacity 0.2s;
 
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 27vh;
+}
+
+.step-btn.step-welcome-btn:not(:disabled) {
+  background: #4bcdfd;
+  color: #222;
+  border-radius: 0;
+  box-shadow: none;
+  transition: background 0.2s, color 0.2s;
+}
+
+.step-btn.step-welcome-btn:disabled {
+  background: rgba(223, 246, 255, 0.1);
+  color: white;
+  opacity: 1;
+  cursor: not-allowed;
+}
+
+.step-btn-group.step-welcome-btn-group:has(.step-btn.step-welcome-btn:disabled) {
+  background: rgba(223, 246, 255, 0.1) !important;
 }

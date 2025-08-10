@@ -5,15 +5,18 @@ import Logo from "../../IMAGE/logo.svg";
 import { FiSearch, FiMenu } from "react-icons/fi";
 import api from "../../API/axios";
 import DefaultStoreImg from "../../IMAGE/defaultImage.svg";
+import SideDrawer from "./SideDrawer";
+// ...existing code...
 
 function Header() {
   const navigate = useNavigate();
   const [showSearch, setShowSearch] = useState(false);
   const [search, setSearch] = useState("");
   const [results, setResults] = useState([]);
+  const [showDrawer, setShowDrawer] = useState(false);
 
   useEffect(() => {
-    if (showSearch) {
+    if (showSearch || showDrawer) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
@@ -21,7 +24,7 @@ function Header() {
     return () => {
       document.body.style.overflow = "";
     };
-  }, [showSearch]);
+  }, [showSearch, showDrawer]);
 
   const handleSearch = async (keyword) => {
     if (!keyword.trim()) {
@@ -89,7 +92,7 @@ function Header() {
             </li>
 
             <li className="nav-item">
-              <button className="nav-link" onClick={() => navigate("/login")}>
+              <button className="nav-link" onClick={() => setShowDrawer(true)}>
                 <FiMenu className="nav-icon nav-hamburger" />
               </button>
             </li>
@@ -165,6 +168,55 @@ function Header() {
           </div>
         </div>
       )}
+
+      {/* 사이드 드로어 */}
+      <SideDrawer open={showDrawer} onClose={() => setShowDrawer(false)}>
+        <div style={{ marginTop: "2.5rem" }}>
+          <h2 className="side-drawer-title">
+            <span style={{ marginRight: "1.3rem" }}>✨</span>AI
+          </h2>
+          <div className="side-drawer-divider" />
+          <div className="side-drawer-menu-item" onClick={() => { navigate("/recommend"); setShowDrawer(false); }}>
+            <span className="side-drawer-menu-icon">📍</span>
+            <span>AI 코스 생성하기</span>
+          </div>
+          <div className="side-drawer-menu-divider" />
+          <div className="side-drawer-menu-item" onClick={() => { navigate("/ai-course"); setShowDrawer(false); }}>
+            <span className="side-drawer-menu-icon">🔄️</span>
+            <span>AI 코스 다시보기</span>
+          </div>
+          <div className="side-drawer-menu-divider" style={{ marginBottom: "10rem" }} />
+          <h2 className="side-drawer-title">
+            <span style={{ marginRight: "1.3rem" }}>📌</span>카테고리
+          </h2>
+          <div className="side-drawer-divider" />
+          <div className="side-drawer-menu-item" onClick={() => { navigate("/festival"); setShowDrawer(false); }}>
+            <span className="side-drawer-menu-icon">🌅</span>
+            <span>서산 페스티벌</span>
+          </div>
+          <div className="side-drawer-menu-divider" />
+          {/* 아라메길 추가시 여기 수정해야함 */}
+          <div className="side-drawer-menu-item" onClick={() => { navigate("/festival"); setShowDrawer(false); }}>
+            <span className="side-drawer-menu-icon">🚶</span>
+            <span>서산 아라메길</span>
+          </div>
+          <div className="side-drawer-menu-divider" />
+          <div className="side-drawer-menu-item" onClick={() => { navigate("/9kyung"); setShowDrawer(false); }}>
+            <span className="side-drawer-menu-icon">⛰️</span>
+            <span>서산 9경</span>
+          </div>
+          <div className="side-drawer-menu-divider" />
+          <div className="side-drawer-menu-item" onClick={() => { navigate("/9mi"); setShowDrawer(false); }}>
+            <span className="side-drawer-menu-icon">🦀</span>
+            <span>서산 9미</span>
+          </div>
+          <div className="side-drawer-menu-divider" />
+          <div className="side-drawer-menu-item" onClick={() => { navigate("/9pum"); setShowDrawer(false); }}>
+            <span className="side-drawer-menu-icon">🧄</span>
+            <span>서산 9품</span>
+          </div>
+        </div>
+      </SideDrawer>
     </div>
   );
 }

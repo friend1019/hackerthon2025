@@ -1,138 +1,137 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { MdAutoAwesome } from "react-icons/md";
-import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { FiChevronRight } from "react-icons/fi";
 import "../../CSS/HOME/Home.css";
 
 import Header from "../COMMON/Header";
-import Footer from "../COMMON/Footer";
+// import Footer from "../COMMON/Footer";
 
-import main1 from "../../IMAGE/main1.svg";
-import main2 from "../../IMAGE/main2.svg";
-import main3 from "../../IMAGE/main3.svg";
+import mainImage from "../../IMAGE/mainimg.svg";
 
-import nineKyung from "../../IMAGE/9경.svg";
-import nineMi from "../../IMAGE/9미.svg";
-import ninePoom from "../../IMAGE/9품.svg";
-import festival from "../../IMAGE/festival.svg";
-import aramegil from "../../IMAGE/aramegil.svg";
+import nineKyung1 from "../../IMAGE/9경1.svg";
+import nineKyung2 from "../../IMAGE/9경2.svg";
+import nineKyung3 from "../../IMAGE/9경3.svg";
+import festival1 from "../../IMAGE/festival1.svg";
+import festival2 from "../../IMAGE/festival2.svg";
+import festival3 from "../../IMAGE/festival3.svg";
+import aramegil1 from "../../IMAGE/aramegil1.svg";
+import aramegil2 from "../../IMAGE/aramegil2.svg";
+import aramegil3 from "../../IMAGE/aramegil3.svg";
 
-const categoryList = [
-  { img: nineKyung, label: "서산 9경", link: "9kyung" },
-  { img: nineMi, label: "서산 9미", link: "9mi" },
-  { img: ninePoom, label: "서산 9품", link: "9pum" },
-  { img: festival, label: "서산 페스티벌", link: "festival" },
-  { img: aramegil, label: "서산 아래매길", link: "aramegil" },
+
+// 각 카테고리별 예시 장소 데이터
+const categoryTabs = [
+  {
+    key: "9kyung",
+    label: "서산 9경",
+    places: [
+      { img: nineKyung1, name: "해미읍성", id: 88 },
+      { img: nineKyung2, name: "삼길포항", id: 112 },
+      { img: nineKyung3, name: "팔봉산", id: 121 },
+    ],
+    moreLink: "/9kyung",
+  },
+  {
+    key: "festival",
+    label: "페스티벌",
+    places: [
+      { img: festival1, name: "서산국화축제" },
+      { img: festival2, name: "해미읍성축제" },
+      { img: festival3, name: "삼길포항불꽃축제" },
+    ],
+    moreLink: "/festival",
+  },
+  {
+    key: "aramegil",
+    label: "아라메길",
+    places: [
+      { img: aramegil1, name: "보원사지" },
+      { img: aramegil2, name: "용현이 마애여래삼존상" },
+      { img: aramegil3, name: "부석사" },
+    ],
+    moreLink: "/aramegil",
+  },
 ];
 
-const visibleCount = 3;
-
-const CategorySlider = () => {
+const CategorySection = () => {
   const navigate = useNavigate();
-  const [idx, setIdx] = useState(0);
-  const [dragX, setDragX] = useState(0); // 드래그 실시간 이동값
-  const [isDragging, setIsDragging] = useState(false);
-  const [cardWidth, setCardWidth] = useState(0);
-  const maxIdx = categoryList.length - visibleCount;
-  const touchStartX = useRef(null);
-  const lastDragX = useRef(0);
-  const cardRef = useRef(null);
-
-  useEffect(() => {
-    // 카드 wrapper의 실제 width(px) 측정
-    if (cardRef.current) {
-      setCardWidth(cardRef.current.offsetWidth + 17 * 16); // 카드+gap
-    }
-  }, []);
-
-  const handlePrev = () => setIdx((i) => Math.max(0, i - 1));
-  const handleNext = () => setIdx((i) => Math.min(maxIdx, i + 1));
-
-  const handleTouchStart = (e) => {
-    touchStartX.current = e.touches[0].clientX;
-    lastDragX.current = 0;
-    setIsDragging(true);
-  };
-
-  const handleTouchMove = (e) => {
-    if (!isDragging || touchStartX.current === null) return;
-    const moveX = e.touches[0].clientX - touchStartX.current;
-    setDragX(moveX);
-    lastDragX.current = moveX;
-  };
-
-  const handleTouchEnd = () => {
-    setIsDragging(false);
-    // 카드 실제 width 기준으로 idx 계산
-    const threshold = cardWidth / 3;
-    let nextIdx = idx;
-    if (lastDragX.current > threshold && idx > 0) {
-      nextIdx = idx - 1;
-    } else if (lastDragX.current < -threshold && idx < maxIdx) {
-      nextIdx = idx + 1;
-    }
-    setIdx(nextIdx);
-    setDragX(0);
-    touchStartX.current = null;
-    lastDragX.current = 0;
-  };
-
-  // 트랜지션 적용: 드래그 중엔 즉시, 드래그 끝나면 부드럽게
-  const trackStyle = {
-    transform: `translateX(calc(-${idx * cardWidth}px + 2rem + ${dragX}px))`,
-    transition: isDragging ? "none" : "transform 0.4s cubic-bezier(.7,.2,.3,1)",
-    cursor: isDragging ? "grabbing" : "grab",
-  };
+  const [activeTab, setActiveTab] = useState("9kyung");
+  const tabData = categoryTabs.find((tab) => tab.key === activeTab);
 
   return (
-    <div
-      className="category-slider-wrap"
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
-    >
-      <div className="category-slider-header">
-        <div className="category-slider-title"></div>
-        <div className="category-slider-arrows">
+    <div className="category-section">
+      <div className="category-tabs">
+        {categoryTabs.map((tab) => (
           <button
-            className="category-arrow"
-            onClick={handlePrev}
-            disabled={idx === 0}
+            key={tab.key}
+            className={`category-tab${activeTab === tab.key ? " active" : ""}`}
+            onClick={() => setActiveTab(tab.key)}
           >
-            <FiChevronLeft size={24} />
+            {tab.label}
           </button>
-          <button
-            className="category-arrow"
-            onClick={handleNext}
-            disabled={idx === maxIdx}
-          >
-            <FiChevronRight size={24} />
-          </button>
-        </div>
+        ))}
       </div>
-
-      <div className="category-slider-window">
-        <div className="category-slider-track" style={trackStyle}>
-          {categoryList.map((cat, i) => (
-            <div
-              className="category-card-wrapper"
-              key={cat.label}
-              ref={i === 0 ? cardRef : undefined}
-              onClick={() => navigate(`/${cat.link}`)}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={activeTab}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -30 }}
+          transition={{ duration: 0.45, ease: "easeInOut" }}
+        >
+          <div className="category-title-row">
+            <span className="category-title-main">{tabData.label}</span>
+            <button
+              className="category-more-btn"
+              onClick={() => navigate(tabData.moreLink)}
             >
-              <div className="category-card">
-                <div className="category-card-imgbox">
-                  <img
-                    src={cat.img}
-                    alt={cat.label}
-                    className="category-card-img"
-                  />
-                </div>
-              </div>
-              <div className="category-card-label">{cat.label}</div>
-            </div>
-          ))}
-        </div>
+              더보기 <FiChevronRight size={18} />
+            </button>
+          </div>
+          <motion.div
+            className="category-place-cards"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
+          >
+            {tabData.places.map((place, idx) => (
+              <motion.div
+                className="category-place-card"
+                key={place.name}
+                onClick={() => place.id && navigate(`/place/${place.id}`)}
+                style={{ cursor: place.id ? "pointer" : "default" }}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.35, delay: idx * 0.07 }}
+              >
+                <img src={place.img} alt={place.name} className="category-place-img" />
+                <div className="category-place-label">{place.name}</div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </motion.div>
+      </AnimatePresence>
+      <div className="category-desc">
+        함께 보면 좋아요 <span role="img" aria-label="hand">🙌</span>
+      </div>
+      <div className="category-bottom-btns">
+        <button
+          className="category-bottom-btn"
+          onClick={() => navigate("/9mi")}
+        >
+          <span role="img" aria-label="crab">🦀</span> 서산 9미
+        </button>
+        <button
+          className="category-bottom-btn"
+          onClick={() => navigate("/9pum")}
+          style={{ marginRight: "1.5rem" }}
+        >
+          <span role="img" aria-label="garlic">🧄</span> 서산 9품
+        </button>
       </div>
     </div>
   );
@@ -211,6 +210,7 @@ const AnimatedPhrase = () => {
               width: "100%",
               transform: `translateY(${y}rem)`,
               transition: "opacity 0.7s, transform 0.7s",
+              whiteSpace: "nowrap",
             }}
           >
             {p.text}
@@ -221,128 +221,52 @@ const AnimatedPhrase = () => {
   );
 };
 
-const images = [main1, main2, main3];
-
 const Home = () => {
-  const [current, setCurrent] = useState(0);
-  const [barProgress, setBarProgress] = useState(0); // 0~1
-  const timeoutRef = useRef(null);
-  const intervalRef = useRef(null);
   const navigate = useNavigate();
-  const SLIDE_INTERVAL = 4000;
-  const TOTAL_DURATION = SLIDE_INTERVAL * images.length;
-
-  // Progress bar 애니메이션 (한 바퀴 전체)
-  useEffect(() => {
-    let start = Date.now();
-    function update() {
-      const elapsed = Date.now() - start;
-      let progress = elapsed / TOTAL_DURATION;
-      if (progress > 1) progress = 1;
-      setBarProgress(progress);
-      if (progress < 1) {
-        intervalRef.current = requestAnimationFrame(update);
-      } else {
-        setBarProgress(0);
-        setCurrent(0);
-        start = Date.now();
-        intervalRef.current = requestAnimationFrame(update);
-      }
-    }
-    intervalRef.current = requestAnimationFrame(update);
-    return () => cancelAnimationFrame(intervalRef.current);
-  }, [TOTAL_DURATION]); // ✅ 의존성 추가
-
-  // 슬라이드 자동 전환
-  useEffect(() => {
-    timeoutRef.current = setTimeout(() => {
-      setCurrent((prev) => (prev + 1) % images.length);
-    }, SLIDE_INTERVAL);
-    return () => clearTimeout(timeoutRef.current);
-  }, [current]);
-
-  const startX = useRef(null);
-  const handleTouchStart = (e) => {
-    startX.current = e.touches[0].clientX;
-  };
-  const handleTouchEnd = (e) => {
-    if (startX.current === null) return;
-    const endX = e.changedTouches[0].clientX;
-    if (endX - startX.current > 50) {
-      setCurrent((prev) => (prev - 1 + images.length) % images.length);
-    } else if (startX.current - endX > 50) {
-      setCurrent((prev) => (prev + 1) % images.length);
-    }
-    startX.current = null;
-  };
 
   return (
-    <div className="home-bg">
+    <motion.div
+      className="home-bg"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
       <Header />
-      <div
-        className="carousel"
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
-      >
-        {images.map((img, idx) => (
-          <img
-            key={idx}
-            src={img}
-            alt={`main${idx + 1}`}
-            className={`carousel-img${current === idx ? " active" : ""}`}
-            draggable={false}
-          />
-        ))}
+      <div className="carousel">
+        {/* 단일 이미지 */}
+        <img
+          src={mainImage}
+          alt="main"
+          className="carousel-img active"
+          draggable={false}
+        />
         <div className="carousel-header-overlay" />
         <div className="carousel-content-overlay" />
-        <div className="carousel-content">
-          <div className="carousel-text">
-            <span>
-              특별한 <b>AI 서산 여행</b>,<br />
-              지금 시작하세요
-            </span>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "flex-end",
-            }}
-          >
-            <button
-              className="carousel-btn"
-              onClick={() => navigate("/recommend")}
-            >
-              <MdAutoAwesome
-                style={{ marginRight: "0.5rem", fontSize: "1.3rem" }}
-              />
-              <span>AI 추천코스 생성</span>
-            </button>
-            <div className="ai-image-info">
-              *AI로 생성한 서산시의 이미지입니다
-            </div>
-          </div>
+        {/* 중앙 텍스트 */}
+        <div className="carousel-main-center">
+          <span style={{ fontSize: "1.8rem", fontWeight: 500 }}>
+            특별한 <b>AI 서산 여행</b>, 지금 시작하세요
+          </span>
         </div>
-        <div className="carousel-progress">
-          <div
-            className="carousel-bar"
-            style={{ transform: `scaleX(${barProgress})` }}
-          />
+        {/* 사진 왼쪽 아래 AnimatedPhrase 오버레이 */}
+        <div className="carousel-animated-phrase">
+          <AnimatedPhrase />
         </div>
       </div>
 
-      <div className="home-phrase-container">
-        <AnimatedPhrase />
-      </div>
+      <CategorySection />
 
-      <div className="category-section">
-        <div className="category-title">카테고리</div>{" "}
-        {/* 반드시 여기에 있어야 함 */}
-        <CategorySlider />
-      </div>
+      {/* StepInterest 스타일 하단 고정 버튼 */}
+      <button
+        className="carousel-bottom-btn"
+        onClick={() => navigate("/recommend")}
+      >
+        <MdAutoAwesome style={{ marginRight: "0.5rem", fontSize: "1.3rem" }} />
+        <span>AI 추천코스 생성</span>
+      </button>
 
-      <Footer />
-    </div>
+      {/* <Footer /> */}
+    </motion.div>
   );
 };
 

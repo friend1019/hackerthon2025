@@ -1,4 +1,5 @@
 import React from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import "../../CSS/HOME/9kyung.css";
 import Header from "../COMMON/Header";
 
@@ -113,8 +114,14 @@ const PumCard = ({ item }) => {
 
 const PumList = () => {
   return (
-    <>
-      <div className="kyung-list-all">
+    <AnimatePresence mode="wait">
+      <motion.div
+        className="kyung-list-all"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.5 }}
+      >
         <Header />
         <h1 className="kyung-list-title">서산 9품</h1>
         <div className="kyung-list-wrap">
@@ -122,8 +129,8 @@ const PumList = () => {
             <PumCard key={item.id} item={item} />
           ))}
         </div>
-      </div>
-    </>
+      </motion.div>
+    </AnimatePresence>
   );
 };
 

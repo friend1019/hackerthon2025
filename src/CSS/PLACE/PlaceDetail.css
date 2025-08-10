@@ -1,13 +1,19 @@
+.place-detail {
+  background-color: #141414; /* 원하는 배경색 */
+  min-height: 100vh; /* 전체 높이 */
+  box-sizing: border-box;
+}
+
 /* 제목, 지도보기 버튼을 감싸는 반투명 박스 */
 .place-titlebox {
   background: rgba(223, 246, 255, 0.15);
   border-radius: 2.5rem;
-  border: 1px solid rgba(255,255,255,0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 2rem 1.5rem 1.5rem 1.5rem;
   margin: -8rem auto 7rem auto;
   max-width: 45vw;
   text-align: center;
-  box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
   backdrop-filter: blur(2px);
 }
 .place-titlebox .place-name {
@@ -75,7 +81,6 @@
   animation: slideOutToLeft 0.25s ease-in forwards;
 }
 
-
 /* 지도 모달 애니메이션 */
 .place-map-modal-animate {
   opacity: 0;
@@ -112,9 +117,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: rgba(24,24,24,0.93);
+  background: rgba(24, 24, 24, 0.93);
   border-radius: 1.1rem;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.45);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
   padding: 0.7rem 1.1rem 0.5rem 1.1rem;
   min-width: 12rem;
   max-width: 18rem;
@@ -126,7 +131,7 @@
   border-radius: 0.7rem;
   overflow: hidden;
   margin-bottom: 0.5rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
 }
 .naver-map-place-card-img-wrap img {
   width: 100%;
@@ -338,7 +343,6 @@
   position: relative;
   z-index: 2;
 }
-
 
 .place-address {
   font-size: 1.1rem;

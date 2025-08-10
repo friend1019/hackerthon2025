@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import Header from "../COMMON/Header";
 import "../../CSS/HOME/Festival.css";
 import samgilpoImg from "../../IMAGE/samgilpo.svg"; // 예시 이미지 경로
@@ -174,57 +175,81 @@ const Festival = () => {
   });
 
   return (
-    <div className="festival-container">
-      <Header />
-      <h1 className="festival-title">서산시 페스티벌</h1>
-      <div className="month-slider">
-        {monthList.map((month) => (
-          <button
-            key={month.num}
-            className={`month-button ${
-              selectedMonth === month.num ? "active" : ""
-            }`}
-            onClick={() => setSelectedMonth(month.num)}
-          >
-            <div className="month-num">{month.num}월</div>
-            <span className="month-divider" />
-            <div className="month-label">{month.label}</div>
-          </button>
-        ))}
-      </div>
+    <AnimatePresence mode="wait">
+      <motion.div
+        className="festival-container"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <Header />
+        <h1 className="festival-title">서산시 페스티벌</h1>
+        <div className="month-slider">
+          {monthList.map((month) => (
+            <motion.button
+              key={month.num}
+              className={`month-button ${selectedMonth === month.num ? "active" : ""}`}
+              onClick={() => setSelectedMonth(month.num)}
+              initial={false}
+              animate={{
+                backgroundColor: selectedMonth === month.num ? "#4bcdfd" : "#222",
+                color: selectedMonth === month.num ? "#222" : "#fff",
+                opacity: 1
+              }}
+              transition={{ duration: 0.3 }}
+              layout
+            >
+              <div className="month-num">{month.num}월</div>
+              <span className="month-divider" />
+              <div className="month-label">{month.label}</div>
+            </motion.button>
+          ))}
+        </div>
 
-      <div className="festival-list">
-        {filteredFestivals.map((f, idx) => (
-          <div className="festival-card" key={idx}>
-            <img src={f.image} alt={f.title} className="festival-img" />
-            <div className="festival-info">
-              <h3>
-                {f.title} <span className="subtitle">{f.subtitle}</span>
-                <span className="status-tag">{f.status}</span>
-              </h3>
-              <p>{f.desc}</p>
-              <ul className="festival-meta">
-                <li>
-                  <strong>📍 장소:</strong> {f.location}
-                </li>
-                <li>
-                  <strong>📅 기간:</strong> {f.date}
-                </li>
-                <li>
-                  <strong>☎️ 문의:</strong> {f.tel1} / {f.tel2}
-                </li>
-                <li>
-                  <strong>🔗 공식사이트:</strong>{" "}
-                  <a href={f.site} target="_blank" rel="noreferrer">
-                    {f.site}
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
+        <div className="festival-list">
+          <AnimatePresence mode="wait">
+            {filteredFestivals.map((f, idx) => (
+              <motion.div
+                className="festival-card"
+                key={f.title + idx}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.4 }}
+                layout
+              >
+                <img src={f.image} alt={f.title} className="festival-img" />
+                <div className="festival-info">
+                  <h3>
+                    {f.title} <span className="subtitle">{f.subtitle}</span>
+                    <span className="status-tag">{f.status}</span>
+                  </h3>
+                  <p>{f.desc}</p>
+                  <ul className="festival-meta">
+                    <li>
+                      <strong>📍 장소:</strong> {f.location}
+                    </li>
+                    <li>
+                      <strong>📅 기간:</strong> {f.date}
+                    </li>
+                    <li>
+                      <strong>☎️ 문의:</strong> {f.tel1} / {f.tel2}
+                    </li>
+                    <li>
+                      <strong>🔗 공식사이트:</strong>{" "}
+                      <a href={f.site} target="_blank" rel="noreferrer">
+                        {f.site}
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </div>
+      </motion.div>
+    </AnimatePresence>
   );
 };
 export default Festival;
