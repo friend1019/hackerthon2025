@@ -1,157 +1,109 @@
-@media (max-width: 600px) {
-  .category-bottom-btns {
-    margin-bottom: 8.5rem;
-  }
+/* ===================== 0. Base Tokens ===================== */
+:root {
+  --accent: #4bcdfd;
+  --text-light: #bfc6d0;
+  --text-white: #fff;
+  --border-dark: #23242a;
+  --sep: #5E5E5E;
 }
+
 /* ===================== 1. 전체 레이아웃 ===================== */
 .home-bg {
   position: relative;
   width: 100vw;
-  overflow: hidden;
   min-height: 100vh;
-}
-
-/* ===================== 2. 캐러셀(메인 이미지) ===================== */
-.carousel {
-  position: relative;
-  width: 100vw;
-  aspect-ratio: 20/17;
-  max-height: 90vh;
   overflow: hidden;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.carousel-img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 1;
-  z-index: 1;
+  background: transparent !important;
 }
 
-/* ===================== 3. 오버레이(그라데이션) ===================== */
-.carousel-header-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 30rem;
-  background: linear-gradient(
-    to bottom,
-    rgba(20, 20, 20, 0.6) 10%,
-    rgba(20, 20, 20, 0.3) 40%,
-    rgba(20, 20, 20, 0.03) 70%
-  );
-  z-index: 4;
-}
-.carousel-content-overlay {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 30rem;
-  background: linear-gradient(
-    to top,
-    rgba(20, 20, 20, 1) 11%,
-    rgba(20, 20, 20, 0.3) 40%,
-    rgba(20, 20, 20, 0.04) 100%
-  );
-  z-index: 4;
-}
-
-/* ===================== 4. 중앙 텍스트 ===================== */
-.carousel-main-center {
-  position: absolute;
-  top: 45%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: #fff;
-  font-size: 1.8rem;
-  font-weight: 400;
-  text-align: center;
-  line-height: 1.2;
-  text-shadow: 0 2px 16px rgba(0,0,0,0.35);
-  z-index: 1;
-  max-width: 90vw;
-  white-space: nowrap;
-}
-.carousel-main-center b {
-  font-weight: 700;
-}
-
-/* ===================== 5. 사진 왼쪽 아래 AnimatedPhrase ===================== */
-.carousel-animated-phrase {
-  position: absolute;
-  left: 2.5rem;
-  bottom: 2rem;
-  z-index: 1;
-  width: 40vw;
-  max-width: 500px;
-  min-width: 220px;
-  pointer-events: none;
-  font-size: 1.7rem;
-  color: #fff;
-  text-shadow: 0 2px 12px rgba(0,0,0,0.25);
-}
-
-/* ===================== 6. 하단 고정 버튼 (StepInterest 스타일) ===================== */
-.carousel-bottom-btn {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100vw;
-  height: 7rem;
-  background: #3D4143;
-  color: #4BCDFD;
-  font-size: 1.8rem;
-  font-weight: 400;
-  border: none;
-  border-radius: 0;
-  box-shadow: 0 -2px 12px rgba(0,0,0,0.08);
-  cursor: pointer;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.7rem;
-  transition: background 0.2s;
-}
-.carousel-bottom-btn:active {
-  background: linear-gradient(90deg, #2b90d9 0%, #4bcdfd 100%);
-}
-
-/* ===================== 7. 카테고리 슬라이더 ===================== */
-/* ===================== 7. 카테고리 섹션(탭/카드/버튼) ===================== */
+/* ===================== 2. 카테고리 섹션 ===================== */
 .category-section {
-  background: #141414;
-  padding: 2.2rem 0rem 1.5rem 2.2rem;
+  background: transparent !important;
+  padding: 0 0 0 2.2rem;
   width: 100vw;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: stretch;
   gap: 0.5rem;
-  margin-top: -2rem;
   min-height: 47vh;
   border-radius: 0 0 32px 32px;
 }
+.category-desc {
+  font-size: 2rem;
+  color: var(--text-white);
+  font-weight: 500;
+  margin: 0 0 1.5rem 0.2rem;
+}
 
+/* --- 2-1. 라운드 리스트 --- */
+.category-round-list {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 3.5rem;
+  align-items: center;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding-bottom: 0.2rem;
+  margin-right: 2rem;
+  scrollbar-width: none; /* Firefox */
+}
+.category-round-list::-webkit-scrollbar { display: none; } /* WebKit */
+
+.category-round-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: transparent;
+  border: 1.5px solid rgba(255,255,255,0.13);
+  color: var(--text-white);
+  font-size: 2rem;
+  font-weight: 400;
+  padding: 0.5rem 0 0.5rem 0.5rem;
+  border-radius: 3rem;
+  min-width: 15rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: border 0.18s, background 0.18s;
+  cursor: pointer;
+  outline: none;
+  background-clip: padding-box;
+}
+.category-round-item:active,
+.category-round-item:focus {
+  border: 1.5px solid var(--accent);
+  background: rgba(20, 20, 20, 0.5);
+}
+.category-round-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  font-size: 2.1rem;
+  border-radius: 50%;
+  background: #fff;
+  padding: 0.4rem;
+  margin-right: 0.4rem;
+  line-height: 1;
+}
+.category-round-label {
+  font-size: 2rem;
+  font-weight: 400;
+  color: inherit;
+}
+
+/* --- 2-2. 탭 --- */
 .category-tabs {
   display: flex;
   gap: 2rem;
   margin-bottom: 1.2rem;
-  border-bottom: 1px solid #23242a;
+  border-bottom: 1px solid var(--border-dark);
   padding-bottom: 0.7rem;
 }
 .category-tab {
   background: none;
   border: none;
-  color: #bfc6d0;
+  color: var(--text-light);
   font-size: 2rem;
   font-weight: 500;
   padding: 0.4rem 1.5rem;
@@ -160,7 +112,6 @@
   transition: background 0.18s, color 0.18s;
   position: relative;
 }
-
 .category-tab:not(:last-child)::after {
   content: "";
   position: absolute;
@@ -169,44 +120,34 @@
   transform: translateY(-50%);
   width: 1px;
   height: 1rem;
-  background: #5E5E5E;
+  background: var(--sep);
   opacity: 0.5;
+}
+.category-tab-label-with-dot {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+}
+.category-tab-dot {
+  display: inline-block;
+  width: 0.3em;
+  height: 0.3em;
+  border-radius: 50%;
+  margin-left: 0.32em;
+  margin-bottom: 1.2rem;
+  background: var(--text-light);
+  vertical-align: middle;
+  z-index: 10;
+  position: relative;
 }
 .category-tab.active {
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: #8BC0D3;
 }
+.category-tab.active .category-tab-dot { background: #8faaff; }
 
-.category-title-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 1.1rem;
-  margin-top: 1rem;
-}
-.category-title-main {
-  font-size: 2rem;
-  font-weight: 400;
-  color: #fff;
-}
-.category-more-btn {
-  background: none;
-  border: none;
-  color: #bfc6d0;
-  font-size: 1.6rem;
-  font-weight: 400;
-  display: flex;
-  align-items: center;
-  gap: 0.2rem;
-  cursor: pointer;
-  transition: color 0.18s;
-  margin-right: 1rem;
-}
-.category-more-btn:hover {
-  color: #4bcdfd;
-}
-
+/* --- 2-3. 카드 리스트 --- */
 .category-place-cards {
   display: flex;
   gap: 1.3rem;
@@ -216,12 +157,10 @@
   padding-right: 2rem;
   scrollbar-width: none; /* Firefox */
 }
-.category-place-cards::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
-}
+.category-place-cards::-webkit-scrollbar { display: none; } /* WebKit */
 
 .category-place-card {
-  background: #23242a;
+  background: transparent !important;
   border-radius: 18px;
   overflow: hidden;
   width: 20rem;
@@ -231,6 +170,7 @@
   flex: 0 0 auto;
   display: flex;
   align-items: flex-end;
+  cursor: default; /* 클릭 가능한 카드엔 JSX에서 pointer 지정 */
 }
 .category-place-img {
   width: 100%;
@@ -240,121 +180,94 @@
 }
 .category-place-label {
   position: absolute;
-  left: 0;
-  bottom: 0;
+  left: 0; bottom: 0;
   width: 100%;
   padding: 0.7rem 1rem 0.6rem 1rem;
   font-size: 1.5rem;
   font-weight: 300;
-  color: #fff;
-  background: linear-gradient(0deg, rgba(20,20,20,0.4) 80%, rgba(20,20,20,0.3) 90%, rgba(20,20,20,0.01) 100%);
+  color: var(--text-white);
+  background: linear-gradient(
+    0deg,
+    rgba(20,20,20,0.4) 80%,
+    rgba(20,20,20,0.3) 90%,
+    rgba(20,20,20,0.01) 100%
+  );
   text-shadow: 0 2px 8px rgba(0,0,0,0.18);
   box-sizing: border-box;
 }
 
-.category-desc {
-  font-size: 2rem;
-  color: #fff;
-  font-weight: 500;
-  margin-bottom: 3rem;
-  margin-left: 0.2rem;
-  margin-top: 3rem;
+/* ===================== 3. Tip Bar (카드리스트 아래) ===================== */
+.tip-bar-2025 {
+  position: static;
+  display: flex;
+  align-items: center;
+  gap: 2.2rem;
+  width: 100%;
+  max-width: 100%;
+  height: 6.2rem;
+  margin: 2rem 2rem 1.2rem 0;
+  background: none;
+}
+.tip-bar-2025-label {
+  color: var(--text-white);
+  font-size: 2.3rem;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+.tip-bar-2025-line {
+  flex: 1;
+  height: 1px;
+  background: rgba(180,180,180,0.13);
+}
+.tip-bar-2025-btn {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  background: linear-gradient(90deg, #eaf6ff 0%, #b6d6f7 40%, #e2d6f7 100%);
+  box-shadow: 0 2px 16px rgba(120,140,180,0.13);
+  border: none;
+  border-radius: 3.1rem;
+  padding: 0.5rem 2.7rem 0.5rem 1.1rem;
+  min-width: 220px;
+  height: 5.1rem;
+  cursor: pointer;
+  transition: filter 0.18s;
+}
+.tip-bar-2025-btn:hover { filter: brightness(0.97) saturate(1.1); }
+.tip-bar-2025-btn-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.8rem;
+  height: 3.8rem;
+  border-radius: 50%;
+  background: none;
+}
+.tip-bar-2025-btn-text {
+  color: var(--text-white);
+  font-size: 2.1rem;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.10);
 }
 
-.category-bottom-btns {
-  display: flex;
-  justify-content: center;
-  gap: 3rem;
-  margin-top: 0.2rem;
-  padding: 0 3rem;
+/* ===================== 4. Animated Phrase (Tip Bar 아래) ===================== */
+.carousel-animated-phrase {
+  position: static;
+  width: 60vw;
+  max-width: 700px;
+  min-width: 260px;
+  margin: 0 0 2.5rem 0;
+  font-size: 1.7rem;
+  color: var(--text-white);
+  text-shadow: 0 2px 12px rgba(0,0,0,0.25);
+  pointer-events: none;
 }
-.category-bottom-btn {
-  background: #23242a;
-  border: 1.5px solid #35363c;
-  color: #fff;
-  font-size: 2rem;
-  font-weight: 500;
-  border-radius: 3rem;
-  padding: 1rem 3.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.7rem;
-  cursor: pointer;
-  transition: background 0.18s, color 0.18s, border 0.18s;
-}
-.category-bottom-btn:hover {
-  background: #4bcdfd;
-  color: #fff;
-  border: 1.5px solid #4bcdfd;
-}
-.category-card-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.6rem;
-  width: 10rem;
-}
-.category-slider-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-}
-.category-title {
-  font-size: 2rem;
-  font-weight: 400;
-  color: white;
-  margin-left: 1rem;
-}
-.category-slider-arrows {
-  display: flex;
-  gap: 0.8rem;
-}
-.category-arrow {
-  background: none;
-  border: none;
-  color: white;
-  cursor: pointer;
-  opacity: 0.7;
-  transition: opacity 0.2s;
-  margin-top: -3.8rem;
-  margin-bottom: 1.7rem;
-}
-.category-arrow:disabled {
-  opacity: 0.3;
-  cursor: default;
-}
-.category-slider-window {
-  overflow: hidden;
-  width: 100%;
-}
-.category-slider-track {
-  display: flex;
-  gap: 17rem;
-  padding-left: 5rem;
-  will-change: transform;
-}
-.category-card:hover {
-  transform: scale(1.05);
-}
-.category-card-imgbox {
-  width: 23rem;
-  height: 23rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 0.8rem;
-}
-.category-card-img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-.category-card-label {
-  font-size: 1.9rem;
-  font-weight: 300;
-  color: #889AA1;
-  text-align: center;
-  white-space: nowrap;
+
+/* ===================== 5. 반응형(선택) ===================== */
+@media (max-width: 600px) {
+  .tip-bar-2025 { margin: 1.6rem 1.6rem 1rem 0; }
+  .carousel-animated-phrase { width: 90vw; max-width: none; }
 }

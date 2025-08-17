@@ -1,17 +1,29 @@
 import React from "react";
+// import { MdKeyboardArrowRight } from "react-icons/md";
 import { AnimatePresence, motion } from "framer-motion";
 import "../../CSS/HOME/9kyung.css";
 import Header from "../COMMON/Header";
+// import { useNavigate } from "react-router-dom";
+import { ReactComponent as StarSvg } from "../../IMAGE/9경별.svg";
 
-const img1 = "https://www.seosan.go.kr/site/tour/images/contents/cts959_img.jpg";
-const img2 = "https://www.seosan.go.kr/site/tour/images/contents/cts959_img2.jpg";
-const img3 = "https://www.seosan.go.kr/site/tour/images/contents/cts959_img3.jpg";
-const img4 = "https://www.seosan.go.kr/site/tour/images/contents/cts959_img4.jpg";
-const img5 = "https://www.seosan.go.kr/site/tour/images/contents/cts959_img5.jpg";
-const img6 = "https://www.seosan.go.kr/site/tour/images/contents/cts959_img6.jpg";
-const img7 = "https://www.seosan.go.kr/site/tour/images/contents/cts959_img7.jpg";
-const img8 = "https://www.seosan.go.kr/site/tour/images/contents/cts959_img8.jpg";
-const img9 = "https://www.seosan.go.kr/site/tour/images/contents/cts959_img9.jpg";
+const img1 =
+  "https://www.seosan.go.kr/site/tour/images/contents/cts959_img.jpg";
+const img2 =
+  "https://www.seosan.go.kr/site/tour/images/contents/cts959_img2.jpg";
+const img3 =
+  "https://www.seosan.go.kr/site/tour/images/contents/cts959_img3.jpg";
+const img4 =
+  "https://www.seosan.go.kr/site/tour/images/contents/cts959_img4.jpg";
+const img5 =
+  "https://www.seosan.go.kr/site/tour/images/contents/cts959_img5.jpg";
+const img6 =
+  "https://www.seosan.go.kr/site/tour/images/contents/cts959_img6.jpg";
+const img7 =
+  "https://www.seosan.go.kr/site/tour/images/contents/cts959_img7.jpg";
+const img8 =
+  "https://www.seosan.go.kr/site/tour/images/contents/cts959_img8.jpg";
+const img9 =
+  "https://www.seosan.go.kr/site/tour/images/contents/cts959_img9.jpg";
 
 const pumList = [
   {
@@ -67,7 +79,7 @@ const pumList = [
     number: 7,
     title: "황토알타리 무",
     subtitle: "Hwangto Altari Radish",
-    desc: "서산의 우수한 황토에서 자란 알타리 무는 육질과 맛이 뛰어 김치 가공공장에서 주문이 쇄도하는 최고의 상품으로 인정받고 있음.\n고북 지역의 경우 127개 농가에서 1년에 4차례 재배해 농가소득을 올리고 있음",
+    desc: "서산의 우수한 황토에서 자란 알타리 무는 육질과 맛이 뛰어나 김치 가공공장에서 주문이 쇄도하는 최고의 상품으로 인정받고 있음.\n고북 지역의 경우 127개 농가에서 1년에 4차례 재배해 농가소득을 올리고 있음",
     img: img7,
   },
   {
@@ -89,26 +101,36 @@ const pumList = [
 ];
 
 const PumCard = ({ item }) => {
+  // const navigate = useNavigate();
   return (
-    <>
-      <Header />
-      <div
-        className="kyung-card"
-      >
-        <div className="kyung-card-imgbox">
-          <img src={item.img} alt={item.title} className="kyung-card-img" />
-          <div className="kyung-card-badge">{item.number}품</div>
+    <div className="kyung-card-redesign">
+      <div className="kyung-card-left">
+        <div className="kyung-card-badge">{item.number}품</div>
+        <div className="kyung-card-title-row">
+          <StarSvg className="kyung-card-star" />
+          <span className="kyung-card-title">{item.title}</span>
+          <span className="kyung-card-title-en">{item.subtitle}</span>
         </div>
-        <div className="kyung-card-info">
-          <div className="kyung-card-title-row">
-            <div className="kyung-card-title">{item.title}</div>
-            <div className="kyung-card-divider" />
-            <div className="kyung-card-subtitle">{item.subtitle}</div>
-          </div>
-          <div className="kyung-card-desc">{item.desc}</div>
-        </div>
+        <div className="kyung-card-desc">{item.desc}</div>
+        {/* <button
+          className="kyung-card-link"
+          onClick={() => navigate(`/place/${item.id}`)}
+        >
+          상세정보{" "}
+          <MdKeyboardArrowRight
+            style={{
+              fontSize: "1.3rem",
+              verticalAlign: "middle",
+              marginLeft: "-0.3rem",
+              marginBottom: "0.1rem",
+            }}
+          />
+        </button> */}
       </div>
-    </>
+      <div className="kyung-card-right">
+        <img src={item.img} alt={item.title} className="kyung-card-img" />
+      </div>
+    </div>
   );
 };
 
@@ -123,7 +145,21 @@ const PumList = () => {
         transition={{ duration: 0.5 }}
       >
         <Header />
-        <h1 className="kyung-list-title">서산 9품</h1>
+        <div className="kyung-top-section">
+          <h1 className="kyung-list-title">서산9품</h1>
+          <div className="kyung-list-desc">
+            자연의 맛과 정성을 담은 서산 9품을 통해 신선함과 풍미를 한껏
+            느껴보세요.
+          </div>
+          <div className="kyung-pill-list">
+            {pumList.map((item) => (
+              <span className="kyung-pill" key={item.id}>
+                {item.title}
+              </span>
+            ))}
+          </div>
+        </div>
+        <hr className="kyung-section-divider" />
         <div className="kyung-list-wrap">
           {pumList.map((item) => (
             <PumCard key={item.id} item={item} />

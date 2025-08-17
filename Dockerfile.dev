@@ -1,0 +1,12 @@
+# 개발용: CRA + 핫리로드
+FROM node:18-alpine
+WORKDIR /app
+
+# 의존성 먼저 설치(캐시 최적화)
+COPY package.json package-lock.json* ./
+RUN if [ -f package-lock.json ]; then npm ci; else npm i; fi
+
+# 소스는 런타임에 바인드(핫리로드)
+EXPOSE 3000
+# Windows/Mac 둘 다 변경 감지 잘 되게 폴링 옵션
+CMD ["sh", "-c", "HOST=0.0.0.0 CHOKIDAR_USEPOLLING=true npm start"]

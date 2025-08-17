@@ -1,6 +1,7 @@
 @font-face {
-  font-family: 'Pretendard';
-  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+  font-family: "Pretendard";
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+    format("woff");
   font-weight: 400;
   font-style: normal;
 }
@@ -11,12 +12,23 @@ html {
 }
 
 body {
-  background: #141414;
+  background: radial-gradient(
+      circle at 100% 15%,
+      rgba(128, 165, 246, 0.2),
+      transparent 15%
+    ),
+    radial-gradient(circle at 0% 50%, rgba(128, 165, 246, 0.2), transparent 25%),
+    radial-gradient(
+      circle at 100% 85%,
+      rgba(128, 165, 246, 0.2),
+      transparent 15%
+    ),
+    #141414;
   margin: 0;
   padding: 0;
-  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   max-width: 100vw;
@@ -25,9 +37,7 @@ body {
   overscroll-behavior: contain;
 }
 
-
-
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }

@@ -46,12 +46,12 @@
   justify-content: center;
   background: radial-gradient(
       circle at 110% 35%,
-      rgba(75, 205, 253, 0.2),
+      rgba(128, 165, 246, 0.3),
       transparent 30%
     ),
     radial-gradient(
       circle at -10% 70%,
-      rgba(75, 205, 253, 0.2),
+      rgba(128, 165, 246, 0.3),
       transparent 30%
     ),
     #141414;
@@ -72,7 +72,7 @@
 .step-star-img {
   width: 3rem;
   height: 3rem;
-  filter: drop-shadow(0 0 12px #4bcdfd) brightness(1.1);
+  filter: drop-shadow(0 0 12px rgba(128, 165, 246, 1)) brightness(1.1);
 }
 
 .step-title.step-interest-title {

@@ -1,7 +1,10 @@
 import React from "react";
+// import { MdKeyboardArrowRight } from "react-icons/md";
 import { AnimatePresence, motion } from "framer-motion";
 import "../../CSS/HOME/9kyung.css";
 import Header from "../COMMON/Header";
+// import { useNavigate } from "react-router-dom";
+import { ReactComponent as StarSvg } from "../../IMAGE/9경별.svg";
 
 const img1 = "https://www.seosan.go.kr/site/tour/images/main/food_img1.jpg";
 const img2 = "https://www.seosan.go.kr/site/tour/images/main/food_img2.jpg";
@@ -89,27 +92,36 @@ const miList = [
 ];
 
 const MiCard = ({ item }) => {
+  // const navigate = useNavigate();
   return (
-    <>
-      <Header />
-      <div
-        className="kyung-card"
-        style={{ cursor: "pointer" }}
-      >
-        <div className="kyung-card-imgbox">
-          <img src={item.img} alt={item.title} className="kyung-card-img" />
-          <div className="kyung-card-badge">{item.number}미</div>
+    <div className="kyung-card-redesign">
+      <div className="kyung-card-left">
+        <div className="kyung-card-badge">{item.number}미</div>
+        <div className="kyung-card-title-row">
+          <StarSvg className="kyung-card-star" />
+          <span className="kyung-card-title">{item.title}</span>
+          <span className="kyung-card-title-en">{item.subtitle}</span>
         </div>
-        <div className="kyung-card-info">
-          <div className="kyung-card-title-row">
-            <div className="kyung-card-title">{item.title}</div>
-            <div className="kyung-card-divider" />
-            <div className="kyung-card-subtitle">{item.subtitle}</div>
-          </div>
-          <div className="kyung-card-desc">{item.desc}</div>
-        </div>
+        <div className="kyung-card-desc">{item.desc}</div>
+        {/* <button
+          className="kyung-card-link"
+          onClick={() => navigate(`/place/${item.id}`)}
+        >
+          상세정보{" "}
+          <MdKeyboardArrowRight
+            style={{
+              fontSize: "1.3rem",
+              verticalAlign: "middle",
+              marginLeft: "-0.3rem",
+              marginBottom: "0.1rem",
+            }}
+          />
+        </button> */}
       </div>
-    </>
+      <div className="kyung-card-right">
+        <img src={item.img} alt={item.title} className="kyung-card-img" />
+      </div>
+    </div>
   );
 };
 
@@ -124,7 +136,21 @@ const MiList = () => {
         transition={{ duration: 0.5 }}
       >
         <Header />
-        <h1 className="kyung-list-title">서산 9미</h1>
+        <div className="kyung-top-section">
+          <h1 className="kyung-list-title">서산9미</h1>
+          <div className="kyung-list-desc">
+            자연의 맛과 정성이 담긴 서산 9미를 통해 서산의 풍미와 멋을 함께
+            느껴보세요.
+          </div>
+          <div className="kyung-pill-list">
+            {miList.map((item) => (
+              <span className="kyung-pill" key={item.id}>
+                {item.title}
+              </span>
+            ))}
+          </div>
+        </div>
+        <hr className="kyung-section-divider" />
         <div className="kyung-list-wrap">
           {miList.map((item) => (
             <MiCard key={item.id} item={item} />
