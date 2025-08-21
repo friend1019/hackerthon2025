@@ -1,30 +1,60 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import Alert from "../COMMON/Alert";
 import "../../CSS/AI/AiCourse.css";
 import Header from "../COMMON/Header";
 
 const AiCourse = () => {
   const [courseData, setCourseData] = useState([]);
+  const [initialized, setInitialized] = useState(false); // 초기 렌더 제어
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertRedirect, setAlertRedirect] = useState(null); // 닫을 때 이동할 경로
   const navigate = useNavigate();
+
+  // 코스 유효성 검사 함수
+  const isValidCourse = (course) =>
+    course && Array.isArray(course.course) && course.course.length > 0;
 
   useEffect(() => {
     try {
       const stored = localStorage.getItem("aiCourses");
-      if (stored) {
-        const parsed = JSON.parse(stored);
-        setCourseData(parsed);
-      } else {
-        console.warn("저장된 AI 코스 데이터가 없습니다.");
+
+      if (!stored) {
+        setAlertMessage("추천받은 AI 코스가 없습니다.");
+        setAlertRedirect("/"); // 확인 시 홈으로 이동
+        setShowAlert(true);
+        return;
       }
+
+      const parsed = JSON.parse(stored);
+
+      // 배열이 아니거나 빈 배열이거나, 모든 코스가 유효하지 않은 경우까지 처리
+      const isArray = Array.isArray(parsed);
+      const hasUsable =
+        isArray && parsed.length > 0 && parsed.some((c) => isValidCourse(c));
+
+      if (!isArray || !hasUsable) {
+        setAlertMessage("추천받은 AI 코스가 없습니다.");
+        setAlertRedirect("/"); // 확인 시 홈으로 이동
+        setShowAlert(true);
+        return;
+      }
+
+      setCourseData(parsed);
     } catch (e) {
       console.error("AI 코스 데이터를 불러오는 중 오류 발생:", e);
+      setAlertMessage("추천받은 AI 코스가 없습니다.");
+      setAlertRedirect("/"); // 확인 시 홈으로 이동
+      setShowAlert(true);
+    } finally {
+      setInitialized(true);
     }
-  }, []);
+  }, [navigate]);
 
-  // 코스 유효성 검사 함수
-  const isValidCourse = (course) =>
-    Array.isArray(course.course) && course.course.length > 0;
+  // 초기화 전에는 렌더하지 않음(깜빡임 방지)
+  if (!initialized) return null;
 
   return (
     <AnimatePresence>
@@ -35,6 +65,19 @@ const AiCourse = () => {
         exit={{ opacity: 0 }}
         transition={{ duration: 0.5 }}
       >
+        {/* Alert 모달 */}
+        {showAlert && (
+          <Alert
+            message={alertMessage}
+            onClose={() => {
+              setShowAlert(false);
+              if (alertRedirect) {
+                navigate(alertRedirect, { replace: true });
+              }
+            }}
+          />
+        )}
+
         <Header />
         <h2
           className="ai-course-title"
@@ -62,9 +105,11 @@ const AiCourse = () => {
                 if (valid) {
                   navigate(`/ai-course/${index}`);
                 } else {
-                  alert(
+                  setAlertMessage(
                     "이 코스는 유효하지 않아 상세 페이지로 이동할 수 없습니다."
                   );
+                  setAlertRedirect(null); // 닫아도 이동 없음
+                  setShowAlert(true);
                 }
               }}
             >
@@ -146,9 +191,14 @@ const AiCourse = () => {
           );
         })}
 
-        <button className="retry-btn" onClick={() => navigate("/recommend")}>
-          ✨ 다시 추천 받기
-        </button>
+        <div className="ai-course-btn-group">
+          <button
+            className="ai-course-btn"
+            onClick={() => navigate("/recommend")}
+          >
+            ✨ 다시 추천 받기
+          </button>
+        </div>
       </motion.div>
     </AnimatePresence>
   );

@@ -59,14 +59,11 @@ function Header() {
         address: item.address,
       }));
 
-      // 통합 필터링
+      // 통합 필터링 (이름에만 검색)
       const all = [...tourData, ...storeData];
       const filtered = all.filter(
-        (place) =>
-          (place.name && place.name.includes(keyword)) ||
-          (place.address && place.address.includes(keyword))
+        (place) => place.name && place.name.includes(keyword)
       );
-
       setResults(filtered);
     } catch (error) {
       console.error("검색 오류:", error);
@@ -196,7 +193,7 @@ function Header() {
           </div>
           <div className="side-drawer-menu-divider" />
           {/* 아라메길 추가시 여기 수정해야함 */}
-          <div className="side-drawer-menu-item" onClick={() => { navigate("/festival"); setShowDrawer(false); }}>
+          <div className="side-drawer-menu-item" onClick={() => { navigate("/aramegil"); setShowDrawer(false); }}>
             <span className="side-drawer-menu-icon">🚶</span>
             <span>서산 아라메길</span>
           </div>

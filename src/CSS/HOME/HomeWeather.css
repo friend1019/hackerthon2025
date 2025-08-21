@@ -1,0 +1,374 @@
+/* ===================== Weather Widget (Home theme) ===================== */
+
+.hw {
+  width: 100%;
+  max-width: 64rem;
+  color: var(--text-white);
+  margin: 0 auto;
+  background: transparent;
+  display: grid;
+  grid-template-columns: 33rem 26rem; /* 좌: 큰 카드 / 우: 패널 */
+  grid-template-rows: auto auto; /* 위: AM/PM, 아래: 주간 */
+  gap: 2rem;
+  padding: 1.6rem;
+  border-radius: 2rem;
+  box-sizing: border-box;
+  grid-template-areas:
+    "now side"
+    "now week";
+}
+.hw-now {
+  grid-area: now;
+}
+.hw-side {
+  grid-area: side;
+}
+.hw-week {
+  grid-area: week;
+}
+
+/* ===================== Left: Now card ===================== */
+
+.hw-now {
+  background: rgba(128, 165, 246, 0.1);
+  border-radius: 2.5rem;
+  position: relative;
+}
+
+/* 상단 헤더 띠 */
+.hw-now__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #6f90d8;
+  border-radius: 2.5rem 2.5rem 0 0;
+  padding: 1.5rem 1.4rem;
+  margin: 1.2rem 1.2rem 0 1.2rem;
+}
+.hw-now__place {
+  font-size: 1.3rem;
+  color: #eaf0ff;
+}
+.hw-now__place strong {
+  font-weight: 700;
+  color: #fff;
+  font-size: 1.5rem;
+}
+.hw-now__time {
+  font-size: 1.3rem;
+  color: #f3f6ff;
+}
+
+/* 본문: 두 열 정렬 */
+.hw-now__main {
+  position: relative;
+  margin: 0 1.2rem 1.2rem 1.2rem;
+  padding: 1.2rem 1.2rem 2.6rem;
+  border-radius: 0 0 2.5rem 2.5rem;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr; /* 좌 텍스트 / 우 아이콘 */
+  grid-template-areas:
+    "temp   icon"
+    "minmax icon"
+    "badge  badge";
+  column-gap: 1.4rem;
+  row-gap: 0.6rem;
+  background: rgba(128, 165, 246, 0.6);
+}
+.hw-now__tempwrap {
+  grid-area: temp;
+  align-self: start;
+}
+.hw-now__minmax {
+  grid-area: minmax;
+  align-self: start;
+  font-size: 1.22rem;
+  color: #eef3ff;
+  display: grid;
+  gap: 0.32rem;
+  position: relative;
+  left: 0.5rem;
+}
+.hw-now__right {
+  grid-area: icon;
+  position: relative;
+  min-height: 11rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 숫자/기호 */
+.hw-now__temp {
+  font-size: 6.8rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  position: relative;
+  top: 1rem;
+  left: 0.5rem;
+}
+.hw-now__deg {
+  font-size: 3.2rem;
+  margin-left: 0.28rem;
+  position: relative;
+  top: -2.5rem; /* ⬅︎ 동그라미 위로 */
+}
+
+/* 메인 아이콘 */
+.hw-now__bigicon {
+  width: 9.2rem;
+  height: 9.2rem;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
+
+/* 중앙 하단 배지 (pill) */
+.hw-now__badge {
+  grid-area: badge;
+  justify-self: center;
+  width: min(80%, 26rem);
+  text-align: center;
+  padding: 0.72rem 1.2rem;
+  border-radius: 3rem 0 3rem 3rem;
+  background: #6f90d8;
+  color: #fff;
+  font-size: 1.22rem;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28);
+}
+
+/* ===================== Right: AM/PM cards ===================== */
+
+.hw-side {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.6rem;
+}
+
+/* 카드 베이스 + 헤더띠 */
+.hw-halfcard {
+  position: relative;
+  height: 5rem;
+  padding: 0 1.2rem 1.2rem;
+  padding-top: 3rem; /* 헤더띠 높이만큼 본문 확보 */
+  border-radius: 1.8rem;
+  overflow: hidden;
+  background: rgba(128, 165, 246, 0.4);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.22),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+
+  /* 본문: 아이콘 -> 상태 텍스트(중앙) */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+.hw-halfcard::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 3rem;
+  background: rgba(111, 144, 216, 0.5);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.06);
+}
+
+/* 헤더의 '오전/오후' 텍스트 중앙 정렬 */
+.hw-halfcard__label {
+  position: absolute;
+  top: 0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.3rem;
+  line-height: 1;
+  color: #eaf0ff;
+  white-space: nowrap;
+}
+
+/* 아이콘 중앙 */
+.hw-halfcard__icon {
+  order: 1;
+  width: 3rem;
+  height: 3rem;
+  margin-top: 0.4rem;
+  display: block;
+}
+
+/* 상태 텍스트는 아이콘 아래(중앙) */
+.hw-halfcard__chip {
+  order: 2;
+  position: static;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  margin-top: 0.5rem;
+  font-size: 1.25rem;
+  line-height: 1;
+  color: #eaf0ff;
+  text-align: center;
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.12);
+}
+
+/* hover 강조 */
+.hw-halfcard:hover {
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.26),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+/* ===================== Right: Week panel ===================== */
+
+.hw-week {
+  padding: 1rem;
+  border-radius: 2.2rem;
+  background: rgba(128, 165, 246, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+  display: grid;
+}
+.hw-week__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  padding: 0.4rem 0.3rem;
+  border-radius: 1.4rem;
+  background: transparent;
+  gap: 0.8rem;
+}
+.hw-week__row + .hw-week__row {
+  margin-top: 0.5rem;
+}
+.hw-week__date {
+  font-size: 1.5rem;
+}
+.hw-week__icons {
+  display: flex;
+  gap: 0.6rem;
+  justify-self: center;
+}
+.hw-week__icons img {
+  width: 2.4rem;
+  height: 2.4rem;
+  object-fit: contain;
+}
+.hw-week__temps {
+  display: flex;
+  gap: 1.6rem;
+  justify-self: end;
+  font-size: 1.4rem;
+  color: #eaeffe;
+}
+.hw-week__deg {
+  font-size: 1.6rem;
+  margin-left: -1.3rem;
+  position: relative;
+  top: 0rem; /* ⬅︎ 동그라미 위로 */
+}
+
+/* ===================== Status ===================== */
+
+.hw-loading,
+.hw-error {
+  color: var(--text-white);
+  background: rgba(20, 20, 20, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1rem 1.2rem;
+  border-radius: 1rem;
+  font-size: 1.3rem;
+}
+
+/* ===================== Compact mode ===================== */
+
+.hw.hw--compact {
+  grid-template-columns: 31rem 24rem;
+  max-width: 60rem;
+  gap: 1.6rem;
+}
+.hw.hw--compact .hw-now__temp {
+  font-size: 5.4rem;
+}
+.hw.hw--compact .hw-now__deg {
+  font-size: 2.6rem;
+  top: -2.2rem;
+}
+.hw.hw--compact .hw-now__bigicon {
+  width: 6.6rem;
+  height: 6.6rem;
+}
+.hw.hw--compact .hw-halfcard {
+  height: 8.8rem;
+}
+.hw.hw--compact .hw-week__icons img {
+  width: 2.2rem;
+  height: 2.2rem;
+}
+
+/* ===================== Responsive (≤560px) ===================== */
+
+/* ===================== Responsive (≤560px) ===================== */
+
+@media (max-width: 560px) {
+  .hw {
+    width: 100%;
+    max-width: 100%;
+    grid-template-columns: 1.25fr 1fr;
+    grid-template-areas:
+      "now side"
+      "now week";
+    gap: clamp(0.8rem, 2.5vw, 1.2rem);
+    padding: clamp(0.8rem, 3vw, 1.2rem);
+  }
+  /* ✅ 좌우 균형 패치 */
+  .hw-now__top {
+    padding: 1.2rem 1rem;        /* 내부 padding으로 대체 */
+    border-radius: 1.6rem 1.6rem 0 0;
+  }
+  .hw-now__main {
+    padding: 1rem;               /* 내부 padding으로 대체 */
+    border-radius: 0 0 1.6rem 1.6rem;
+    column-gap: clamp(0.8rem, 2.6vw, 1.2rem);
+    row-gap: clamp(0.4rem, 1.8vw, 0.8rem);
+  }
+
+  .hw-now__temp {
+    font-size: clamp(4.6rem, 12vw, 6rem);
+  }
+  .hw-now__deg {
+    font-size: clamp(2.4rem, 7vw, 3rem);
+    top: -2rem;
+  }
+  .hw-now__bigicon {
+    width: 11rem;
+    height: 11rem;
+  }
+  .hw-now__badge {
+    width: min(80%, 28rem);
+  }
+
+  .hw-halfcard {
+    height: 5rem;
+    padding: 0 1rem 1rem;
+    padding-top: 2.8rem;
+  }
+  .hw-halfcard__label {
+    font-size: 1.2rem;
+    top: 1rem;
+  }
+  .hw-halfcard__icon {
+    width: 2.6rem;
+    height: 2.6rem;
+    margin-top: 0.3rem;
+  }
+  .hw-halfcard__chip {
+    font-size: 1.15rem;
+    margin-top: 0.35rem;
+  }
+
+  /* (선택) 오른쪽 열에도 약간 padding 주면 완전 대칭 */
+  .hw-side { padding: 0 0.2rem; }
+  .hw-week { padding: 0.8rem 0.8rem; }
+}

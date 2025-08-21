@@ -31,8 +31,7 @@ body {
     "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  max-width: 100vw;
-  min-height: 100vh;
+  max-width: 100%;
   touch-action: manipulation;
   overscroll-behavior: contain;
 }

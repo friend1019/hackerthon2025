@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import "../../CSS/HOME/9kyung.css";
 import Header from "../COMMON/Header";
 // import { useNavigate } from "react-router-dom";
-import { ReactComponent as StarSvg } from "../../IMAGE/9경별.svg";
+import { ReactComponent as StarSvg } from "../../IMAGE/kyung-star.svg";
 
 const img1 =
   "https://www.seosan.go.kr/site/tour/images/contents/cts959_img.jpg";

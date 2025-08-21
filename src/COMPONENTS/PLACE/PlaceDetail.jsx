@@ -48,10 +48,11 @@ function PlaceDetail() {
     }, 200);
   };
 
-  const coordinates =
-    place?.latitude && place?.longitude
-      ? `${place.latitude},${place.longitude}`
-      : null;
+  const hasCoords =
+    Number.isFinite(Number(place?.latitude)) &&
+    Number.isFinite(Number(place?.longitude));
+
+  const coordinates = hasCoords ? `${place.latitude},${place.longitude}` : null;
 
   const imageSrc = place?.imageUrl || place?.image || DefaultStoreImg;
 
@@ -80,17 +81,13 @@ function PlaceDetail() {
               <div className="place-detail-image">
                 <img src={imageSrc} alt={place.name} />
               </div>
+
               <div className="place-detail-info">
-                <div className="place-titlebox">
-                  <h2 className="place-name">{place.name}</h2>
-                  <hr className="place-divider" />
-                  <button
-                    className="place-map-btn"
-                    onClick={() => setShowMap(true)}
-                  >
-                    지도 보기 &gt;
-                  </button>
+                <div className="place-titlebar">
+                  <span className="place-title">{place.name}</span>
+                  <div className="place-divider"></div>
                 </div>
+
                 <div className="place-row">
                   <div className="place-label">주소</div>
                   <div className="place-value">
@@ -98,30 +95,35 @@ function PlaceDetail() {
                     {place.detailAddress ? ` (${place.detailAddress})` : ""}
                   </div>
                 </div>
+
                 {place.location && (
                   <div className="place-row">
                     <div className="place-label">행정동</div>
                     <div className="place-value">{place.location}</div>
                   </div>
                 )}
+
                 {place.description && (
                   <div className="place-row">
                     <div className="place-label">소개</div>
                     <div className="place-value">{place.description}</div>
                   </div>
                 )}
+
                 {place.category && (
                   <div className="place-row">
                     <div className="place-label">카테고리</div>
                     <div className="place-value">{place.category}</div>
                   </div>
                 )}
+
                 {place.type && (
                   <div className="place-row">
                     <div className="place-label">유형</div>
                     <div className="place-value">{place.type}</div>
                   </div>
                 )}
+
                 {place.finalType && (
                   <div className="place-row">
                     <div className="place-label">유형</div>
@@ -132,6 +134,18 @@ function PlaceDetail() {
             </motion.div>
           )}
         </AnimatePresence>
+      </div>
+
+      {/* ✅ 하단 고정 버튼 그룹 */}
+      <div className="place-detail-btn-group">
+        <button
+          className="place-detail-mapbtn"
+          onClick={() => setShowMap(true)}
+          disabled={!hasCoords}
+          aria-disabled={!hasCoords}
+        >
+          📍 지도 보기
+        </button>
       </div>
 
       {showMap && (

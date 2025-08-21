@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import HomeHero from "./HomeHero";
+import Weather from "./HomeWeather";
 import "../../CSS/HOME/Home.css";
 
 import Header from "../COMMON/Header";
@@ -23,9 +25,9 @@ const categoryTabs = [
     key: "recommended",
     label: "추천",
     places: [
-      { img: nineKyung1, name: "해미읍성", id: 88 },
-      { img: nineKyung2, name: "삼길포항", id: 112 },
-      { img: nineKyung3, name: "팔봉산", id: 121 },
+      { img: nineKyung1, name: "팔봉산", id: 121 },
+      { img: nineKyung2, name: "황금산", id: 117 },
+      { img: nineKyung3, name: "간월암", id: 136 },
     ],
     moreLink: "/9kyung",
   },
@@ -33,9 +35,9 @@ const categoryTabs = [
     key: "festival",
     label: "페스티벌",
     places: [
-      { img: festival1, name: "서산국화축제" },
-      { img: festival2, name: "해미읍성축제" },
-      { img: festival3, name: "삼길포항불꽃축제" },
+      { img: festival1, name: "서산해미읍성축제" },
+      { img: festival2, name: "서산국화축제" },
+      { img: festival3, name: "해미벚꽃축제" },
     ],
     moreLink: "/festival",
   },
@@ -43,9 +45,9 @@ const categoryTabs = [
     key: "aramegil",
     label: "아라메길",
     places: [
-      { img: aramegil1, name: "보원사지" },
-      { img: aramegil2, name: "용현이 마애여래삼존상" },
-      { img: aramegil3, name: "부석사" },
+      { img: aramegil1, name: "용현리 마애여래삼존상" },
+      { img: aramegil2, name: "개심사" },
+      { img: aramegil3, name: "해넘이전망대" },
     ],
     moreLink: "/aramegil",
   },
@@ -54,7 +56,6 @@ const categoryTabs = [
 /* ===================== AnimatedPhrase ===================== */
 const phrases = [
   { text: "⛰️🌊 원하는 테마를 선택하고", style: { fontWeight: 500, color: "#fff" } },
-  { text: "🏷️ 관심 있는 태그를 골라주세요!", style: { fontWeight: 500, color: "#fff" } },
   { text: "🧑‍🤝‍🧑 누구와 함께하는 여행인가요?", style: { fontWeight: 500, color: "#fff" } },
   { text: "✨ 이제, 준비는 끝났어요 — 함께 떠나볼까요?", style: { fontWeight: 500, color: "#fff" } },
 ];
@@ -221,7 +222,7 @@ const CategorySection = () => {
               style={{ width: "3.2rem", height: "3.2rem", display: "block" }}
             />
           </span>
-          <span className="tip-bar-2025-btn-text">AI 코스 추천</span>
+          <span className="tip-bar-2025-btn-text">AI 코스 추천받기</span>
         </button>
       </div>
 
@@ -243,6 +244,8 @@ const Home = () => {
       transition={{ duration: 0.5 }}
     >
       <Header />
+      <HomeHero />
+      <Weather />
       <CategorySection />
       {/* <Footer /> */}
     </motion.div>

@@ -1,21 +1,21 @@
-/* 월 숫자와 영어 월명 사이 구분선 */
+/* 월 구분선 */
 .month-divider {
   display: inline-block;
-  width: 2.2rem; /* 가로로 눕힌 길이 */
-  height: 1px; /* 세로 두께 */
+  width: 2.2rem;
+  height: 1px;
   background: #141414;
   opacity: 0.3;
   margin: 0.7rem 0.7rem;
   border-radius: 2px;
   vertical-align: middle;
 }
+
+/* 컨테이너/타이틀 */
 .festival-container {
   padding: 2rem 0 0 0;
-  background: #0d0d0d;
   color: white;
   min-height: 100vh;
 }
-
 .festival-title {
   font-size: 2rem;
   font-weight: 500;
@@ -24,6 +24,7 @@
   margin-top: 8rem;
 }
 
+/* 월 선택 슬라이더 */
 .month-slider {
   display: flex;
   overflow-x: auto;
@@ -48,13 +49,13 @@
   cursor: pointer;
   text-align: center;
 }
-
 .month-button.active {
-  background: #dff6ff;
+  background: #6F90D8;
   color: #141414;
   font-weight: 400;
 }
 
+/* 리스트 래퍼 */
 .festival-list {
   display: flex;
   flex-direction: column;
@@ -66,23 +67,108 @@
   overflow-x: hidden;
 }
 
+/* =========================
+   9kyung 카드 레이아웃 이식
+   ========================= */
+
+/* 카드 컨테이너 → kyung-card-redesign 매핑 */
 .festival-card {
-  width: 90vw;
-  min-width: 260px;
-  max-width: 600px;
-  min-height: 220px;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 2rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  overflow: hidden;
+  display: flex;
+  flex-direction: row;             /* 좌: 텍스트 / 우: 이미지 */
+  align-items: stretch;
+  background: transparent !important;
+  border-radius: 1.3rem;
+  padding: 1.3rem 1.1rem;
+  margin: 1.2rem;
+  min-height: 0;
+  width: auto;
+  max-width: 95vw;
+  position: relative;
+  transition: box-shadow 0.2s, transform 0.2s;
+
+  /* 9kyung 톤 */
+  box-shadow: 0 2px 16px rgba(0,0,0,0.18);
+}
+
+/* 좌측 텍스트 → kyung-card-left 매핑 */
+.festival-info {
   display: flex;
   flex-direction: column;
-  margin: 0 auto 2rem auto;
-  box-sizing: border-box;
-  flex-grow: 1;
-  word-break: keep-all;
-  max-height: 100%;
+  justify-content: center;
+  gap: 0.8rem;
+  min-width: 0;
+  padding: 0;           /* 내부 패딩은 요소별로 */
+  margin: 0;
+  flex: 1 1 auto;
+  overflow: visible;
 }
+.festival-info h3 {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #fff;
+  margin: 0 0 0.1rem 0;
+}
+.subtitle {
+  font-weight: normal;
+  font-size: 1rem;
+  color: #bfc6d0;
+  margin-left: 0.4rem;
+}
+
+/* 배지 → kyung-card-badge 느낌 */
+.status-tag {
+  display: inline-block;
+  background: rgba(80, 80, 80, 0.45);
+  color: #e3eafc;
+  font-size: 1rem;
+  font-weight: 400;
+  border-radius: 1.2rem;
+  padding: 0.13em 1em;
+  box-shadow: 0 2px 8px #0002;
+  width: fit-content;
+  margin: 0 0 0.2rem 0;  /* 타이틀 위 살짝 띄움 */
+}
+
+/* 설명/메타 → kyung-card-desc 톤 */
+.festival-info p,
+.festival-meta {
+  font-size: 1rem;
+  color: #eaeaea;
+  font-weight: 300;
+  line-height: 1.6;
+  margin: 0.1rem 1rem 0.5rem 1rem; /* 왼쪽 인덴트 */
+}
+.festival-meta {
+  margin-top: 0.6rem;
+  list-style: none;
+  padding: 0;
+}
+.festival-meta li {
+  margin-bottom: 0.5rem;
+}
+
+/* 우측 이미지 → kyung-card-right 매핑 */
+.festival-card-media {
+  margin-left: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 110px;
+}
+
+/* 이미지 → kyung-card-img 매핑 */
+.festival-img {
+  width: 110px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 1.1rem;
+  box-shadow: 0 2px 16px #0003;
+  background: #222;
+  margin: 0;               /* 상단 카드형에서 오는 마진 제거 */
+  border: none;            /* 기존 보더 제거 */
+}
+
+/* 모바일 세부 튜닝 (≤600px) */
 @media (max-width: 600px) {
   .festival-card {
     width: 90vw;
@@ -90,64 +176,107 @@
     max-width: 100vw;
     margin: 0 auto 1.2rem auto;
     border-radius: 1.2rem;
+    padding: 1rem;            /* 모바일 패딩 살짝 축소 */
+  }
+  .festival-card-media {
+    flex: 0 0 100px;
+    margin-left: 0.9rem;
   }
   .festival-img {
-    min-height: 80px;
-    max-height: 120px;
-    border-radius: 1.2rem;
+    width: 100px;
+    height: 90px;
+    border-radius: 1rem;
   }
   .festival-info {
-    padding: 0 0.7rem 0.5rem 0.7rem;
+    gap: 0.6rem;
+  }
+  .festival-info h3 {
+    font-size: 1.35rem;
+  }
+  .festival-info p,
+  .festival-meta {
     font-size: 0.98rem;
+    margin: 0.1rem 0.6rem 0.5rem 0.6rem;
   }
 }
 
-.festival-img {
-  width: 97%;
-  min-height: 120px;
-  max-height: 180px;
-  object-fit: cover;
-  margin: 0.6rem auto;
-  border-radius: 2rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+/* 데스크탑 확대(≥700px) → 9kyung와 동일 톤 */
+@media (min-width: 700px) {
+  .festival-card {
+    padding: 2.5rem 2.5rem 2.5rem 2.8rem;
+    min-height: 220px;
+    max-width: 900px;
+    margin: 2.5rem;
+    border-radius: 2.2rem;
+  }
+  .festival-info {
+    gap: 1.1rem;
+  }
+  .festival-card-media {
+    margin-left: 2.5rem;
+    justify-content: center;
+    flex: 0 0 180px;
+  }
+  .festival-img {
+    width: 170px;
+    height: 130px;
+    border-radius: 1.3rem;
+  }
+  .festival-info h3 {
+    font-size: 2.1rem;
+  }
+  .subtitle {
+    font-size: 1.15rem;
+  }
+  .festival-info p,
+  .festival-meta {
+    font-size: 1.15rem;
+  }
 }
 
-.festival-info {
-  padding: 0 1.5rem 0rem 1.5rem;
-  margin-top: -0.5rem;
-  flex: 1 1 auto;
-  overflow-y: auto;
-  min-height: 120px;
-}
-
-.festival-info h3 {
-  margin-bottom: 0.5rem;
-  font-size: 1.5rem;
-  margin-top: 0.7rem;
-}
-
-.subtitle {
-  font-weight: normal;
-  font-size: 1rem;
-  color: #ccc;
-  margin-left: 0.5rem;
-}
-
-.status-tag {
-  background: #0099ff;
-  padding: 0.2rem 0.6rem;
-  margin-left: 1rem;
-  border-radius: 0.6rem;
-  font-size: 0.9rem;
-  color: white;
-}
-
+/* (선택) 9kyung 색상 통일감 */
+.festival-info h3,
+.festival-info p,
 .festival-meta {
-  margin-top: 1rem;
-  list-style: none;
-  padding: 0;
+  color: #f8f7f5 !important;
 }
 
-.festival-meta li {
-  margin-bottom: 0.5rem;
+/* ===== 별 + 타이틀 행 (9kyung 매핑) ===== */
+.festival-card-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.1rem 0 0.4rem 0; /* 타이틀 위아래 간격 */
+}
+
+.festival-card-star {
+  width: 1.05rem;
+  height: 1.05rem;
+  color: #fff; /* StarSvg에 currentColor 적용 시 반영 */
+  margin-right: 0.1rem;
+  filter: drop-shadow(0 0 6px #4bcdfd); /* 9kyung과 동일한 글로우 */
+}
+
+.festival-card-title {
+  font-size: 1.5rem;     /* 9kyung .kyung-card-title */
+  font-weight: 500;
+  color: #fff;
+  margin-right: 0.5rem;
+}
+
+.festival-card-title-en {
+  font-size: 1rem;       /* 9kyung .kyung-card-title-en */
+  color: #bfc6d0;
+  font-weight: 400;
+  margin-left: 0.4rem;
+}
+
+/* 데스크탑에서 크기 업 (9kyung과 동일) */
+@media (min-width: 700px) {
+  .festival-card-title {
+    font-size: 2.1rem;
+  }
+  .festival-card-title-en {
+    font-size: 1.15rem;
+  }
 }

@@ -3,18 +3,17 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import StepWelcome from "./StepWelcome";
 import StepTheme from "./StepTheme";
-import StepInterest from "./StepInterest";
+// import StepInterest from "./StepInterest";
 import StepAi from "./StepAi";
 import api from "../../API/axios";
 import CourseSpinner from "./CourseSpinner";
 
-const steps = [StepWelcome, StepTheme, StepInterest, StepAi];
+const steps = [StepWelcome, StepTheme, StepAi];
 
 const RecommendCourse = () => {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState({
     theme: "",
-    interests: [],
     aiText: "",
   });
   const [loading, setLoading] = useState(false);
@@ -35,14 +34,13 @@ const RecommendCourse = () => {
   const handleRecommend = async (updatedAnswers = answers) => {
     setLoading(true);
     const area = updatedAnswers.theme;
-    const category = updatedAnswers.interests.join(",");
     const text = updatedAnswers.aiText;
 
-    console.log("🚀 API 요청 파라미터:", { area, category, text });
+    console.log("🚀 API 요청 파라미터:", { area, text });
 
     try {
       const res = await api.get(
-        `/ai/travel-plans?area=${area}&category=${category}&text=${text}`
+        `/ai/travel-plans?area=${area}&text=${text}`
       );
       localStorage.setItem("aiCourses", JSON.stringify(res.data));
       console.log("✅ API 응답 결과 저장 완료");

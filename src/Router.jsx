@@ -10,6 +10,8 @@ import AiCourse from "./COMPONENTS/AI/AiCourse";
 import AiCourseDetail from "./COMPONENTS/AI/AiCourseDetail";
 import LoadingSpinner from "./COMPONENTS/COMMON/LoadingSpinner";
 import CourseSpinner from "./COMPONENTS/STEPS/CourseSpinner";
+import MapContainer from "./COMPONENTS/AI/MapContainer";
+import Aramegil from "./COMPONENTS/HOME/Aramegil";
 
 function AppRouter() {
   return (
@@ -27,8 +29,10 @@ function AppRouter() {
       <Route path="/9mi" element={<MiList />} />
       <Route path="/9pum" element={<PumList />} />
       <Route path="/festival" element={<Festival />} />
+      <Route path="/aramegil" element={<Aramegil />} />
       <Route path="/ai-course" element={<AiCourse />} />
       <Route path="/ai-course/:id" element={<AiCourseDetail />} />
+      <Route path="/map" element={<MapContainer />} />
 
       {/* 기타 라우트 */}
     </Routes>

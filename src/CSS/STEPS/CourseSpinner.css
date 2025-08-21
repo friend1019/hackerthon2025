@@ -1,18 +1,9 @@
-/* 코스 추천중 스피너 전체 배경 */
+/* ==========================================================================
+   코스 추천중 스피너 — 전체 배경 (기존 펄스 유지)
+   ========================================================================== */
 .course-spinner-bg {
   width: 100vw;
   min-height: 100vh;
-  background: radial-gradient(
-      circle at 110% 35%,
-      rgba(75, 205, 253, var(--spinner-alpha, 0.2)),
-      transparent 30%
-    ),
-    radial-gradient(
-      circle at -10% 70%,
-      rgba(75, 205, 253, var(--spinner-alpha, 0.2)),
-      transparent 30%
-    ),
-    #141414;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -21,105 +12,157 @@
 }
 
 @keyframes spinner-alpha-move {
-  0% {
-    --spinner-alpha: 0.2;
-  }
-  5% {
-    --spinner-alpha: 0.21;
-  }
-  10% {
-    --spinner-alpha: 0.22;
-  }
-  15% {
-    --spinner-alpha: 0.23;
-  }
-  20% {
-    --spinner-alpha: 0.24;
-  }
-  25% {
-    --spinner-alpha: 0.25;
-  }
-  30% {
-    --spinner-alpha: 0.26;
-  }
-  35% {
-    --spinner-alpha: 0.28;
-  }
-  40% {
-    --spinner-alpha: 0.3;
-  }
-  45% {
-    --spinner-alpha: 0.32;
-  }
-  50% {
-    --spinner-alpha: 0.34;
-  }
-  55% {
-    --spinner-alpha: 0.36;
-  }
-  60% {
-    --spinner-alpha: 0.38;
-  }
-  65% {
-    --spinner-alpha: 0.4;
-  }
-  70% {
-    --spinner-alpha: 0.38;
-  }
-  75% {
-    --spinner-alpha: 0.36;
-  }
-  80% {
-    --spinner-alpha: 0.34;
-  }
-  85% {
-    --spinner-alpha: 0.32;
-  }
-  90% {
-    --spinner-alpha: 0.3;
-  }
-  95% {
-    --spinner-alpha: 0.28;
-  }
-  100% {
-    --spinner-alpha: 0.2;
-  }
+  0%   { --spinner-alpha: 0.20; }
+  5%   { --spinner-alpha: 0.21; }
+  10%  { --spinner-alpha: 0.22; }
+  15%  { --spinner-alpha: 0.23; }
+  20%  { --spinner-alpha: 0.24; }
+  25%  { --spinner-alpha: 0.25; }
+  30%  { --spinner-alpha: 0.26; }
+  35%  { --spinner-alpha: 0.28; }
+  40%  { --spinner-alpha: 0.30; }
+  45%  { --spinner-alpha: 0.32; }
+  50%  { --spinner-alpha: 0.34; }
+  55%  { --spinner-alpha: 0.36; }
+  60%  { --spinner-alpha: 0.38; }
+  65%  { --spinner-alpha: 0.40; }
+  70%  { --spinner-alpha: 0.38; }
+  75%  { --spinner-alpha: 0.36; }
+  80%  { --spinner-alpha: 0.34; }
+  85%  { --spinner-alpha: 0.32; }
+  90%  { --spinner-alpha: 0.30; }
+  95%  { --spinner-alpha: 0.28; }
+  100% { --spinner-alpha: 0.20; }
 }
 
-/* 중앙 컨테이너 */
+/* ==========================================================================
+   중앙 컨테이너
+   ========================================================================== */
 .course-spinner-center {
   width: 100%;
   max-width: 500px;
   margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   min-height: 60vh;
+
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-/* 별 이미지 */
-.course-spinner-star {
-  width: 90px;
-  height: 90px;
-  filter: drop-shadow(0 0 40px #4bcdfd) brightness(1.2);
-  margin-bottom: 2.5rem;
+/* ==========================================================================
+   숨쉬는 원형 구체 (별 이미지 대체)
+   ========================================================================== */
+.spinner-core {
+  --size: 55px;            /* 기본 크기 */
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  position: relative;
+  pointer-events: none;
+
+  /* 파스텔 블루 → 보라 → 핑크로 번지는 구체 */
+  background:
+    radial-gradient(circle at 32% 30%,
+      rgba(255,255,255,0.98) 0%,
+      rgba(205,220,255,0.85) 36%,
+      rgba(190,180,255,0.62) 58%,
+      rgba(248,205,230,0.50) 78%,
+      rgba(255,255,255,0.18) 100%),
+    radial-gradient(circle at 50% 52%,
+      rgba(255,255,255,0.9) 0%,
+      rgba(255,255,255,0) 60%);
+
+  box-shadow:
+    0 0 40px rgba(200,220,255,0.45),
+    0 0 110px rgba(190,180,255,0.28),
+    inset 0 0 36px rgba(255,255,255,0.35);
+  filter: saturate(1.05);
+
+  /* 숨쉬는 애니메이션 */
+  animation: spinner-breathe 3.2s ease-in-out infinite;
+  margin-bottom: 2.5rem; /* 기존 별 하단 간격 계승 */
 }
 
-/* 제목 */
+/* 바깥 헤일로(은은하게 퍼짐) */
+.spinner-core::after {
+  content: "";
+  position: absolute;
+  inset: -12%;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+    rgba(160,190,255,0.20) 0%,
+    rgba(160,190,255,0.12) 40%,
+    rgba(160,190,255,0.06) 60%,
+    rgba(160,190,255,0.00) 100%);
+  filter: blur(2px);
+  animation: spinner-halo 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes spinner-breathe {
+  0% {
+    transform: scale(1);
+    box-shadow:
+      0 0 40px rgba(200,220,255,0.45),
+      0 0 110px rgba(190,180,255,0.28),
+      inset 0 0 36px rgba(255,255,255,0.35);
+  }
+  50% {
+    transform: scale(1.06);
+    box-shadow:
+      0 0 56px rgba(200,220,255,0.55),
+      0 0 150px rgba(190,180,255,0.34),
+      inset 0 0 48px rgba(255,255,255,0.42);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow:
+      0 0 40px rgba(200,220,255,0.45),
+      0 0 110px rgba(190,180,255,0.28),
+      inset 0 0 36px rgba(255,255,255,0.35);
+  }
+}
+
+@keyframes spinner-halo {
+  0%, 100% { opacity: 0.7; transform: scale(1); }
+  50%      { opacity: 1;   transform: scale(1.08); }
+}
+
+.spinner-ripple {
+  position: absolute;
+  inset: -105%;
+  border-radius: 50%;
+  pointer-events: none;
+  background:
+    radial-gradient(circle,
+      rgba(180,200,255,0.20) 0%,
+      rgba(180,200,255,0.12) 35%,
+      rgba(180,200,255,0.00) 60%);
+  animation: ripple-expand 3.6s ease-out infinite;
+  mix-blend-mode: screen;
+  filter: blur(1px);
+}
+
+/* 구체 안에 이 엘리먼트를 넣어주세요 */
+
+
+/* ==========================================================================
+   텍스트 (제목/설명)
+   ========================================================================== */
 .course-spinner-title {
   color: #fff;
   font-size: 2.1rem;
   font-weight: 600;
   text-align: center;
   margin-bottom: 2.2rem;
+  letter-spacing: -0.02em;
 }
-
-/* 설명 */
 .course-spinner-desc {
   color: #fff;
   font-size: 1.25rem;
@@ -129,17 +172,25 @@
   margin-bottom: 2rem;
 }
 
-/* 태블릿 반응형 */
+/* ==========================================================================
+   접근성: 모션 최소화
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .course-spinner-bg { animation: none; }
+  .spinner-core { animation: none; }
+  .spinner-core::after { animation: none; }
+}
+
+/* ==========================================================================
+   반응형
+   ========================================================================== */
+/* 태블릿 */
 @media (min-width: 600px) {
   .course-spinner-center {
     max-width: 700px;
-    padding-top: 12rem;
+    padding-top: 12rem; /* 기존 여백 유지 원하면 사용, 절대 중앙이므로 영향 적음 */
   }
-  .course-spinner-star {
-    width: 120px;
-    height: 120px;
-    margin-bottom: 3rem;
-  }
+  .spinner-core { --size: 200px; margin-bottom: 3rem; }
   .course-spinner-title {
     font-size: 2.5rem;
     margin-bottom: 2.5rem;
@@ -150,17 +201,13 @@
   }
 }
 
-/* PC 반응형 */
+/* PC */
 @media (min-width: 1024px) {
   .course-spinner-center {
     max-width: 900px;
     padding-top: 16rem;
   }
-  .course-spinner-star {
-    width: 160px;
-    height: 160px;
-    margin-bottom: 4rem;
-  }
+  .spinner-core { --size: 240px; margin-bottom: 4rem; }
   .course-spinner-title {
     font-size: 3rem;
     margin-bottom: 3rem;

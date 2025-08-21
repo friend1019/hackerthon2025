@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import star1 from "../../IMAGE/star1.svg";
 import "../../CSS/STEPS/StepWelcome.css"; // 스타일 파일 임포트
 import Header from "../COMMON/Header";
 
@@ -20,7 +19,8 @@ const StepWelcome = ({ answers, setAnswers, nextStep, prevStep }) => {
         >
           <div className="step-container step-welcome-center">
             <div className="step-star-wrap">
-              <img src={star1} alt="별" className="step-star-img-one" />
+              {/* 기존 <img src={star1} … /> 대신 */}
+              <div className="welcome-core" />
             </div>
             <h2 className="step-title step-welcome-title">
               서산책에 오신 걸 환영합니다

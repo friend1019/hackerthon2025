@@ -1,17 +1,18 @@
 import React, { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Header from "../COMMON/Header";
+import { ReactComponent as StarSvg } from "../../IMAGE/kyung-star.svg";
 import "../../CSS/HOME/Festival.css";
-import samgilpoImg from "../../IMAGE/samgilpo.svg"; // 예시 이미지 경로
-import haemiblossomImg from "../../IMAGE/haemiblossom.svg"; // 예시 이미지 경로
-import starfestivalImg from "../../IMAGE/starfestival.svg"; // 예시 이미지 경로
-import wangsanpofestivalImg from "../../IMAGE/jigokwang.svg"; // 예시 이미지 경로
-import potatofestivalImg from "../../IMAGE/potatofestival.svg"; // 예시 이미지 경로
-import octopusfestivalImg from "../../IMAGE/octopusfestival.svg"; // 예시 이미지 경로
-import garlicfestivalImg from "../../IMAGE/garlicfestival.svg"; // 예시 이미지 경로
-import gukwhafestivalImg from "../../IMAGE/gukwhafestival.svg"; // 예시 이미지 경로
-import haemifortressfestivalImg from "../../IMAGE/haemifortressfestival.svg"; // 예시 이미지 경로
-import gulfestivalImg from "../../IMAGE/gulfestival.svg"; // 예시 이미지 경로
+import samgilpoImg from "../../IMAGE/samgilpo.svg";
+import haemiblossomImg from "../../IMAGE/haemiblossom.svg";
+import starfestivalImg from "../../IMAGE/starfestival.svg";
+import wangsanpofestivalImg from "../../IMAGE/jigokwang.svg";
+import potatofestivalImg from "../../IMAGE/potatofestival.svg";
+import octopusfestivalImg from "../../IMAGE/octopusfestival.svg";
+import garlicfestivalImg from "../../IMAGE/garlicfestival.svg";
+import gukwhafestivalImg from "../../IMAGE/gukwhafestival.svg";
+import haemifortressfestivalImg from "../../IMAGE/haemifortressfestival.svg";
+import gulfestivalImg from "../../IMAGE/gulfestival.svg";
 
 const monthList = [
   { num: 4, label: "Apr." },
@@ -161,16 +162,13 @@ const festivalData = [
 const Festival = () => {
   const [selectedMonth, setSelectedMonth] = useState(8);
 
-  // date에 "8월~9월"처럼 입력된 경우 해당 월에 포함되도록 처리
   const filteredFestivals = festivalData.filter((f) => {
-    // "8월~9월" 또는 "8월" 등에서 월 추출
-    const monthRange = f.date.match(/(\d{1,2})월(?:~(\d{1,2})월)?/);
+    const monthRange = f.date.match(/(\d{1,2})월(?:\s*[~-]\s*(\d{1,2})월)?/);
     if (monthRange) {
       const startMonth = parseInt(monthRange[1], 10);
       const endMonth = monthRange[2] ? parseInt(monthRange[2], 10) : startMonth;
       return selectedMonth >= startMonth && selectedMonth <= endMonth;
     }
-    // 기존 month 필드도 체크
     return f.month === selectedMonth;
   });
 
@@ -185,17 +183,23 @@ const Festival = () => {
       >
         <Header />
         <h1 className="festival-title">서산시 페스티벌</h1>
+
         <div className="month-slider">
           {monthList.map((month) => (
             <motion.button
               key={month.num}
-              className={`month-button ${selectedMonth === month.num ? "active" : ""}`}
+              className={`month-button ${
+                selectedMonth === month.num ? "active" : ""
+              }`}
               onClick={() => setSelectedMonth(month.num)}
               initial={false}
               animate={{
-                backgroundColor: selectedMonth === month.num ? "#4bcdfd" : "#222",
-                color: selectedMonth === month.num ? "#222" : "#fff",
-                opacity: 1
+                backgroundColor:
+                  selectedMonth === month.num
+                    ? "#6F90D8"
+                    : "rgba(255,255,255,0.1)",
+                color: selectedMonth === month.num ? "#141414" : "#fff",
+                opacity: 1,
               }}
               transition={{ duration: 0.3 }}
               layout
@@ -219,13 +223,19 @@ const Festival = () => {
                 transition={{ duration: 0.4 }}
                 layout
               >
-                <img src={f.image} alt={f.title} className="festival-img" />
+                {/* 좌측: 텍스트 */}
                 <div className="festival-info">
-                  <h3>
-                    {f.title} <span className="subtitle">{f.subtitle}</span>
-                    <span className="status-tag">{f.status}</span>
-                  </h3>
+                  <div className="status-tag">{f.status}</div>
+
+                  {/* 👇 별 + 타이틀 + 영문 부제 (9경 카드와 동일한 형태) */}
+                  <div className="festival-card-title-row">
+                    <StarSvg className="festival-card-star" />
+                    <span className="festival-card-title">{f.title}</span>
+                    <span className="festival-card-title-en">{f.subtitle}</span>
+                  </div>
+
                   <p>{f.desc}</p>
+
                   <ul className="festival-meta">
                     <li>
                       <strong>📍 장소:</strong> {f.location}
@@ -234,7 +244,8 @@ const Festival = () => {
                       <strong>📅 기간:</strong> {f.date}
                     </li>
                     <li>
-                      <strong>☎️ 문의:</strong> {f.tel1} / {f.tel2}
+                      <strong>☎️ 문의:</strong> {f.tel1}
+                      {f.tel2 && <> / {f.tel2}</>}
                     </li>
                     <li>
                       <strong>🔗 공식사이트:</strong>{" "}
@@ -244,6 +255,11 @@ const Festival = () => {
                     </li>
                   </ul>
                 </div>
+
+                {/* 우측: 이미지 */}
+                <div className="festival-card-media">
+                  <img src={f.image} alt={f.title} className="festival-img" />
+                </div>
               </motion.div>
             ))}
           </AnimatePresence>
@@ -252,4 +268,5 @@ const Festival = () => {
     </AnimatePresence>
   );
 };
+
 export default Festival;

@@ -1,49 +1,56 @@
+/* ==========================================================================
+   Step Interest (AI Interest Select) Styles
+   - 모바일 퍼스트
+   - 속성 알파벳순 정렬
+   - 기존 동작/값 유지
+   ========================================================================== */
+
+/* == Placeholder ========================================================== */
 /* StepAi 입력창 placeholder 색상 지정 */
 .step-ai-input::placeholder {
   color: rgba(255, 255, 255, 0.3);
 }
+
+/* == 공통 레이아웃 ======================================================== */
 /* motion.div에 적용될 가운데 정렬 및 레이아웃 */
 .step-interest-content {
-  width: 100%;
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  max-width: 900px;
   margin: 0 auto;
+  max-width: 900px;
+  width: 100%;
 }
+
+/* == 상단/뒤로가기 버튼 ==================================================== */
 .step-interest-prev-btn {
-  position: absolute;
-  top: 10rem;
-  left: 2rem;
-  z-index: 10;
-  width: 3rem;
-  height: 3rem;
+  align-items: center;
   background: rgba(255, 255, 255, 0.2);
   border: none;
   border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
   color: #e3eafc;
-  font-size: 2rem;
   cursor: pointer;
   display: flex;
-  align-items: center;
+  font-size: 2rem;
+  height: 3rem;
   justify-content: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-  transition: background 0.2s;
+  left: 2rem;
   outline: none;
+  position: absolute;
+  top: 10rem;
+  transition: background 0.2s;
+  width: 3rem;
+  z-index: 10;
 }
 .step-interest-prev-btn:hover {
   background: linear-gradient(135deg, #2a2d3e 80%, #181a20 100%);
   color: #fff;
 }
 
+/* == 중앙 배경/컨테이너 ==================================================== */
 .step-interest-center {
-  position: relative;
-  width: 100%;
-  min-height: calc(100vh);
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
   background: radial-gradient(
       circle at 110% 35%,
       rgba(128, 165, 246, 0.3),
@@ -55,203 +62,283 @@
       transparent 30%
     ),
     #141414;
-  top: -1rem;
-  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   margin: 0 auto;
+  max-width: 900px;
+  min-height: calc(100vh);
+  position: relative;
+  top: -1rem;
+  width: 100%;
 }
 
+/* == 상단 별 아이콘/타이틀/설명 =========================================== */
+/* 상단 진행점(구체) — 불 켜짐/꺼짐 공통 베이스 */
+.step-dot {
+  position: relative;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  display: inline-block;
+
+  /* 파스텔 구체 느낌 */
+  background: radial-gradient(
+      circle at 30% 30%,
+      rgba(255, 255, 255, 0.95) 0%,
+      rgba(205, 220, 255, 0.85) 38%,
+      rgba(190, 180, 255, 0.6) 58%,
+      rgba(248, 205, 230, 0.5) 78%,
+      rgba(255, 255, 255, 0.2) 100%
+    ),
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(255, 255, 255, 0.9) 0%,
+      rgba(255, 255, 255, 0) 60%
+    );
+
+  box-shadow: 0 0 10px rgba(200, 220, 255, 0.55),
+    0 0 24px rgba(190, 180, 255, 0.3), inset 0 0 12px rgba(255, 255, 255, 0.45);
+
+  transition: all 0.3s ease;
+}
+
+/* 활성(불 켜진 원) */
+.step-dot.is-active {
+  filter: brightness(1) saturate(1.05);
+  opacity: 1;
+}
+
+/* 비활성(불 꺼진 원) */
+.step-dot.is-dim {
+  filter: brightness(0.68) saturate(0.9);
+  opacity: 0.55;
+  box-shadow: 0 0 6px rgba(200, 220, 255, 0.35),
+    0 0 14px rgba(190, 180, 255, 0.2), inset 0 0 8px rgba(255, 255, 255, 0.3);
+}
+
+/* 원 배치 + 간격 */
 .step-star-row {
   display: flex;
-  gap: 1.2rem;
-  align-items: center;
   justify-content: center;
-  width: 100%;
-  margin-bottom: 0.5rem;
-  margin-left: 0;
-}
-.step-star-img {
-  width: 3rem;
-  height: 3rem;
-  filter: drop-shadow(0 0 12px rgba(128, 165, 246, 1)) brightness(1.1);
+  align-items: center;
+  gap: 1.6rem; /* 원들 간격 조절 */
+  margin-bottom: 1rem;
+  position: relative;
 }
 
+/* 스포트라이트 효과 */
+.step-star-row::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -2.8rem; /* 스포트라이트 위치 */
+  margin: 0 auto;
+  width: 10rem; /* 빛 퍼짐 폭 */
+  height: 3.8rem;
+  background: none;
+  pointer-events: none;
+}
+/* 타이틀 */
 .step-title.step-interest-title {
+  align-self: center;
   color: #fff;
   font-size: 2.5rem;
   font-weight: 400;
-  text-align: center;
-  width: 100%;
-  max-width: 600px;
   margin-bottom: 1.2rem;
   margin-left: 0;
-  align-self: center;
+  max-width: 600px;
+  text-align: center;
+  width: 100%;
 }
+
+/* 설명문 */
 .step-desc.step-interest-desc {
+  align-self: center;
   color: #fff;
   font-size: 1.7rem;
   font-weight: 300;
-  text-align: center;
-  width: 100%;
-  max-width: 600px;
+  line-height: 1.7;
   margin-bottom: 3rem;
   margin-left: 0;
-  line-height: 1.7;
-  align-self: center;
+  max-width: 600px;
+  text-align: center;
+  width: 100%;
 }
 
+/* == 관심사 카드 그리드 ==================================================== */
 .step-interest-list {
   display: grid;
+  gap: 2rem;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(2, 1fr);
-  gap: 2rem;
-  width: 90vw;
-  max-width: 500px;
   margin: 0 auto;
+  max-width: 500px;
+  width: 90vw;
 }
 
-@media (min-width: 900px) {
-  .step-interest-list {
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    gap: 3rem 4rem;
-    width: 100%;
-    margin-bottom: 6rem;
-  }
-  .step-interest-btn {
-    aspect-ratio: 1/1;
-    min-width: 220px;
-    max-width: 260px;
-    min-height: 220px;
-    max-height: 260px;
-    font-size: 1.3rem;
-  }
-  .step-interest-label {
-    font-size: 1.3rem;
-    margin: 1rem 1.5rem 1.5rem 0;
-    padding: 0.3rem 1rem;
-  }
-  .step-title.step-interest-title {
-    font-size: 3.2rem;
-    max-width: 700px;
-  }
-  .step-desc.step-interest-desc {
-    font-size: 2rem;
-    max-width: 700px;
-  }
-}
+/* == 관심사 카드(버튼) ===================================================== */
 .step-interest-btn {
+  align-items: flex-end;
+  aspect-ratio: 1 / 1;
   background: none;
   border: none;
   border-radius: 1.2rem;
-  overflow: hidden;
   box-shadow: 0 2px 18px rgba(0, 0, 0, 0.18);
   cursor: pointer;
-  padding: 0;
-  transition: box-shadow 0.2s, transform 0.2s, opacity 0.2s;
-  opacity: 0.7;
-  position: relative;
-  aspect-ratio: 1/1;
-  min-width: 160px;
-  min-height: 160px;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
   justify-content: flex-end;
+  min-height: 160px;
+  min-width: 160px;
+  opacity: 0.7;
+  overflow: hidden;
+  padding: 0;
+  position: relative;
+  transition: box-shadow 0.2s, transform 0.2s, opacity 0.2s;
 }
 .step-interest-btn.selected {
-  opacity: 1;
   box-shadow: 0 4px 24px #4bcdfd55;
+  opacity: 1;
   transform: scale(1.04);
 }
+
+/* 카드 이미지 */
 .step-interest-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
   border-radius: 1.2rem;
-  position: absolute;
+  height: 100%;
   left: 0;
+  object-fit: cover;
+  position: absolute;
   top: 0;
+  width: 100%;
   z-index: 1;
 }
+
+/* 카드 라벨 */
 .step-interest-label {
-  position: relative;
-  z-index: 2;
+  background: rgba(20, 20, 20, 0.18);
+  border-radius: 0.7rem;
   color: #fff;
   font-size: 1.1rem;
   font-weight: 500;
   margin: 0.7rem 1.2rem 1.2rem 0;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-  background: rgba(20, 20, 20, 0.18);
-  border-radius: 0.7rem;
   padding: 0.2rem 0.7rem;
+  position: relative;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  z-index: 2;
 }
 
+/* 선택 상태 시 이미지 어둡게 */
+.step-interest-btn.selected .step-interest-img {
+  filter: brightness(0.7);
+}
+
+/* == 체크 오버레이(선택 표시) ============================================= */
+.step-interest-check-overlay {
+  align-items: center;
+  display: flex;
+  height: 40%;
+  justify-content: center;
+  left: 50%;
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 40%;
+  z-index: 2;
+}
+
+/* == 하단 고정 CTA 버튼 영역 ============================================== */
 /* 하단 전체가 클릭 영역이 되도록 버튼을 덮는 스타일 */
 .step-btn-group.step-interest-btn-group {
-  position: fixed;
-  left: 0;
-  right: 0;
+  background: #80A5F6;
   bottom: 0;
-  width: 100vw;
-  background: #4bcdfd;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  z-index: 10;
   box-shadow: 0 -2px 16px rgba(0, 0, 0, 0.12);
+  display: flex;
   height: 7rem;
+  justify-content: center;
+  left: 0;
+  padding: 0;
+  position: fixed;
+  right: 0;
+  width: 100vw;
+  z-index: 10;
 }
 
+/* 다음 버튼 */
 .step-btn.step-interest-btn-next {
-  width: 100vw;
-  height: 7rem;
-  font-size: 1.8rem;
-  color: #222;
+  align-items: center;
   background: none;
   border: none;
-  font-weight: 500;
-  letter-spacing: 0.02em;
-  cursor: pointer;
-  padding: 0;
-  transition: opacity 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.step-btn.step-interest-btn-next:not(:disabled) {
-  background: #4bcdfd;
-  color: black;
   border-radius: 0;
   box-shadow: none;
+  color: #222;
+  cursor: pointer;
+  display: flex;
+  font-size: 1.8rem;
+  font-weight: 500;
+  height: 7rem;
+  justify-content: center;
+  letter-spacing: 0.02em;
+  padding: 0;
+  transition: opacity 0.2s;
+  width: 100vw;
+}
+
+/* 다음 버튼 – 활성/비활성 상태 */
+.step-btn.step-interest-btn-next:not(:disabled) {
+  background: #80A5F6;
+  color: black;
   transition: background 0.2s, color 0.2s;
 }
 .step-btn.step-interest-btn-next:disabled {
   background: rgba(223, 246, 255, 0.1);
   color: white;
-  opacity: 1;
   cursor: not-allowed;
+  opacity: 1;
 }
 
-.step-btn-group.step-interest-btn-group:has(.step-btn.step-interest-btn-next:disabled) {
+/* 버튼 그룹 – 내부 버튼이 비활성화일 때 그룹 배경 변경 */
+.step-btn-group.step-interest-btn-group:has(
+    .step-btn.step-interest-btn-next:disabled
+  ) {
   background: rgba(223, 246, 255, 0.1) !important;
 }
 
-/* 체크 오버레이 추가 */
-.step-interest-check-overlay {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 40%;
-  height: 40%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-  z-index: 2;
-}
+/* == 반응형(데스크톱 이상) ================================================ */
+@media (min-width: 900px) {
+  .step-interest-list {
+    gap: 3rem 4rem;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    margin-bottom: 6rem;
+    width: 100%;
+  }
 
-.step-interest-btn.selected .step-interest-img {
-  filter: brightness(0.7);
-}
+  .step-interest-btn {
+    aspect-ratio: 1 / 1;
+    font-size: 1.3rem;
+    max-height: 260px;
+    max-width: 260px;
+    min-height: 220px;
+    min-width: 220px;
+  }
 
+  .step-interest-label {
+    font-size: 1.3rem;
+    margin: 1rem 1.5rem 1.5rem 0;
+    padding: 0.3rem 1rem;
+  }
+
+  .step-title.step-interest-title {
+    font-size: 3.2rem;
+    max-width: 700px;
+  }
+
+  .step-desc.step-interest-desc {
+    font-size: 2rem;
+    max-width: 700px;
+  }
+}

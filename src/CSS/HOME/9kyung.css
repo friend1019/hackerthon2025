@@ -2,7 +2,7 @@
 .kyung-top-section {
   width: 100%;
   max-width: 900px;
-  margin: 8rem auto 0 1rem; /* 헤더와 충분히 띄움 */
+  margin: 6rem auto 0 1rem; /* 헤더와 충분히 띄움 */
   padding: 2.2rem 1.2rem 1.2rem 1.2rem;
   display: flex;
   flex-direction: column;

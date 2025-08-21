@@ -33,18 +33,17 @@
   font-size: 2rem;
   color: var(--text-white);
   font-weight: 500;
-  margin: 0 0 1.5rem 0.2rem;
+  margin: 2rem 0 1.5rem 0.2rem;
 }
 
 /* --- 2-1. 라운드 리스트 --- */
 .category-round-list {
   display: flex;
   gap: 1.5rem;
-  margin-bottom: 3.5rem;
+  margin-bottom: 4.5rem;
   align-items: center;
   overflow-x: auto;
   white-space: nowrap;
-  padding-bottom: 0.2rem;
   margin-right: 2rem;
   scrollbar-width: none; /* Firefox */
 }
@@ -90,6 +89,8 @@
   font-size: 2rem;
   font-weight: 400;
   color: inherit;
+  margin-top: 0.3rem;
+  margin-left: 0.2rem;
 }
 
 /* --- 2-2. 탭 --- */
@@ -106,7 +107,7 @@
   color: var(--text-light);
   font-size: 2rem;
   font-weight: 500;
-  padding: 0.4rem 1.5rem;
+  padding: 0.7rem 1.5rem 0.4rem 1.5rem;
   cursor: pointer;
   border-radius: 3rem;
   transition: background 0.18s, color 0.18s;
@@ -139,11 +140,12 @@
   vertical-align: middle;
   z-index: 10;
   position: relative;
+  top: -0.5rem;
 }
 .category-tab.active {
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #8BC0D3;
+  color: #80A5F6;
 }
 .category-tab.active .category-tab-dot { background: #8faaff; }
 
@@ -204,8 +206,8 @@
   gap: 2.2rem;
   width: 100%;
   max-width: 100%;
-  height: 6.2rem;
-  margin: 2rem 2rem 1.2rem 0;
+  height: 8rem;
+  margin: 0rem 0rem 1.2rem 0;
   background: none;
 }
 .tip-bar-2025-label {
@@ -214,6 +216,7 @@
   font-weight: 400;
   letter-spacing: 0.01em;
   white-space: nowrap;
+  margin-left: 1rem;
 }
 .tip-bar-2025-line {
   flex: 1;
@@ -221,20 +224,31 @@
   background: rgba(180,180,180,0.13);
 }
 .tip-bar-2025-btn {
+  position: fixed;        /* 화면에 고정 */
+  right: 2rem;            /* 화면 오른쪽에서 2rem 떨어짐 */
+  bottom: 2rem;           /* 화면 하단에서 2rem 떨어짐 */
+  z-index: 1000;          /* 다른 요소 위에 보이도록 */
+
   display: flex;
   align-items: center;
   gap: 1.1rem;
+
   background: linear-gradient(90deg, #eaf6ff 0%, #b6d6f7 40%, #e2d6f7 100%);
   box-shadow: 0 2px 16px rgba(120,140,180,0.13);
   border: none;
   border-radius: 3.1rem;
-  padding: 0.5rem 2.7rem 0.5rem 1.1rem;
-  min-width: 220px;
+
+  padding: 0.5rem 1.6rem;
   height: 5.1rem;
+
   cursor: pointer;
   transition: filter 0.18s;
 }
-.tip-bar-2025-btn:hover { filter: brightness(0.97) saturate(1.1); }
+
+.tip-bar-2025-btn:hover {
+  filter: brightness(0.97) saturate(1.1);
+}
+
 .tip-bar-2025-btn-icon {
   display: flex;
   align-items: center;
@@ -245,12 +259,13 @@
   background: none;
 }
 .tip-bar-2025-btn-text {
-  color: var(--text-white);
-  font-size: 2.1rem;
-  font-weight: 400;
+  color: #80A5F6;
+  font-size: 2rem;
+  font-weight: 700;
   letter-spacing: 0.01em;
   white-space: nowrap;
   text-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  margin-right: 0.5rem;
 }
 
 /* ===================== 4. Animated Phrase (Tip Bar 아래) ===================== */
@@ -258,8 +273,10 @@
   position: static;
   width: 60vw;
   max-width: 700px;
-  min-width: 260px;
-  margin: 0 0 2.5rem 0;
+  min-width: 300px;
+  height: 15rem;
+  margin: 0 0rem 2.5rem 1rem;
+  margin-top: -1rem;
   font-size: 1.7rem;
   color: var(--text-white);
   text-shadow: 0 2px 12px rgba(0,0,0,0.25);
