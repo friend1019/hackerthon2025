@@ -18,7 +18,7 @@ import a9 from "../../IMAGE/a9.svg";
 
 const kyungList = [
   {
-    id: 88,
+    id: 1,
     number: 1,
     title: "해미읍성",
     subtitle: "Haemieupseong Fortress",
@@ -26,7 +26,7 @@ const kyungList = [
     img: a1,
   },
   {
-    id: 107,
+    id: 20,
     number: 2,
     title: "서산 용현리 마애여래삼존상",
     subtitle: "Rock-carved Buddha of Yonghyeon-ri",
@@ -34,7 +34,7 @@ const kyungList = [
     img: a2,
   },
   {
-    id: 136,
+    id: 49,
     number: 3,
     title: "간월암",
     subtitle: "Ganworam Hermitage",
@@ -42,7 +42,7 @@ const kyungList = [
     img: a3,
   },
   {
-    id: 127,
+    id: 40,
     number: 4,
     title: "개심사",
     subtitle: "Gaesimsa Temple",
@@ -50,7 +50,7 @@ const kyungList = [
     img: a4,
   },
   {
-    id: 121,
+    id: 34,
     number: 5,
     title: "팔봉산",
     subtitle: "Palbongsan Mountain",
@@ -58,7 +58,7 @@ const kyungList = [
     img: a5,
   },
   {
-    id: 130,
+    id: 43,
     number: 6,
     title: "가야산",
     subtitle: "Gayasan Mountain",
@@ -66,7 +66,7 @@ const kyungList = [
     img: a6,
   },
   {
-    id: 117,
+    id: 30,
     number: 7,
     title: "황금산",
     subtitle: "Hwanggeumsan Mountain",
@@ -74,7 +74,7 @@ const kyungList = [
     img: a7,
   },
   {
-    id: 142,
+    id: 55,
     number: 8,
     title: "서산한우목장",
     subtitle: "Seosan Hanwoo Ranch",
@@ -82,7 +82,7 @@ const kyungList = [
     img: a8,
   },
   {
-    id: 112,
+    id: 25,
     number: 9,
     title: "삼길포항",
     subtitle: "Samgilpo Port",

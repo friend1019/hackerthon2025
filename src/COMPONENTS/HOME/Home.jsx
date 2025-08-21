@@ -25,9 +25,9 @@ const categoryTabs = [
     key: "recommended",
     label: "추천",
     places: [
-      { img: nineKyung1, name: "팔봉산", id: 121 },
-      { img: nineKyung2, name: "황금산", id: 117 },
-      { img: nineKyung3, name: "간월암", id: 136 },
+      { img: nineKyung1, name: "팔봉산", id: 34 },
+      { img: nineKyung2, name: "황금산", id: 30 },
+      { img: nineKyung3, name: "간월암", id: 49 },
     ],
     moreLink: "/9kyung",
   },

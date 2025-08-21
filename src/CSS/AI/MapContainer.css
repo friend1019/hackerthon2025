@@ -56,7 +56,7 @@
   position: absolute;
   top: 6.6rem;
   right: 1.6rem;
-  z-index: 20;
+  z-index: 2;
   pointer-events: none;
 }
 .seosan-transport-mode-selector {
@@ -194,7 +194,7 @@
   left: 0;
   right: 0;
   bottom: -30rem; /* 숨김 위치 */
-  z-index: 15;
+  z-index: 2;
 
   display: grid;
   place-items: stretch;

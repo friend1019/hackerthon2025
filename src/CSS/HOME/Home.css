@@ -227,7 +227,7 @@
   position: fixed;        /* 화면에 고정 */
   right: 2rem;            /* 화면 오른쪽에서 2rem 떨어짐 */
   bottom: 2rem;           /* 화면 하단에서 2rem 떨어짐 */
-  z-index: 1000;          /* 다른 요소 위에 보이도록 */
+  z-index: 2;          /* 다른 요소 위에 보이도록 */
 
   display: flex;
   align-items: center;

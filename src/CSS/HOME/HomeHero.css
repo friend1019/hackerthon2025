@@ -290,7 +290,7 @@
 }
 .badge-c {
   --a: 40deg;
-  --dur: 27s;
+  --dur: 30s;
   animation-direction: reverse;
   width: 2.6rem !important;
   height: 2.6rem !important;

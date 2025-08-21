@@ -130,6 +130,12 @@ function PlaceDetail() {
                     <div className="place-value">{place.finalType}</div>
                   </div>
                 )}
+                {isStore && (
+                  <div className="place-row">
+                    <div className="place-label">지역화폐 사용가능 여부</div>
+                    <div className="place-value">✅</div>
+                  </div>
+                )}
               </div>
             </motion.div>
           )}
