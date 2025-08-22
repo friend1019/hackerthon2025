@@ -5,7 +5,7 @@ import "../../CSS/PLACE/PlaceDetail.css";
 import api from "../../API/axios";
 import { FiChevronLeft } from "react-icons/fi";
 import NaverMap from "../MAPS/NaverMap";
-import DefaultStoreImg from "../../IMAGE/defaultImage.svg";
+import DefaultStoreImg from "../../IMAGE/place/defaultImage.svg";
 import { motion, AnimatePresence } from "framer-motion";
 
 function PlaceDetail() {

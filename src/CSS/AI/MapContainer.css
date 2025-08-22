@@ -1,10 +1,10 @@
 /* ==========================================================================
    MapContainer.css — 10px = 1rem 기준 (html: 62.5% 가정)
-   - Fullscreen map + overlays
-   - Transport mode buttons: Responsive & compact
+   - 전체 화면 지도 + 오버레이
+   - 교통수단 버튼: 반응형·컴팩트
    ========================================================================== */
 
-/* ========= 0. Tokens ========= */
+/* ========= 0) 디자인 토큰 ========= */
 :root {
   --mc-bg: #141416;
   --mc-card: rgba(22, 24, 28, 0.72);
@@ -15,7 +15,7 @@
   --mc-shadow: 0 0.8rem 2.4rem rgba(0, 0, 0, 0.25);
 }
 
-/* ========= 1. Layout: Fullscreen container & map ========= */
+/* ========= 1) 레이아웃: 전체 화면 컨테이너 & 지도 ========= */
 .seosan-map-fullscreen-container {
   position: relative;
   width: 100vw;
@@ -30,7 +30,7 @@
   height: 100%;
 }
 
-/* ========= 2. Brand (Logo, link) ========= */
+/* ========= 2) 브랜드(로고, 링크) ========= */
 .seosan-logo-container {
   position: absolute;
   top: 1.6rem;
@@ -39,19 +39,26 @@
   display: inline-flex;
   align-items: center;
   gap: 0.8rem;
-
-  padding: 0.6rem 1.0rem;
+  padding: 0.6rem 1rem;
   border-radius: 1.2rem;
   background: rgba(0, 0, 0, 0.35);
   border: 0.1rem solid rgba(255, 255, 255, 0.14);
   backdrop-filter: blur(0.6rem);
   color: var(--mc-text);
-  box-shadow: 0 0.4rem 1.2rem rgba(0,0,0,0.18);
+  box-shadow: 0 0.4rem 1.2rem rgba(0, 0, 0, 0.18);
 }
-.seosan-logo { width: 2.4rem; height: 2.4rem; display: block; }
-.seosan-logo-text { font-size: 1.4rem; font-weight: 600; letter-spacing: 0.02em; }
+.seosan-logo {
+  width: 2.4rem;
+  height: 2.4rem;
+  display: block;
+}
+.seosan-logo-text {
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
 
-/* ========= 3. Transport mode selector ========= */
+/* ========= 3) 교통수단 선택 오버레이 ========= */
 .seosan-transport-mode-overlay {
   position: absolute;
   top: 6.6rem;
@@ -63,7 +70,6 @@
   pointer-events: auto;
   width: min(20rem, 86vw);
   max-width: 36rem;
-
   padding: 1.2rem 1.2rem 1.2rem;
   border-radius: 1.6rem;
   background: var(--mc-card);
@@ -86,52 +92,46 @@
   gap: 0.8rem;
   align-items: stretch;
 }
-
 .seosan-mode-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-
-  height: 4.0rem;
+  height: 4rem;
   padding: 0.5rem 0.9rem;
   min-width: 0;
   border-radius: 1rem;
-
-  background: rgba(255,255,255,0.06);
-  border: 0.1rem solid rgba(255,255,255,0.14);
+  background: rgba(255, 255, 255, 0.06);
+  border: 0.1rem solid rgba(255, 255, 255, 0.14);
   color: var(--mc-text);
-
   font-size: 1.3rem;
   line-height: 1;
   cursor: pointer;
   transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
-  box-shadow: 0 0.2rem 0.6rem rgba(0,0,0,0.10);
+  box-shadow: 0 0.2rem 0.6rem rgba(0, 0, 0, 0.1);
 }
 .seosan-mode-button:hover {
   transform: translateY(-0.03rem);
-  background: rgba(255,255,255,0.10);
-  border-color: rgba(255,255,255,0.28);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.28);
 }
 .seosan-mode-button.active {
   background: linear-gradient(135deg, rgba(128,165,246,0.22), rgba(143,170,255,0.18));
   border-color: rgba(128,165,246,0.55);
-  box-shadow: 0 0.3rem 1.0rem rgba(100,140,240,0.18);
+  box-shadow: 0 0.3rem 1rem rgba(100,140,240,0.18);
 }
-
 .seosan-mode-icon { font-size: 1.6rem; line-height: 1; }
 .seosan-mode-label { font-size: 1.25rem; font-weight: 600; letter-spacing: -0.02rem; }
 
-/* 작은 화면: 2열 고정 + 더 컴팩트 */
+/* 작은 화면(≤420px): 2열 고정 + 더 컴팩트 */
 @media (max-width: 420px) {
   .seosan-transport-mode-selector { width: min(30rem, 92vw); }
-  .seosan-mode-buttons { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 0.6rem; }
+  .seosan-mode-buttons { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.6rem; }
   .seosan-mode-button { height: 3.6rem; padding: 0.45rem 0.7rem; border-radius: 0.9rem; }
   .seosan-mode-icon { font-size: 1.5rem; }
   .seosan-mode-label { font-size: 1.15rem; }
 }
-
-/* 태블릿 이상: 살짝 넉넉 */
+/* 태블릿(≥768px): 여유 있는 배치 */
 @media (min-width: 768px) {
   .seosan-mode-buttons { grid-template-columns: repeat(auto-fit, minmax(9.6rem, 1fr)); gap: 1rem; }
   .seosan-mode-button { height: 4.2rem; padding: 0.6rem 1rem; }
@@ -139,7 +139,7 @@
   .seosan-mode-label { font-size: 1.3rem; }
 }
 
-/* ========= 4. Empty state (no places) ========= */
+/* ========= 4) 빈 상태(장소 없음) ========= */
 .seosan-no-places-overlay {
   position: absolute;
   inset: 0;
@@ -173,32 +173,28 @@
   gap: 0.4rem;
   margin-bottom: 0.8rem;
 }
-.seosan-command {
-  font-size: 1.3rem;
-}
+.seosan-command { font-size: 1.3rem; }
 .seosan-command code {
   margin-left: 0.6rem;
   padding: 0.1rem 0.5rem;
   border-radius: 0.6rem;
-  background: rgba(255,255,255,0.08);
-  border: 0.1rem solid rgba(255,255,255,0.14);
+  background: rgba(255, 255, 255, 0.08);
+  border: 0.1rem solid rgba(255, 255, 255, 0.14);
 }
 .seosan-note {
   font-size: 1.2rem;
   color: var(--mc-text-muted);
 }
 
-/* ========= 5. Route panel (bottom sheet) ========= */
+/* ========= 5) 경로 패널(바텀 시트) ========= */
 .seosan-route-info-overlay {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: -30rem; /* 숨김 위치 */
+  bottom: -30rem; /* 기본: 숨김 위치 */
   z-index: 2;
-
   display: grid;
   place-items: stretch;
-
   transition: bottom 0.28s ease;
 }
 @media (min-width: 900px) {
@@ -213,7 +209,6 @@
   transform: translateX(-50%);
   width: 5.2rem;
   height: 2.4rem;
-
   display: grid;
   place-items: center;
   border-radius: 1.2rem 1.2rem 0 0;
@@ -221,21 +216,20 @@
   border: 0.1rem solid var(--mc-card-border);
   color: var(--mc-text);
   cursor: pointer;
-  box-shadow: 0 -0.4rem 1rem rgba(0,0,0,0.12);
+  box-shadow: 0 -0.4rem 1rem rgba(0, 0, 0, 0.12);
 }
 .seosan-toggle-icon { font-size: 1.6rem; line-height: 1; opacity: 0.8; }
 
 .seosan-route-info-list {
   max-height: 42vh;
   overflow: auto;
-
   padding: 1.4rem 1.2rem 1.6rem;
   border-radius: 1.6rem 1.6rem 0 0;
   background: var(--mc-card);
   border-top: 0.1rem solid var(--mc-card-border);
   color: var(--mc-text);
   backdrop-filter: blur(0.8rem);
-  box-shadow: 0 -0.8rem 2rem rgba(0,0,0,0.24);
+  box-shadow: 0 -0.8rem 2rem rgba(0, 0, 0, 0.24);
 }
 
 .seosan-route-header {
@@ -253,8 +247,8 @@
   height: 3.2rem;
   padding: 0 1rem;
   border-radius: 0.8rem;
-  border: 0.1rem solid rgba(255,255,255,0.18);
-  background: rgba(255,255,255,0.06);
+  border: 0.1rem solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.06);
   color: var(--mc-text);
   cursor: pointer;
   transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease, opacity 0.15s ease;
@@ -262,8 +256,8 @@
 .seosan-show-all-button:disabled { opacity: 0.5; cursor: not-allowed; }
 .seosan-show-all-button:hover:not(:disabled),
 .seosan-naver-map-button:hover {
-  background: rgba(255,255,255,0.10);
-  border-color: rgba(255,255,255,0.28);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.28);
   transform: translateY(-0.03rem);
 }
 .seosan-naver-map-button { color: #03C75A; }
@@ -276,13 +270,13 @@
 .seosan-route-card {
   padding: 1rem;
   border-radius: 1rem;
-  background: rgba(255,255,255,0.04);
-  border: 0.1rem solid rgba(255,255,255,0.12);
+  background: rgba(255, 255, 255, 0.04);
+  border: 0.1rem solid rgba(255, 255, 255, 0.12);
   transition: border-color 0.15s ease, background 0.15s ease;
 }
 .seosan-route-card.active {
-  background: rgba(128,165,246, 0.10);
-  border-color: rgba(128,165,246, 0.55);
+  background: rgba(128, 165, 246, 0.1);
+  border-color: rgba(128, 165, 246, 0.55);
 }
 .seosan-route-card-header {
   display: flex;
@@ -297,7 +291,7 @@
 }
 .seosan-route-card-content {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0,1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.8rem;
 }
 .seosan-route-info-item { display: grid; gap: 0.2rem; min-width: 0; }
@@ -311,27 +305,32 @@
 }
 
 /* 카드 내 액션 버튼 */
-.seosan-seg-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.6rem; }
+.seosan-seg-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 0.6rem;
+}
 .seosan-seg-view-button,
 .seosan-seg-naver-button {
   height: 3rem;
   padding: 0 0.9rem;
   border-radius: 0.7rem;
-  border: 0.1rem solid rgba(255,255,255,0.18);
-  background: rgba(255,255,255,0.06);
+  border: 0.1rem solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.06);
   color: var(--mc-text);
   cursor: pointer;
   transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
 }
 .seosan-seg-view-button:hover,
 .seosan-seg-naver-button:hover {
-  background: rgba(255,255,255,0.10);
-  border-color: rgba(255,255,255,0.28);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.28);
   transform: translateY(-0.02rem);
 }
 .seosan-seg-view-button.active {
-  background: rgba(128,165,246,0.18);
-  border-color: rgba(128,165,246,0.55);
+  background: rgba(128, 165, 246, 0.18);
+  border-color: rgba(128, 165, 246, 0.55);
 }
 .seosan-seg-naver-button { color: #03C75A; }
 
@@ -341,16 +340,18 @@
   padding: 0.6rem 0.2rem;
 }
 
+/* 바텀시트 확장 버전(큰 화면) */
 @media (min-width: 900px) {
   .seosan-route-info-list { max-height: 46vh; }
-  .seosan-route-cards { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .seosan-route-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
+/* 모바일 최적화 */
 @media (max-width: 640px) {
   .seosan-route-card-content { grid-template-columns: 1fr; }
   .seosan-transport-mode-selector { right: 1.2rem; }
 }
 
-/* ========= 7. Marker overlay card ========= */
+/* ========= 7) 마커 오버레이 카드 ========= */
 .seosan-overlay-card {
   position: relative;
   background: rgba(17, 17, 17, 0.95);
@@ -358,8 +359,8 @@
   border-radius: 1.2rem;
   padding: 1rem 1.2rem;
   max-width: 22rem;
-  box-shadow: 0 0.6rem 2.4rem rgba(0,0,0,0.35), 0 0 0.8rem rgba(128,165,246,0.25);
-  border: 0.1rem solid rgba(128,165,246,0.35);
+  box-shadow: 0 0.6rem 2.4rem rgba(0, 0, 0, 0.35), 0 0 0.8rem rgba(128, 165, 246, 0.25);
+  border: 0.1rem solid rgba(128, 165, 246, 0.35);
   font-size: 1rem;
   line-height: 1.4;
   backdrop-filter: blur(0.4rem);
@@ -372,7 +373,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  text-shadow: 0 0 0.4rem rgba(128,165,246,0.35);
+  text-shadow: 0 0 0.4rem rgba(128, 165, 246, 0.35);
 }
 .seosan-overlay-card .meta { opacity: 0.8; font-size: 1.2rem; }
 .seosan-overlay-arrow {
@@ -384,11 +385,11 @@
   height: 0;
   border-left: 0.8rem solid transparent;
   border-right: 0.8rem solid transparent;
-  border-top: 0.8rem solid rgba(17,17,17,0.95);
-  filter: drop-shadow(0 -1px 0 rgba(255,255,255,0.08));
+  border-top: 0.8rem solid rgba(17, 17, 17, 0.95);
+  filter: drop-shadow(0 -1px 0 rgba(255, 255, 255, 0.08));
 }
 
-/* ========= 8. Segment label ========= */
+/* ========= 8) 구간 라벨 ========= */
 .seosan-seg-label {
   background: rgba(20, 20, 20, 0.85);
   color: #fff;
@@ -397,48 +398,44 @@
   padding: 0.4rem 0.7rem;
   border-radius: 999px;
   border: 0.12rem solid transparent; /* JS에서 borderColor로 구간색 주입 */
-  box-shadow: 0 0.4rem 1.2rem rgba(0,0,0,0.25);
+  box-shadow: 0 0.4rem 1.2rem rgba(0, 0, 0, 0.25);
   white-space: nowrap;
   user-select: none;
   pointer-events: none;
 }
 
-/* ========= 9. ✅ Pin Pulse (리플 애니메이션) — 위치 오프셋 적용 ========= */
+/* ========= 9) 핀 펄스(리플 애니메이션) — 위치 오프셋 적용 ========= */
 .seosan-pin-pulse {
   position: relative;
   width: 14px;
   height: 14px;
 
-  /* 👉 오프셋: 오른쪽(x), 아래(y)으로 살짝 이동 */
-  --pulse-x: 0px;   /* 필요하면 2~6px 사이로 조정 */
+  /* 미세 위치 오프셋 (오른쪽/아래) */
+  --pulse-x: 0px;   /* 필요 시 2~6px 범위로 조정 */
   --pulse-y: 1px;
 
-  /* CustomOverlay가 xAnchor:0.5, yAnchor:1.0 이므로
-     추가 중앙 정렬은 하지 않고, 원하는 만큼만 미세 이동 */
+  /* CustomOverlay가 xAnchor:0.5, yAnchor:1.0 → 중앙 정렬 유지 + 미세 이동 */
   transform: translate(var(--pulse-x), var(--pulse-y));
 
   border-radius: 50%;
-  background: rgba(128,165,246,0.28);
-  box-shadow: 0 0 12px rgba(128,165,246,0.45);
+  background: rgba(128, 165, 246, 0.28);
+  box-shadow: 0 0 12px rgba(128, 165, 246, 0.45);
   animation: pinPulseCore 2.2s ease-out infinite;
   pointer-events: none;
 }
-
 .seosan-pin-pulse::after,
 .seosan-pin-pulse::before {
   content: "";
   position: absolute;
   inset: -6px; /* 링 두께/크기 */
   border-radius: 50%;
-  border: 2px solid rgba(128,165,246,0.55);
+  border: 2px solid rgba(128, 165, 246, 0.55);
   opacity: 0.8;
   animation: pinPulseRing 2.2s ease-out infinite;
 }
-.seosan-pin-pulse::before {
-  animation-delay: 1.1s; /* 두 번째 리플 지연 */
-}
+.seosan-pin-pulse::before { animation-delay: 1.1s; } /* 두 번째 리플 지연 */
 
-/* 위치 오프셋을 유지한 채 scale만 변화 */
+/* 위치 오프셋 유지 + scale 변화만 적용 */
 @keyframes pinPulseCore {
   0%   { transform: translate(var(--pulse-x), var(--pulse-y)) scale(0.96); opacity: 0.95; }
   50%  { transform: translate(var(--pulse-x), var(--pulse-y)) scale(1.04); opacity: 1; }

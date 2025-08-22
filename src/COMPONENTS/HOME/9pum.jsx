@@ -1,30 +1,26 @@
+// src/COMPONENTS/HOME/9pum.jsx
 import React from "react";
-// import { MdKeyboardArrowRight } from "react-icons/md";
 import { AnimatePresence, motion } from "framer-motion";
-import "../../CSS/HOME/9kyung.css";
+
+/* 공통 컴포넌트 & 스타일 */
 import Header from "../COMMON/Header";
-// import { useNavigate } from "react-router-dom";
-import { ReactComponent as StarSvg } from "../../IMAGE/kyung-star.svg";
+import "../../CSS/HOME/9kyung.css";
 
-const img1 =
-  "https://www.seosan.go.kr/site/tour/images/contents/cts959_img.jpg";
-const img2 =
-  "https://www.seosan.go.kr/site/tour/images/contents/cts959_img2.jpg";
-const img3 =
-  "https://www.seosan.go.kr/site/tour/images/contents/cts959_img3.jpg";
-const img4 =
-  "https://www.seosan.go.kr/site/tour/images/contents/cts959_img4.jpg";
-const img5 =
-  "https://www.seosan.go.kr/site/tour/images/contents/cts959_img5.jpg";
-const img6 =
-  "https://www.seosan.go.kr/site/tour/images/contents/cts959_img6.jpg";
-const img7 =
-  "https://www.seosan.go.kr/site/tour/images/contents/cts959_img7.jpg";
-const img8 =
-  "https://www.seosan.go.kr/site/tour/images/contents/cts959_img8.jpg";
-const img9 =
-  "https://www.seosan.go.kr/site/tour/images/contents/cts959_img9.jpg";
+/* 에셋 */
+import { ReactComponent as StarSvg } from "../../IMAGE/icons/kyung-star.svg";
 
+/* 외부 이미지 (서산시 관광 사이트) */
+const img1 = "https://www.seosan.go.kr/site/tour/images/contents/cts959_img.jpg";
+const img2 = "https://www.seosan.go.kr/site/tour/images/contents/cts959_img2.jpg";
+const img3 = "https://www.seosan.go.kr/site/tour/images/contents/cts959_img3.jpg";
+const img4 = "https://www.seosan.go.kr/site/tour/images/contents/cts959_img4.jpg";
+const img5 = "https://www.seosan.go.kr/site/tour/images/contents/cts959_img5.jpg";
+const img6 = "https://www.seosan.go.kr/site/tour/images/contents/cts959_img6.jpg";
+const img7 = "https://www.seosan.go.kr/site/tour/images/contents/cts959_img7.jpg";
+const img8 = "https://www.seosan.go.kr/site/tour/images/contents/cts959_img8.jpg";
+const img9 = "https://www.seosan.go.kr/site/tour/images/contents/cts959_img9.jpg";
+
+/* === 서산 9품 목록(정적 데이터) === */
 const pumList = [
   {
     id: 1,
@@ -100,33 +96,36 @@ const pumList = [
   },
 ];
 
+/* === 개별 카드 === */
 const PumCard = ({ item }) => {
+  // 상세 페이지 라우팅을 추가한다면 useNavigate 사용
   // const navigate = useNavigate();
+
   return (
     <div className="kyung-card-redesign">
+      {/* 좌측: 배지/타이틀/설명 */}
       <div className="kyung-card-left">
         <div className="kyung-card-badge">{item.number}품</div>
+
         <div className="kyung-card-title-row">
           <StarSvg className="kyung-card-star" />
           <span className="kyung-card-title">{item.title}</span>
           <span className="kyung-card-title-en">{item.subtitle}</span>
         </div>
+
         <div className="kyung-card-desc">{item.desc}</div>
-        {/* <button
+
+        {/* 상세 페이지가 준비되면 아래 버튼을 활성화하세요.
+        <button
           className="kyung-card-link"
           onClick={() => navigate(`/place/${item.id}`)}
         >
-          상세정보{" "}
-          <MdKeyboardArrowRight
-            style={{
-              fontSize: "1.3rem",
-              verticalAlign: "middle",
-              marginLeft: "-0.3rem",
-              marginBottom: "0.1rem",
-            }}
-          />
-        </button> */}
+          상세정보 <MdKeyboardArrowRight style={{ fontSize: "1.3rem", verticalAlign: "middle", marginLeft: "-0.3rem", marginBottom: "0.1rem" }} />
+        </button>
+        */}
       </div>
+
+      {/* 우측: 썸네일 이미지 */}
       <div className="kyung-card-right">
         <img src={item.img} alt={item.title} className="kyung-card-img" />
       </div>
@@ -134,6 +133,7 @@ const PumCard = ({ item }) => {
   );
 };
 
+/* === 목록 페이지 === */
 const PumList = () => {
   return (
     <AnimatePresence mode="wait">
@@ -144,13 +144,17 @@ const PumList = () => {
         exit={{ opacity: 0 }}
         transition={{ duration: 0.5 }}
       >
+        {/* 상단 헤더 */}
         <Header />
+
+        {/* 상단 섹션: 타이틀/설명/필 리스트 */}
         <div className="kyung-top-section">
           <h1 className="kyung-list-title">서산9품</h1>
           <div className="kyung-list-desc">
             자연의 맛과 정성을 담은 서산 9품을 통해 신선함과 풍미를 한껏
             느껴보세요.
           </div>
+
           <div className="kyung-pill-list">
             {pumList.map((item) => (
               <span className="kyung-pill" key={item.id}>
@@ -159,7 +163,10 @@ const PumList = () => {
             ))}
           </div>
         </div>
+
         <hr className="kyung-section-divider" />
+
+        {/* 카드 리스트 */}
         <div className="kyung-list-wrap">
           {pumList.map((item) => (
             <PumCard key={item.id} item={item} />

@@ -2,10 +2,12 @@ import React, { useEffect, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import { useParams, useNavigate } from "react-router-dom";
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
-import "../../CSS/AI/AiCourseDetail.css";
+
 import Alert from "../COMMON/Alert";
 import Header from "../COMMON/Header";
-import defaultImage from "../../IMAGE/defaultImage.svg";
+
+import "../../CSS/AI/AiCourseDetail.css";
+import defaultImage from "../../IMAGE/place/defaultImage.svg";
 
 const AiCourseDetail = () => {
   const { id } = useParams();

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../API/axios";
-import DefaultStoreImg from "../../IMAGE/defaultImage.svg";
+import DefaultStoreImg from "../../IMAGE/place/defaultImage.svg";
 import "../../CSS/HOME/HomeHero.css";
 
 export default function HomeHeroSearchDropdown() {

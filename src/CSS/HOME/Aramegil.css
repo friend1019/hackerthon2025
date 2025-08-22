@@ -1,4 +1,3 @@
-
 /* ========================================================
    Layout: Page Containers
 ======================================================== */
@@ -12,20 +11,26 @@
   background-color: #141414;
 }
 
-.aramegil-main { display: flex; flex-direction: column; width: 100%; }
+.aramegil-main {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
 
-/* Utility */
+/* ========================================================
+   Utilities
+======================================================== */
 .aramegil-align-right {
   margin-left: auto;
-  justify-content: flex-end !important;
-  display: flex !important;
+  display: flex;
   align-items: center;
+  justify-content: flex-end;
 }
 
 /* ========================================================
    Place / Intro Pane
 ======================================================== */
-.aramegil-place-pane { padding: 0.8rem 1.6rem 2rem 1.6rem; }
+.aramegil-place-pane { padding: 0.8rem 1.6rem 2rem; }
 
 .aramegil-place-title {
   color: #fff;
@@ -43,14 +48,19 @@
 }
 
 /* Tags */
-.aramegil-tag-list { display: flex; flex-wrap: wrap; gap: 0.8rem; }
+.aramegil-tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
 .aramegil-tag-item {
   background: #393c41;
   color: #fff;
-  font-size: 1.08rem; /* 10.8px approx */
+  font-size: 1.08rem; /* 10.8px */
   font-weight: 500;
   border-radius: 1.5rem;
-  padding: 0.48em 1.3em; /* scalable with font-size */
+  padding: 0.48em 1.3em;
   display: inline-block;
   margin-bottom: 0.2rem;
   box-shadow: 0 0.2rem 0.8rem #0002;
@@ -77,10 +87,9 @@
   flex-wrap: nowrap;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  padding-bottom: 0.6rem; /* 6px */
-  padding-left: 1.6rem; /* 16px */
+  padding: 0 0 0.6rem 1.6rem;
   -ms-overflow-style: none; /* IE, Edge */
-  scrollbar-width: none; /* Firefox */
+  scrollbar-width: none;    /* Firefox */
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
@@ -92,13 +101,17 @@
   scroll-snap-align: start;
   flex-shrink: 0;
   width: min(26.3rem, 100%); /* 263px */
-  height: 18.8rem; /* 188px */
-  border-radius: 1.6rem; /* 16px */
+  height: 18.8rem;           /* 188px */
+  border-radius: 1.6rem;     /* 16px */
   overflow: hidden;
   min-width: 0;
 }
 
-.aramegil-photo-img { width: 100%; height: 100%; object-fit: cover; }
+.aramegil-photo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
 .aramegil-photo-caption {
   position: absolute;
@@ -106,7 +119,7 @@
   bottom: 0;
   width: 100%;
   padding: 0.8rem 1rem; /* 8px 10px */
-  font-size: 1.3rem; /* 13px */
+  font-size: 1.3rem;    /* 13px */
   color: #fff;
   background: rgba(0, 0, 0, 0.3);
 }
@@ -114,9 +127,13 @@
 /* ========================================================
    Trails / Cards
 ======================================================== */
-.aramegil-trails-section { padding: 0.3rem 0 0.7rem 0; }
+.aramegil-trails-section { padding: 0.3rem 0 0.7rem; }
 
-.aramegil-trail-card { padding: 1.6rem; margin-top: -5rem; }
+/* NOTE: 기존 -5rem는 겹침 이슈의 가능성이 있어 0으로 수정 */
+.aramegil-trail-card {
+  padding: 1.6rem;
+  margin-top: 0;
+}
 
 .aramegil-trail-card-header {
   display: flex;
@@ -124,7 +141,12 @@
   margin-bottom: 0.8rem;
 }
 
-.aramegil-trail-card-title { display: flex; align-items: center; gap: 0.8rem; }
+.aramegil-trail-card-title {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
 .aramegil-star-icon { width: 1.6rem; height: 1.6rem; }
 
 .aramegil-trail-card-title-text {
@@ -135,14 +157,34 @@
 }
 
 .aramegil-trail-card-distance,
-.aramegil-trail-card-duration { color: rgba(255,255,255,0.6); font-size: 1rem; }
+.aramegil-trail-card-duration {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1rem;
+}
 
-.aramegil-trail-card-difficulty { display: flex; align-items: center; gap: 0.6rem; }
-.aramegil-difficulty-text { color: rgba(255,255,255,0.6); font-size: 1rem; }
-.aramegil-difficulty-text-inline { color: rgba(255,255,255,0.6); font-size: 1rem; margin-right: 0.4rem; }
+.aramegil-trail-card-difficulty {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
 
-.aramegil-difficulty-stars { display: flex; gap: 0.2rem; }
-.aramegil-difficulty-stars-inline { display: flex; align-items: center; gap: 0.4rem; }
+.aramegil-difficulty-text,
+.aramegil-difficulty-text-inline {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1rem;
+}
+
+.aramegil-difficulty-text-inline { margin-right: 0.4rem; }
+
+.aramegil-difficulty-stars,
+.aramegil-difficulty-stars-inline {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.aramegil-difficulty-stars-inline { gap: 0.4rem; }
+
 .aramegil-difficulty-star-icon { width: 1.2rem; height: 1.2rem; }
 
 .aramegil-trail-card-description {
@@ -151,18 +193,27 @@
   line-height: 1.2rem; /* 12px */
   white-space: pre-line;
   margin-bottom: 1.2rem; /* 12px */
-  padding-left: 2.4rem; /* 24px */
+  padding-left: 2.4rem;  /* 24px */
 }
 
 /* ========================================================
-   Subcourse (하위 코스)
+   Subcourses (하위 코스) — JSX와 매칭
 ======================================================== */
-.aramegil-subcourses-container { margin-bottom: 1.2rem; }
-.aramegil-subcourse-item { margin-bottom: 1.2rem; }
+.aramegil-subcourses-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  margin-bottom: 1.2rem;
+}
 
-.aramegil-subcourse-header { display: flex; justify-content: space-between; margin-bottom: 0.4rem; }
+.aramegil-subcourse-block { margin-bottom: 0.2rem; }
 
-.aramegil-subcourse-title-row { display: flex; align-items: center; gap: 1.6rem; margin-bottom: 0.2rem; }
+.aramegil-subcourse-title-row {
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+  margin-bottom: 0.2rem;
+}
 
 .aramegil-subcourse-title {
   color: #fff;
@@ -171,26 +222,25 @@
   padding-left: 2.4rem; /* 24px */
 }
 
-/* Optional alt styling from later snippet (kept as a single source of truth):
-   If you prefer the larger title, uncomment below and remove the block above.
-   .aramegil-subcourse-title { color:#f8f7f5; font-weight:500; font-size:1.15rem; padding-left:1.8rem; }
-*/
-
-.aramegil-subcourse-meta { color: rgba(255, 255, 255, 0.6); font-size: 1rem; margin-left: 0.8rem; margin-right: 1.2rem; }
+.aramegil-subcourse-meta {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1rem;
+  margin-left: 0.8rem;
+  margin-right: 1.2rem;
+}
 
 .aramegil-subcourse-description {
   color: rgba(255, 255, 255, 0.85);
-  font-size: 0.9rem; /* 9px */
-  line-height: 1.6rem; /* make subcourse text more readable */
+  font-size: 0.9rem;         /* 9px */
+  line-height: 1.6rem;       /* 가독성 향상 */
   white-space: pre-line;
   padding-left: 2.4rem;
-  margin: 0.1rem 1.5rem 0.5rem 1.8rem; /* from mixed snippets, normalized */
+  margin: 0.1rem 1.5rem 0.5rem 1.8rem;
 }
 
 /* ========================================================
-   Misc Typography (from mixed snippets consolidated)
+   Optional Variants (사용 시에만)
 ======================================================== */
-/* Trail card extended text style mentioned inside other blocks */
 .aramegil-trail-card-description--extended {
   color: #eaeaea;
   font-size: 1rem;
@@ -200,14 +250,19 @@
   white-space: pre-line;
 }
 
-/* Larger hero-like title/desc variants (if used elsewhere) */
-.aramegil-hero-title { color: #f8f7f5; font-size: 2.1rem; font-weight: 400; margin-bottom: 0.7rem; letter-spacing: -0.05rem; line-height: 1.2; }
-.aramegil-hero-desc { color: #f8f7f5; font-size: 1.08rem; font-weight: 400; margin-bottom: 1.5rem; line-height: 1.6; }
+.aramegil-hero-title {
+  color: #f8f7f5;
+  font-size: 2.1rem;
+  font-weight: 400;
+  margin-bottom: 0.7rem;
+  letter-spacing: -0.05rem;
+  line-height: 1.2;
+}
 
-/* ========================================================
-   Notes
-   - Removed invalid nested selectors from prior CSS (converted into standalone selectors).
-   - De-duplicated repeated rules (e.g., subcourse title/description, dividers, tag styles).
-   - All px values converted to rem using 10px = 1rem (via html 62.5%).
-   - Kept visual parity while improving responsiveness.
-======================================================== */
+.aramegil-hero-desc {
+  color: #f8f7f5;
+  font-size: 1.08rem;
+  font-weight: 400;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}

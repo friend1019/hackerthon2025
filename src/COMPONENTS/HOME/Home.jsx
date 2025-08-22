@@ -6,18 +6,18 @@ import Weather from "./HomeWeather";
 import "../../CSS/HOME/Home.css";
 
 import Header from "../COMMON/Header";
-import twostars from "../../IMAGE/twostars.svg";
+import twostars from "../../IMAGE/icons/twostars.svg";
 // import Footer from "../COMMON/Footer";
 
-import nineKyung1 from "../../IMAGE/9경1.svg";
-import nineKyung2 from "../../IMAGE/9경2.svg";
-import nineKyung3 from "../../IMAGE/9경3.svg";
-import festival1 from "../../IMAGE/festival1.svg";
-import festival2 from "../../IMAGE/festival2.svg";
-import festival3 from "../../IMAGE/festival3.svg";
-import aramegil1 from "../../IMAGE/aramegil1.svg";
-import aramegil2 from "../../IMAGE/aramegil2.svg";
-import aramegil3 from "../../IMAGE/aramegil3.svg";
+import nineKyung1 from "../../IMAGE/place/9경1.svg";
+import nineKyung2 from "../../IMAGE/place/9경2.svg";
+import nineKyung3 from "../../IMAGE/place/9경3.svg";
+import festival1 from "../../IMAGE/place/festival1.svg";
+import festival2 from "../../IMAGE/place/festival2.svg";
+import festival3 from "../../IMAGE/place/festival3.svg";
+import aramegil1 from "../../IMAGE/place/aramegil1.svg";
+import aramegil2 from "../../IMAGE/place/aramegil2.svg";
+import aramegil3 from "../../IMAGE/place/aramegil3.svg";
 
 /* ===================== 상수: 카테고리 탭 ===================== */
 const categoryTabs = [

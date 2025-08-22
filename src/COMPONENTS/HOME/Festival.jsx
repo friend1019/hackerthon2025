@@ -1,20 +1,24 @@
-import React, { useState } from "react";
+import React, { useMemo, useState, memo } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Header from "../COMMON/Header";
-import { ReactComponent as StarSvg } from "../../IMAGE/kyung-star.svg";
+import { ReactComponent as StarSvg } from "../../IMAGE/icons/kyung-star.svg";
 import "../../CSS/HOME/Festival.css";
-import samgilpoImg from "../../IMAGE/samgilpo.svg";
-import haemiblossomImg from "../../IMAGE/haemiblossom.svg";
-import starfestivalImg from "../../IMAGE/starfestival.svg";
-import wangsanpofestivalImg from "../../IMAGE/jigokwang.svg";
-import potatofestivalImg from "../../IMAGE/potatofestival.svg";
-import octopusfestivalImg from "../../IMAGE/octopusfestival.svg";
-import garlicfestivalImg from "../../IMAGE/garlicfestival.svg";
-import gukwhafestivalImg from "../../IMAGE/gukwhafestival.svg";
-import haemifortressfestivalImg from "../../IMAGE/haemifortressfestival.svg";
-import gulfestivalImg from "../../IMAGE/gulfestival.svg";
 
-const monthList = [
+import samgilpoImg from "../../IMAGE/place/samgilpo.svg";
+import haemiblossomImg from "../../IMAGE/place/haemiblossom.svg";
+import starfestivalImg from "../../IMAGE/place/starfestival.svg";
+import wangsanpofestivalImg from "../../IMAGE/place/jigokwang.svg";
+import potatofestivalImg from "../../IMAGE/place/potatofestival.svg";
+import octopusfestivalImg from "../../IMAGE/place/octopusfestival.svg";
+import garlicfestivalImg from "../../IMAGE/place/garlicfestival.svg";
+import gukwhafestivalImg from "../../IMAGE/place/gukwhafestival.svg";
+import haemifortressfestivalImg from "../../IMAGE/place/haemifortressfestival.svg";
+import gulfestivalImg from "../../IMAGE/place/gulfestival.svg";
+
+/* -----------------------------------------------------
+ * 상수 데이터
+ * --------------------------------------------------- */
+const MONTH_LIST = Object.freeze([
   { num: 4, label: "Apr." },
   { num: 5, label: "May" },
   { num: 6, label: "June" },
@@ -23,10 +27,9 @@ const monthList = [
   { num: 9, label: "Sep." },
   { num: 10, label: "Oct." },
   { num: 11, label: "Nov." },
-];
+]);
 
-// 축제 데이터 (월 기준 정렬)
-const festivalData = [
+const FESTIVALS = Object.freeze([
   {
     month: 7,
     title: "삼길포우럭축제",
@@ -157,20 +160,137 @@ const festivalData = [
     status: "예정",
     image: gukwhafestivalImg,
   },
-];
+]);
 
+/* -----------------------------------------------------
+ * 유틸 & 파서
+ * --------------------------------------------------- */
+function includesSelectedMonth(dateText, selectedMonth) {
+  // 패턴: "9월", "9월 ~ 10월", "9월~10월", "9월-10월"
+  const match = dateText.match(/(\d{1,2})월(?:\s*[-~]\s*(\d{1,2})월)?/);
+  if (!match) return false;
+  const start = parseInt(match[1], 10);
+  const end = match[2] ? parseInt(match[2], 10) : start;
+  return selectedMonth >= start && selectedMonth <= end;
+}
+
+/* -----------------------------------------------------
+ * 프레젠테이션 컴포넌트
+ * --------------------------------------------------- */
+const MonthSlider = memo(function MonthSlider({ selectedMonth, onSelect }) {
+  return (
+    <div className="month-slider">
+      {MONTH_LIST.map((m) => {
+        const isActive = selectedMonth === m.num;
+        return (
+          <motion.button
+            key={m.num}
+            className={`month-button ${isActive ? "active" : ""}`}
+            onClick={() => onSelect(m.num)}
+            initial={false}
+            animate={{
+              backgroundColor: isActive ? "#6F90D8" : "rgba(255,255,255,0.1)",
+              color: isActive ? "#141414" : "#fff",
+              opacity: 1,
+            }}
+            transition={{ duration: 0.3 }}
+            layout
+          >
+            <div className="month-num">{m.num}월</div>
+            <span className="month-divider" />
+            <div className="month-label">{m.label}</div>
+          </motion.button>
+        );
+      })}
+    </div>
+  );
+});
+
+const FestivalCard = memo(function FestivalCard({ f }) {
+  return (
+    <motion.div
+      className="festival-card"
+      key={f.title}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.4 }}
+      layout
+    >
+      {/* 좌측: 텍스트 */}
+      <div className="festival-info">
+        {f.status && <div className="status-tag">{f.status}</div>}
+
+        {/* 별 + 타이틀 + 영문 부제 */}
+        <div className="festival-card-title-row">
+          <StarSvg className="festival-card-star" aria-hidden="true" />
+          <span className="festival-card-title">{f.title}</span>
+          {f.subtitle && (
+            <span className="festival-card-title-en">{f.subtitle}</span>
+          )}
+        </div>
+
+        {f.desc && <p>{f.desc}</p>}
+
+        <ul className="festival-meta">
+          {f.location && (
+            <li>
+              <strong>📍 장소:</strong> {f.location}
+            </li>
+          )}
+          {f.date && (
+            <li>
+              <strong>📅 기간:</strong> {f.date}
+            </li>
+          )}
+          {(f.tel1 || f.tel2) && (
+            <li>
+              <strong>☎️ 문의:</strong> {f.tel1}
+              {f.tel2 && <> / {f.tel2}</>}
+            </li>
+          )}
+          {f.site && (
+            <li>
+              <strong>🔗 공식사이트:</strong>{" "}
+              <a href={f.site} target="_blank" rel="noopener noreferrer">
+                {f.site}
+              </a>
+            </li>
+          )}
+        </ul>
+      </div>
+
+      {/* 우측: 이미지 */}
+      <div className="festival-card-media">
+        {f.image && (
+          <img
+            src={f.image}
+            alt={f.title}
+            className="festival-img"
+            loading="lazy"
+          />
+        )}
+      </div>
+    </motion.div>
+  );
+});
+
+/* -----------------------------------------------------
+ * 페이지 컴포넌트
+ * --------------------------------------------------- */
 const Festival = () => {
-  const [selectedMonth, setSelectedMonth] = useState(8);
+  // 현재 달을 기본 선택(한국 시간대 기준 가정)
+  const nowMonth = new Date().getMonth() + 1; // 1~12
+  const defaultMonth =
+    MONTH_LIST.find((m) => m.num === nowMonth)?.num ?? 8; // 없으면 8월
+  const [selectedMonth, setSelectedMonth] = useState(defaultMonth);
 
-  const filteredFestivals = festivalData.filter((f) => {
-    const monthRange = f.date.match(/(\d{1,2})월(?:\s*[~-]\s*(\d{1,2})월)?/);
-    if (monthRange) {
-      const startMonth = parseInt(monthRange[1], 10);
-      const endMonth = monthRange[2] ? parseInt(monthRange[2], 10) : startMonth;
-      return selectedMonth >= startMonth && selectedMonth <= endMonth;
-    }
-    return f.month === selectedMonth;
-  });
+  const filteredFestivals = useMemo(() => {
+    return FESTIVALS.filter((f) => {
+      if (f.date && includesSelectedMonth(f.date, selectedMonth)) return true;
+      return f.month === selectedMonth;
+    });
+  }, [selectedMonth]);
 
   return (
     <AnimatePresence mode="wait">
@@ -184,83 +304,12 @@ const Festival = () => {
         <Header />
         <h1 className="festival-title">서산시 페스티벌</h1>
 
-        <div className="month-slider">
-          {monthList.map((month) => (
-            <motion.button
-              key={month.num}
-              className={`month-button ${
-                selectedMonth === month.num ? "active" : ""
-              }`}
-              onClick={() => setSelectedMonth(month.num)}
-              initial={false}
-              animate={{
-                backgroundColor:
-                  selectedMonth === month.num
-                    ? "#6F90D8"
-                    : "rgba(255,255,255,0.1)",
-                color: selectedMonth === month.num ? "#141414" : "#fff",
-                opacity: 1,
-              }}
-              transition={{ duration: 0.3 }}
-              layout
-            >
-              <div className="month-num">{month.num}월</div>
-              <span className="month-divider" />
-              <div className="month-label">{month.label}</div>
-            </motion.button>
-          ))}
-        </div>
+        <MonthSlider selectedMonth={selectedMonth} onSelect={setSelectedMonth} />
 
         <div className="festival-list">
           <AnimatePresence mode="wait">
-            {filteredFestivals.map((f, idx) => (
-              <motion.div
-                className="festival-card"
-                key={f.title + idx}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.4 }}
-                layout
-              >
-                {/* 좌측: 텍스트 */}
-                <div className="festival-info">
-                  <div className="status-tag">{f.status}</div>
-
-                  {/* 👇 별 + 타이틀 + 영문 부제 (9경 카드와 동일한 형태) */}
-                  <div className="festival-card-title-row">
-                    <StarSvg className="festival-card-star" />
-                    <span className="festival-card-title">{f.title}</span>
-                    <span className="festival-card-title-en">{f.subtitle}</span>
-                  </div>
-
-                  <p>{f.desc}</p>
-
-                  <ul className="festival-meta">
-                    <li>
-                      <strong>📍 장소:</strong> {f.location}
-                    </li>
-                    <li>
-                      <strong>📅 기간:</strong> {f.date}
-                    </li>
-                    <li>
-                      <strong>☎️ 문의:</strong> {f.tel1}
-                      {f.tel2 && <> / {f.tel2}</>}
-                    </li>
-                    <li>
-                      <strong>🔗 공식사이트:</strong>{" "}
-                      <a href={f.site} target="_blank" rel="noreferrer">
-                        {f.site}
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-
-                {/* 우측: 이미지 */}
-                <div className="festival-card-media">
-                  <img src={f.image} alt={f.title} className="festival-img" />
-                </div>
-              </motion.div>
+            {filteredFestivals.map((f) => (
+              <FestivalCard key={`${f.title}-${f.month}`} f={f} />
             ))}
           </AnimatePresence>
         </div>

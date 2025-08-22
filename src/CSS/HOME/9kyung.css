@@ -1,4 +1,8 @@
-/* ======= 9경 상단 타이틀/설명/알약 리스트 ======= */
+/* ==========================================================================
+   9kyung.css — 서산 9경 리스트/카드 화면 스타일
+   ========================================================================== */
+
+/* ===================== 상단 타이틀/설명/알약 리스트 ===================== */
 .kyung-top-section {
   width: 100%;
   max-width: 900px;
@@ -26,17 +30,16 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.7rem 1.1rem;
-  margin-bottom: 0.5rem;
-  margin-top: 1rem;
+  margin: 1rem 0 0.5rem;
 }
 .kyung-pill {
+  display: inline-block;
+  padding: 0.48em 1.3em;
   background: #393c41;
   color: #fff;
   font-size: 1.08rem;
   font-weight: 500;
   border-radius: 1.5rem;
-  padding: 0.48em 1.3em 0.48em 1.3em;
-  display: inline-block;
   margin-bottom: 0.2rem;
   box-shadow: 0 2px 8px #0002;
   letter-spacing: -0.5px;
@@ -47,57 +50,50 @@
   color: #23242a;
 }
 
+/* (태블릿 이상) 상단 여백/타이포 확장 */
 @media (min-width: 700px) {
   .kyung-top-section {
     padding: 3.5rem 0 2.2rem 0;
     max-width: 900px;
     margin-top: 4.5rem;
   }
-  .kyung-list-title {
-    font-size: 2.5rem;
-  }
-  .kyung-list-desc {
-    font-size: 1.18rem;
-  }
-  .kyung-pill-list {
-    gap: 1rem 2rem;
-  }
-  .kyung-pill {
-    font-size: 1.15rem;
-    padding: 0.55em 2.1em 0.55em 2.1em;
-  }
+  .kyung-list-title { font-size: 2.5rem; }
+  .kyung-list-desc { font-size: 1.18rem; }
+  .kyung-pill-list { gap: 1rem 2rem; }
+  .kyung-pill { font-size: 1.15rem; padding: 0.55em 2.1em; }
 }
 
-/* ======= 리디자인 9경 카드 (모바일 기본, PC 반응형) ======= */
-.kyung-card-redesign {
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  background: transparent !important;
-  border-radius: 1.3rem;
-  padding: 1.3rem 1.1rem 1.3rem 1.1rem;
-  margin: 1.2rem 1.2rem 1.2rem 1.2rem; /* 상하좌우 여백 */
-  min-height: 0;
-  max-width: 95vw;
-  width: auto;
-  position: relative;
-  transition: box-shadow 0.2s, transform 0.2s;
-}
-
-/* 실제 카드 리스트 부모에 gap 적용 */
+/* ===================== 카드 리스트 컨테이너 ===================== */
 .kyung-list-wrap {
   display: flex;
   flex-direction: column;
-  gap: 7rem;
+  gap: 7rem;              /* 카드 간 간격 (모바일) */
   align-items: center;
 }
-
 @media (min-width: 700px) {
-  .kyung-list-wrap {
-    gap: 8rem;
-  }
+  .kyung-list-wrap { gap: 8rem; }  /* 태블릿 이상 간격 확대 */
 }
 
+/* ===================== 9경 카드(모바일 기본, PC 반응형) ===================== */
+.kyung-card-redesign {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+
+  width: auto;
+  max-width: 95vw;
+  min-height: 0;
+
+  margin: 1.2rem;
+  padding: 1.3rem 1.1rem;
+
+  background: transparent !important;
+  border-radius: 1.3rem;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+/* 카드 좌측 영역: 배지/타이틀/설명/링크 */
 .kyung-card-left {
   display: flex;
   flex-direction: column;
@@ -107,16 +103,19 @@
 }
 .kyung-card-badge {
   display: inline-block;
+  width: fit-content;
+  padding: 0.13em 1em;
+
   background: rgba(80, 80, 80, 0.45);
   color: #e3eafc;
+
   font-size: 1rem;
   font-weight: 400;
-  border-radius: 1.2rem;
-  padding: 0.13em 1em 0.13em 1em;
-  margin-right: 1.2rem;
   letter-spacing: 0.01em;
+
+  border-radius: 1.2rem;
   box-shadow: 0 2px 8px #0002;
-  width: fit-content;
+  margin-right: 1.2rem;
 }
 .kyung-card-title-row {
   display: flex;
@@ -139,17 +138,17 @@
 }
 .kyung-card-title-en {
   font-size: 1rem;
-  color: #bfc6d0;
   font-weight: 400;
+  color: #bfc6d0;
   margin-left: 0.4rem;
 }
 .kyung-card-desc {
   font-size: 1rem;
-  color: #eaeaea;
   font-weight: 300;
   line-height: 1.6;
-  margin-bottom: 0.5rem;
-  margin-top: 0.1rem;
+  color: #eaeaea;
+
+  margin: 0.1rem 0 0.5rem;
   margin-left: 1rem;
   padding-right: 1.5rem;
 }
@@ -159,114 +158,99 @@
   color: rgba(75, 205, 253, 0.5);
   font-size: 1rem;
   font-weight: 500;
-  cursor: pointer;
-  padding: 0;
-  margin-top: 0.1rem;
   text-align: left;
-  transition: color 0.18s;
+  cursor: pointer;
+
+  margin-top: 0.1rem;
   margin-left: 1rem;
+  padding: 0;
+
+  transition: color 0.18s;
 }
-.kyung-card-link:hover {
-  color: #fff;
-}
+.kyung-card-link:hover { color: #fff; }
+
+/* 카드 우측 영역: 썸네일 */
 .kyung-card-right {
+  flex: 0 0 110px;
   margin-left: 1.2rem;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  flex: 0 0 110px;
 }
 .kyung-card-img {
   width: 110px;
   height: 100px;
   object-fit: cover;
+
+  background: #222;
   border-radius: 1.1rem;
   box-shadow: 0 2px 16px #0003;
-  background: #222;
   margin-top: 1rem;
 }
 
+/* (태블릿 이상) 카드 확대/여백/타이포 업스케일 */
 @media (min-width: 700px) {
   .kyung-card-redesign {
     flex-direction: row;
-    padding: 2.5rem 2.5rem 2.5rem 2.8rem;
-    min-height: 220px;
-    max-width: 900px;
-    margin: 2.5rem 2.5rem 2.5rem 2.5rem; /* 좌우 여백 더 넓게 */
-    border-radius: 2.2rem;
     width: auto;
+    max-width: 900px;
+    min-height: 220px;
+
+    margin: 2.5rem;
+    padding: 2.5rem 2.5rem 2.5rem 2.8rem;
+
+    border-radius: 2.2rem;
   }
-  .kyung-card-left {
-    gap: 1.1rem;
-  }
+  .kyung-card-left { gap: 1.1rem; }
   .kyung-card-right {
+    flex: 0 0 180px;
     margin-left: 2.5rem;
     margin-top: 0;
     justify-content: center;
-    flex: 0 0 180px;
   }
   .kyung-card-img {
     width: 170px;
     height: 130px;
     border-radius: 1.3rem;
   }
-  .kyung-card-title {
-    font-size: 2.1rem;
-  }
-  .kyung-card-title-en {
-    font-size: 1.15rem;
-  }
-  .kyung-card-desc {
-    font-size: 1.15rem;
-  }
-  .kyung-card-badge {
-    font-size: 1.1rem;
-  }
+  .kyung-card-title { font-size: 2.1rem; }
+  .kyung-card-title-en { font-size: 1.15rem; }
+  .kyung-card-desc { font-size: 1.15rem; }
+  .kyung-card-badge { font-size: 1.1rem; }
 }
 
-/* 9경 카드 배지, desc, 상세정보 오른쪽 이동 */
+/* 배지/설명/상세정보를 살짝 오른쪽으로 정렬 */
 .kyung-card-badge,
 .kyung-card-desc,
-.kyung-card-link {
-  margin-left: 1.8rem;
-}
-
+.kyung-card-link { margin-left: 1.8rem; }
 @media (min-width: 700px) {
   .kyung-card-badge,
   .kyung-card-desc,
-  .kyung-card-link {
-    margin-left: 1rem;
-  }
+  .kyung-card-link { margin-left: 1rem; }
 }
 
-/* ======= 섹션/카드 구분선 ======= */
+/* ===================== 섹션/카드 구분선 ===================== */
 .kyung-section-divider {
   width: 85%;
-  margin: 1rem auto 2.7rem auto;
+  margin: 1rem auto 2.7rem;
   border: none;
   border-top: 1.2px solid rgba(255, 255, 255, 0.1);
   background: none;
 }
 
-/* 9경 카드 텍스트 색상 통일 (상세정보, 영문 타이틀 제외) */
+/* ===================== 텍스트 컬러 통일(예외: 영문 타이틀/상세링크) ===================== */
 .kyung-card-badge,
 .kyung-card-title,
 .kyung-card-desc {
   color: #f8f7f5 !important;
 }
 
-/* 9경 전체 페이지 배경 그라데이션 적용 */
+/* ===================== 전체 페이지 배경 그라데이션 ===================== */
 .kyung-list-all {
-  background: radial-gradient(
-      circle at 100% 15%,
-      rgba(128, 165, 246, 0.2),
-      transparent 15%
-    ),
+  background:
+    radial-gradient(circle at 100% 15%, rgba(128, 165, 246, 0.2), transparent 15%),
     radial-gradient(circle at 0% 50%, rgba(128, 165, 246, 0.2), transparent 25%),
-    radial-gradient(
-      circle at 100% 85%,
-      rgba(128, 165, 246, 0.2),
-      transparent 15%
-    ),
+    radial-gradient(circle at 100% 85%, rgba(128, 165, 246, 0.2), transparent 15%),
     #141414;
 }

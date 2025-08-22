@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+
 import Alert from "../COMMON/Alert";
-import "../../CSS/AI/AiCourse.css";
 import Header from "../COMMON/Header";
+
+import "../../CSS/AI/AiCourse.css";
 
 const AiCourse = () => {
   const [courseData, setCourseData] = useState([]);
@@ -79,6 +81,7 @@ const AiCourse = () => {
         )}
 
         <Header />
+
         <h2
           className="ai-course-title"
           style={{ display: "flex", alignItems: "center", gap: "0.3rem" }}
@@ -92,8 +95,8 @@ const AiCourse = () => {
 
           return (
             <div
-              className="course-box"
               key={index}
+              className="course-box"
               tabIndex={0}
               role="button"
               style={{
@@ -122,6 +125,7 @@ const AiCourse = () => {
                 }}
               >
                 <span>✦ 코스 {String.fromCharCode(65 + index)}.</span>
+
                 {!valid && (
                   <span
                     style={{
@@ -134,6 +138,7 @@ const AiCourse = () => {
                     (유효하지 않음)
                   </span>
                 )}
+
                 <span
                   className="course-more"
                   style={{
@@ -169,7 +174,7 @@ const AiCourse = () => {
                           : maxOpacity;
 
                       return (
-                        <div className="track-item" key={idx}>
+                        <div key={idx} className="track-item">
                           <div className="track-dot" style={{ opacity }} />
                           <div
                             className={`track-label${

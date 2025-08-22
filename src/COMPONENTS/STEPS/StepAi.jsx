@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Header from "../COMMON/Header";
 import "../../CSS/STEPS/StepInterest.css";
 import { FiChevronLeft } from "react-icons/fi";
-import aicourse from "../../IMAGE/aicourse.png";
+import aicourse from "../../IMAGE/icons/aicourse.png";
 
 /** 상단 진행 점(구체) — CSS는 StepInterest.css의 .step-dot 사용 */
 const Dot = ({ active = false }) => (

@@ -1,21 +1,26 @@
+// src/COMPONENTS/HOME/9kyung.jsx
 import React from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import "../../CSS/HOME/9kyung.css";
-import Header from "../COMMON/Header";
-import { ReactComponent as StarSvg } from "../../IMAGE/kyung-star.svg";
 import { useNavigate } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
 import { MdKeyboardArrowRight } from "react-icons/md";
 
-import a1 from "../../IMAGE/a1.svg";
-import a2 from "../../IMAGE/a2.svg";
-import a3 from "../../IMAGE/a3.svg";
-import a4 from "../../IMAGE/a4.svg";
-import a5 from "../../IMAGE/a5.svg";
-import a6 from "../../IMAGE/a6.svg";
-import a7 from "../../IMAGE/a7.svg";
-import a8 from "../../IMAGE/a8.svg";
-import a9 from "../../IMAGE/a9.svg";
+/* 공통 컴포넌트 & 스타일 */
+import Header from "../COMMON/Header";
+import "../../CSS/HOME/9kyung.css";
 
+/* 에셋 */
+import { ReactComponent as StarSvg } from "../../IMAGE/icons/kyung-star.svg";
+import a1 from "../../IMAGE/place/a1.svg";
+import a2 from "../../IMAGE/place/a2.svg";
+import a3 from "../../IMAGE/place/a3.svg";
+import a4 from "../../IMAGE/place/a4.svg";
+import a5 from "../../IMAGE/place/a5.svg";
+import a6 from "../../IMAGE/place/a6.svg";
+import a7 from "../../IMAGE/place/a7.svg";
+import a8 from "../../IMAGE/place/a8.svg";
+import a9 from "../../IMAGE/place/a9.svg";
+
+/* === 서산 9경 목록(정적 데이터) === */
 const kyungList = [
   {
     id: 1,
@@ -91,18 +96,24 @@ const kyungList = [
   },
 ];
 
+/* === 개별 카드 === */
 const KyungCard = ({ item }) => {
   const navigate = useNavigate();
+
   return (
     <div className="kyung-card-redesign">
+      {/* 좌측: 번호/타이틀/설명 */}
       <div className="kyung-card-left">
         <div className="kyung-card-badge">{item.number}경</div>
+
         <div className="kyung-card-title-row">
           <StarSvg className="kyung-card-star" />
           <span className="kyung-card-title">{item.title}</span>
           <span className="kyung-card-title-en">{item.subtitle}</span>
         </div>
+
         <div className="kyung-card-desc">{item.desc}</div>
+
         <button
           className="kyung-card-link"
           onClick={() => navigate(`/place/${item.id}`)}
@@ -118,6 +129,8 @@ const KyungCard = ({ item }) => {
           />
         </button>
       </div>
+
+      {/* 우측: 썸네일 이미지 */}
       <div className="kyung-card-right">
         <img src={item.img} alt={item.title} className="kyung-card-img" />
       </div>
@@ -125,6 +138,7 @@ const KyungCard = ({ item }) => {
   );
 };
 
+/* === 목록 페이지 === */
 const KyungList = () => {
   return (
     <AnimatePresence mode="wait">
@@ -135,13 +149,17 @@ const KyungList = () => {
         exit={{ opacity: 0 }}
         transition={{ duration: 0.5 }}
       >
+        {/* 상단 헤더 */}
         <Header />
+
+        {/* 상단 섹션: 타이틀/설명/필 리스트 */}
         <div className="kyung-top-section">
           <h1 className="kyung-list-title">서산9경</h1>
           <div className="kyung-list-desc">
             자연과 역사가 빚어낸 서산 9경을 통해 아름다움과 감동을 한껏
             느껴보세요.
           </div>
+
           <div className="kyung-pill-list">
             {kyungList.map((item) => (
               <span className="kyung-pill" key={item.id}>
@@ -150,7 +168,10 @@ const KyungList = () => {
             ))}
           </div>
         </div>
+
         <hr className="kyung-section-divider" />
+
+        {/* 카드 리스트 */}
         <div className="kyung-list-wrap">
           {kyungList.map((item) => (
             <KyungCard key={item.id} item={item} />

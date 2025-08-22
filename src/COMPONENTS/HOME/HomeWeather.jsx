@@ -2,15 +2,15 @@ import React, { useEffect, useState } from "react";
 import api from "../../API/axios.js";
 import "../../CSS/HOME/HomeWeather.css";
 
-import Sun1 from "../../IMAGE/sun1.svg";
-import Rain1 from "../../IMAGE/rain1.svg";
-import Snow1 from "../../IMAGE/snow1.svg";
-import Cloud1 from "../../IMAGE/cloud1.svg";
+import Sun1 from "../../IMAGE/icons/sun1.svg";
+import Rain1 from "../../IMAGE/icons/rain1.svg";
+import Snow1 from "../../IMAGE/icons/snow1.svg";
+import Cloud1 from "../../IMAGE/icons/cloud1.svg";
 
-import Sun2 from "../../IMAGE/sun2.svg";
-import Rain2 from "../../IMAGE/rain2.svg";
-import Snow2 from "../../IMAGE/snow2.svg";
-import Cloud2 from "../../IMAGE/cloud2.svg";
+import Sun2 from "../../IMAGE/icons/sun2.svg";
+import Rain2 from "../../IMAGE/icons/rain2.svg";
+import Snow2 from "../../IMAGE/icons/snow2.svg";
+import Cloud2 from "../../IMAGE/icons/cloud2.svg";
 
 // 더미 (API 장애 시)
 const FALLBACK = {

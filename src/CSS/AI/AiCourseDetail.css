@@ -1,31 +1,33 @@
+/* === AI 코스 상세 전체 컨테이너 === */
 .ai-course-detail-wrapper {
-  padding: 10rem 1rem;
-  min-height: 100%;
-  color: white;
   position: relative;
+  min-height: 100%;
+  padding: 10rem 1rem;
+  color: white;
 }
 
+/* === 제목 및 부제목 === */
 .ai-course-detail-title {
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
   margin-left: 2rem;
+  margin-bottom: 0.5rem;
+  font-size: 2rem;
 }
 
 .ai-course-detail-sub {
-  margin-bottom: 2rem;
   margin-left: 2rem;
-  color: #ccc;
+  margin-bottom: 2rem;
   font-size: 1.3rem;
+  color: #ccc;
 }
 
-/* 개별 코스 구역 */
+/* === 개별 코스 구역 === */
 .ai-course-detail-section {
   position: relative;
   padding-left: 2.5rem;
   margin-bottom: 3.5rem;
 }
 
-/* 별을 관통하는 세로선 */
+/* === 별을 관통하는 세로 라인 === */
 .ai-course-detail-line {
   position: absolute;
   top: 3rem;
@@ -36,7 +38,7 @@
   z-index: 0;
 }
 
-/* 코스 타이틀 영역 */
+/* === 코스 타이틀 영역 === */
 .ai-course-detail-header {
   display: flex;
   align-items: center;
@@ -47,22 +49,23 @@
 }
 
 .ai-course-detail-star {
-  font-size: 2rem;
-  font-weight: bold;
-  margin-right: 0.2rem;
-  margin-left: -0.6rem;
-  width: 2rem;
-  text-align: center;
   position: relative;
   z-index: 1;
+  width: 2rem;
+  margin-left: -0.6rem;
+  margin-right: 0.2rem;
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
 }
 
 .ai-course-detail-course-title {
   font-size: 1.4rem;
-  color: white;
   font-weight: bold;
+  color: white;
 }
 
+/* === 지역화폐 표시 === */
 .ai-course-detail-currency-good,
 .ai-course-detail-currency-bad {
   font-size: 1rem;
@@ -77,27 +80,27 @@
   color: #ff5252;
 }
 
-/* 장소 카드 */
+/* === 장소 카드 === */
 .ai-course-detail-card {
   display: flex;
   align-items: center;
-  background: rgba(141, 141, 141, 0.15);
-  border-radius: 2rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 1.2rem 2rem;
-  margin-bottom: 3rem;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
   width: 80%;
   margin-left: 3rem;
   margin-right: auto;
+  margin-bottom: 3rem;
+  padding: 1.2rem 2rem;
+  border-radius: 2rem;
+  background: rgba(141, 141, 141, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
 }
 
 .ai-course-detail-imgbox {
   width: 60px;
   height: 60px;
+  margin-right: 1.5rem;
   background: #e0e0e0;
   border-radius: 1.2rem;
-  margin-right: 1.5rem;
 }
 
 .ai-course-detail-imgbox img {
@@ -118,38 +121,38 @@
 }
 
 .ai-course-detail-name {
-  font-weight: bold;
   font-size: 1.1rem;
+  font-weight: bold;
 }
 
 .ai-course-detail-eng {
-  color: #bdbdbd;
   font-size: 0.95rem;
+  color: #bdbdbd;
 }
 
 .ai-course-detail-desc {
-  color: #eee;
-  font-size: 0.98rem;
   margin-top: 0.5rem;
+  font-size: 0.98rem;
+  color: #eee;
 }
 
 .ai-course-detail-arrowicon {
+  margin-left: 1.2rem;
   font-size: 2.1rem;
   color: #bdbdbd;
-  margin-left: 1.2rem;
 }
 
-/* === 하단 지도 보기 버튼 (StepWelcome 스타일) === */
+/* === 하단 고정: 지도 보기 버튼 === */
 .ai-course-detail-btn-group {
   position: fixed;
+  bottom: 0;
   left: 0;
   right: 0;
-  bottom: 0;
   width: 100vw;
-  background: #4bcdfd;
-  padding: 0;
   display: flex;
   justify-content: center;
+  background: #4bcdfd;
+  padding: 0;
   z-index: 10;
   box-shadow: 0 -2px 16px rgba(0, 0, 0, 0.12);
 }
@@ -157,18 +160,17 @@
 .ai-course-detail-mapbtn {
   width: 100vw;
   height: 7rem;
-  font-size: 1.8rem;
-  color: #222;
-  background: none;
-  border: none;
-  font-weight: 500;
-  letter-spacing: 0.02em;
-  cursor: pointer;
-  padding: 0;
-
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 0;
+  font-size: 1.8rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: #222;
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 
 .ai-course-detail-mapbtn:not(:disabled) {

@@ -2,9 +2,11 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FiChevronLeft } from "react-icons/fi";
+
 import Header from "../COMMON/Header";
 import "../../CSS/AI/MapContainer.css";
 
+/* === 교통수단 정의 === */
 const transportModes = [
   { value: "driving", label: "🚗 자동차", icon: "🚗" },
   { value: "walking", label: "🚶 도보", icon: "🚶" },
@@ -13,6 +15,7 @@ const transportModes = [
 ];
 const SPEED = { driving: 40, walking: 5, transit: 25, bicycle: 15 };
 
+/* === 거리/시간 계산 (단순 계산) === */
 function getMockDistanceAndTime(lat1, lng1, lat2, lng2, mode) {
   const R = 6371;
   const dLat = ((lat2 - lat1) * Math.PI) / 180;
@@ -23,12 +26,12 @@ function getMockDistanceAndTime(lat1, lng1, lat2, lng2, mode) {
       Math.cos((lat2 * Math.PI) / 180) *
       Math.sin(dLng / 2) ** 2;
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  const distance = R * c;
-  const time = (distance / SPEED[mode]) * 60;
+  const distance = R * c; // km
+  const time = (distance / SPEED[mode]) * 60; // 분
   return { distance: distance.toFixed(1), time: Math.round(time) };
 }
 
-// ✅ 커스텀 핀(SVG) 이미지
+/* === 커스텀 핀(SVG) 생성 === */
 function makePinImage(kakao, color = "#80A5F6") {
   const svg = `
   <svg width="20" height="28" viewBox="0 0 22 30" xmlns="http://www.w3.org/2000/svg">
@@ -58,16 +61,17 @@ export default function MapContainer({
   onRouteComputed,
 }) {
   const location = useLocation();
+  const navigate = useNavigate();
 
-  // ===== 상태 =====
+  /* === 상태 === */
   const [places, setPlaces] = useState([]);
   const [selectedMode, setSelectedMode] = useState(initialMode);
   const [routeInfo, setRouteInfo] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showRouteInfo, setShowRouteInfo] = useState(false);
-  const [selectedSegmentIndex, setSelectedSegmentIndex] = useState(null); // null=전체
+  const [selectedSegmentIndex, setSelectedSegmentIndex] = useState(null); // null = 전체
 
-  // ===== refs =====
+  /* === refs === */
   const mapRef = useRef(null);
   const mapInitedRef = useRef(false);
   const onMapReadyRef = useRef(onMapReady);
@@ -75,10 +79,11 @@ export default function MapContainer({
 
   const markersRef = useRef([]);
   const overlaysRef = useRef([]); // 이름 카드
-  const pulseOverlaysRef = useRef([]); // 펄스
-  const segmentRefs = useRef([]); // [{outline, polyline, label}]
+  const pulseOverlaysRef = useRef([]); // 펄스 효과
+  const segmentRefs = useRef([]); // 구간 선/라벨
   const firstCardOpenedOnceRef = useRef(false);
 
+  /* === 콜백 ref 최신화 === */
   useEffect(() => {
     onMapReadyRef.current = onMapReady;
   }, [onMapReady]);
@@ -86,7 +91,7 @@ export default function MapContainer({
     onRouteComputedRef.current = onRouteComputed;
   }, [onRouteComputed]);
 
-  // ===== 데이터 로딩 (props → location.state → localStorage) =====
+  /* === 데이터 로딩 (props → location.state → localStorage) === */
   useEffect(() => {
     const candidates = [
       Array.isArray(propPlaces) ? propPlaces : [],
@@ -127,7 +132,7 @@ export default function MapContainer({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [propPlaces, location?.state?.places]);
 
-  // ===== Kakao SDK 로더 =====
+  /* === 카카오맵 SDK 로더 === */
   const loadKakao = useCallback(() => {
     return new Promise((resolve, reject) => {
       if (window.kakao?.maps?.LatLng) return resolve();
@@ -165,7 +170,7 @@ export default function MapContainer({
     });
   }, []);
 
-  // ===== 정리 유틸 =====
+  /* === 정리 유틸 === */
   function clearMarkersAndOverlays() {
     markersRef.current.forEach((m) => m.setMap && m.setMap(null));
     overlaysRef.current.forEach((o) => o.setMap && o.setMap(null));
@@ -183,7 +188,7 @@ export default function MapContainer({
     segmentRefs.current = [];
   }
 
-  // ===== 마커 + 카드 + 펄스 =====
+  /* === 마커 + 카드 + 펄스 추가 === */
   function addMarkerWithOverlay(map, place, idx, openNow = false) {
     const { kakao } = window;
     const pos = new kakao.maps.LatLng(place.lat, place.lng);
@@ -212,7 +217,7 @@ export default function MapContainer({
     pulseOverlay.setMap(map);
     pulseOverlaysRef.current.push(pulseOverlay);
 
-    // 카드
+    // 이름 카드
     const container = document.createElement("div");
     container.className = "seosan-overlay-card";
     container.innerHTML = `
@@ -261,7 +266,7 @@ export default function MapContainer({
     return { marker, overlay, pulseOverlay };
   }
 
-  // ===== 경로 그리기(구간별 색/대시 + 라벨) =====
+  /* === 경로 그리기 (구간별 선 + 라벨) === */
   const drawRoute = useCallback(async (placesArg, mode, map) => {
     if (!map || !window.kakao?.maps) return;
     clearSegments();
@@ -276,26 +281,13 @@ export default function MapContainer({
       const info = [];
       const { kakao } = window;
 
-      const COLORS = [
-        "#80A5F6",
-        "#03C75A",
-        "#FF7A59",
-        "#FFD400",
-        "#9B59B6",
-        "#E74C3C",
-      ];
+      const COLORS = ["#80A5F6", "#03C75A", "#FF7A59", "#FFD400", "#9B59B6", "#E74C3C"];
       const STYLES = ["solid", "shortdash", "dash", "shortdot"];
 
       for (let i = 0; i < placesArg.length - 1; i++) {
-        const o = placesArg[i],
-          d = placesArg[i + 1];
+        const o = placesArg[i], d = placesArg[i + 1];
         const r = getMockDistanceAndTime(o.lat, o.lng, d.lat, d.lng, mode);
-        info.push({
-          from: o.name,
-          to: d.name,
-          distance: r.distance,
-          time: r.time,
-        });
+        info.push({ from: o.name, to: d.name, distance: r.distance, time: r.time });
 
         const path = [
           new kakao.maps.LatLng(o.lat, o.lng),
@@ -324,7 +316,7 @@ export default function MapContainer({
         });
         polyline.setMap(map);
 
-        // 중간 라벨
+        // 구간 라벨
         const midLat = (o.lat + d.lat) / 2;
         const midLng = (o.lng + d.lng) / 2;
         const labelEl = document.createElement("div");
@@ -352,7 +344,7 @@ export default function MapContainer({
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // ===== 표시/줌 유틸 =====
+  /* === 전체 마커 기준으로 지도 범위 맞추기 === */
   const fitBoundsForAll = useCallback(() => {
     const map = mapRef.current;
     if (!map || markersRef.current.length === 0) return;
@@ -363,7 +355,7 @@ export default function MapContainer({
     map.setBounds(bounds);
   }, []);
 
-  // ✅ 구간 중심으로 정확히 보이게: 패널 높이만큼 Y보정 + 한단계 줌
+  /* === 구간 중심 포커스 === */
   const focusSegmentCenter = useCallback(
     (i, delay = 0) => {
       const map = mapRef.current;
@@ -374,12 +366,11 @@ export default function MapContainer({
 
       const run = () => {
         map.relayout(); // 패널 변화 반영
-
         const proj = map.getProjection?.();
         const { kakao } = window;
         const midLatLng = new kakao.maps.LatLng(midLat, midLng);
 
-        // 패널 높이의 35% 만큼 위로 올려서 중앙 체감 보정
+        // 패널 높이의 35%만큼 Y 오프셋 보정
         let yOffset = 0;
         const sheet = document.querySelector(".seosan-route-info-list");
         if (sheet) {
@@ -397,7 +388,7 @@ export default function MapContainer({
         }
 
         const current = map.getLevel();
-        if (current > 1) map.setLevel(current); // 한 단계만 줌
+        if (current > 1) map.setLevel(current);
       };
 
       if (delay > 0) setTimeout(run, delay);
@@ -406,6 +397,7 @@ export default function MapContainer({
     [places]
   );
 
+  /* === 구간 표시 토글 === */
   const applySegmentVisibility = useCallback((idx) => {
     const map = mapRef.current;
     if (!map) return;
@@ -436,25 +428,18 @@ export default function MapContainer({
     });
   }, []);
 
-  // ===== 코스 포커스 핸들러 =====
+  /* === 코스 포커스 핸들러 === */
   const handleFocusSegment = useCallback(
     (i) => {
       setSelectedSegmentIndex(i);
       applySegmentVisibility(i);
       showOverlaysForSegment(i);
 
-      // 패널이 닫혀 있었다면 먼저 열고, 열림 트랜지션(0.28s) 뒤에 중심 이동
       const needDelay = !showRouteInfo;
       if (!showRouteInfo) setShowRouteInfo(true);
-
       focusSegmentCenter(i, needDelay ? 300 : 0);
     },
-    [
-      applySegmentVisibility,
-      showOverlaysForSegment,
-      focusSegmentCenter,
-      showRouteInfo,
-    ]
+    [applySegmentVisibility, showOverlaysForSegment, focusSegmentCenter, showRouteInfo]
   );
 
   const handleShowAllSegments = useCallback(() => {
@@ -464,7 +449,7 @@ export default function MapContainer({
     fitBoundsForAll();
   }, [applySegmentVisibility, fitBoundsForAll]);
 
-  // ===== 지도 초기화 / 업데이트 =====
+  /* === 지도 초기화/업데이트 === */
   useEffect(() => {
     let cancelled = false;
 
@@ -502,16 +487,15 @@ export default function MapContainer({
           map.setBounds(bounds);
         }
 
-        // 경로 구간 갱신
+        // 경로 갱신
         await drawRoute(places, selectedMode, map);
 
-        // 현재 선택 상태에 맞게 표시 + 중심 이동
+        // 현재 선택 상태 반영
         if (selectedSegmentIndex === null) {
           fitBoundsForAll();
         } else {
           applySegmentVisibility(selectedSegmentIndex);
           showOverlaysForSegment(selectedSegmentIndex);
-          // 패널 상태를 고려해서 약간의 딜레이 후 중심 이동
           focusSegmentCenter(selectedSegmentIndex, showRouteInfo ? 0 : 300);
         }
       } catch (e) {
@@ -535,12 +519,11 @@ export default function MapContainer({
     showRouteInfo,
   ]);
 
-  // ====== 네이버 지도 p/directions 전용 헬퍼들 ======
-  // 값 꺼내기 (lat/lng 또는 latitude/longitude 모두 지원)
+  /* === 네이버 지도 p/directions 헬퍼 === */
   const getLat = (p) => Number(p.lat ?? p.latitude);
   const getLng = (p) => Number(p.lng ?? p.longitude);
 
-  // WGS84(위도/경도) → Web Mercator(EPSG:3857) 변환
+  // WGS84 → Web Mercator(EPSG:3857)
   const toMercator = (lat, lng) => {
     const R = 6378137.0;
     const x = R * ((lng * Math.PI) / 180);
@@ -548,28 +531,11 @@ export default function MapContainer({
     return [x, y];
   };
 
-  // 소수 자리수 정리(과하지 않게)
   const fmt = (n) => (Math.round(n * 1e7) / 1e7).toString();
-  // // 전체 경로 열기 (경유지는 최대 3개, 모드: transit 고정, 카메라: c=14.00,…)
-  // const openNaverMap = useCallback(() => {
-  //   if (!Array.isArray(places) || places.length < 2) return;
 
-  //   const start = places[0];
-  //   const end = places[places.length - 1];
-  //   const vias = places.slice(1, -1).slice(0, 3);
-
-  //   const parts = [segP(start), ...vias.map(segP), segP(end)];
-  //   const url = `https://map.naver.com/p/directions/${parts.join(
-  //     "/"
-  //   )}/-/transit?c=14.00,0,0,0,dh`;
-
-  //   window.open(url, "_blank", "noopener");
-  // }, [places]);
-
-  // 특정 구간만 열기 (i → i+1, 대중교통 고정)
+  // 특정 구간(i → i+1)만 네이버 지도로 열기 (대중교통 고정)
   const openNaverSegment = useCallback(
     (i) => {
-      // segP를 이 안에 정의
       const segP = (p) => {
         const lat = getLat(p);
         const lng = getLng(p);
@@ -591,14 +557,17 @@ export default function MapContainer({
     [places]
   );
 
-  const navigate = useNavigate();
+  /* === 뒤로가기 버튼 === */
   const prevStep = useCallback(() => {
     navigate(-1);
   }, [navigate]);
 
+  /* === 렌더링 === */
   return (
     <div className="seosan-map-fullscreen-container">
       <Header />
+
+      {/* 상단 뒤로가기 */}
       <button
         className="step-interest-prev-btn"
         onClick={prevStep}
@@ -606,7 +575,8 @@ export default function MapContainer({
       >
         <FiChevronLeft style={{ fontSize: "2.1rem", color: "black" }} />
       </button>
-      {/* 교통수단 선택 */}
+
+      {/* 교통수단 선택 오버레이 */}
       <div className="seosan-transport-mode-overlay">
         <div className="seosan-transport-mode-selector">
           <h3>교통수단</h3>
@@ -629,7 +599,7 @@ export default function MapContainer({
         </div>
       </div>
 
-      {/* 지도 */}
+      {/* 지도 컨테이너 */}
       <div id="map" className="seosan-map-container" />
 
       {/* 장소 없음 안내 */}
@@ -659,9 +629,7 @@ export default function MapContainer({
                 <code>clearPlacesAndReload()</code>
               </div>
             </div>
-            <div className="seosan-note">
-              💡 개발자도구(Console)에서 실행하세요.
-            </div>
+            <div className="seosan-note">💡 개발자도구(Console)에서 실행하세요.</div>
           </div>
         </div>
       )}
@@ -669,9 +637,7 @@ export default function MapContainer({
       {/* 하단 경로 패널 */}
       {places.length > 0 && (
         <div
-          className={`seosan-route-info-overlay ${
-            showRouteInfo ? "active" : ""
-          }`}
+          className={`seosan-route-info-overlay ${showRouteInfo ? "active" : ""}`}
         >
           <button
             className="seosan-route-toggle-button"
@@ -706,6 +672,7 @@ export default function MapContainer({
                     <div className="seosan-route-card-header">
                       <div className="seosan-route-number">코스 {i + 1}</div>
                     </div>
+
                     <div className="seosan-route-card-content">
                       <div className="seosan-route-info-item">
                         <div className="seosan-route-label">경로</div>
@@ -715,9 +682,7 @@ export default function MapContainer({
                       </div>
                       <div className="seosan-route-info-item">
                         <div className="seosan-route-label">거리</div>
-                        <div className="seosan-route-value">
-                          {r.distance} km
-                        </div>
+                        <div className="seosan-route-value">{r.distance} km</div>
                       </div>
                       <div className="seosan-route-info-item">
                         <div className="seosan-route-label">시간</div>
@@ -746,9 +711,7 @@ export default function MapContainer({
               </div>
             ) : (
               <div className="seosan-no-route-message">
-                {loading
-                  ? "경로 정보를 계산 중입니다..."
-                  : "경로 정보가 없습니다."}
+                {loading ? "경로 정보를 계산 중입니다..." : "경로 정보가 없습니다."}
               </div>
             )}
           </div>

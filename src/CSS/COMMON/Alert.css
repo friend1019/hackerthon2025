@@ -1,60 +1,73 @@
+/* ==========================================================================
+   Alert.css — 알림 모달 스타일
+   - 오버레이 배경 + 알림 박스 + 확인 버튼
+   ========================================================================== */
+
+/* === 화면 전체를 덮는 오버레이 === */
 .alert-overlay {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9999;
+
+  background: rgba(0, 0, 0, 0.5);   /* 반투명 검은 배경 */
+  z-index: 9999;                    /* 최상위 표시 */
 }
 
+/* === 알림 박스 === */
 .alert-box {
+  width: 90%;
+  max-width: 320px;                 /* 📱 모바일 기준 크기 */
+  padding: 2rem 1.8rem;
+  text-align: center;
+
   background: #fff;
   border-radius: 1.2rem;
-  padding: 2rem 1.8rem;
-  width: 90%;
-  max-width: 320px;              /* 📱 모바일 기본 크기 ↑ */
-  text-align: center;
   box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+
+  /* 등장 애니메이션 */
   animation: fadeInUp 0.35s ease;
 }
 
+/* === 알림 메시지 === */
 .alert-message {
   font-size: 1.1rem;
   color: #333;
-  margin-bottom: 1.5rem;
   line-height: 1.5;
+  margin-bottom: 1.5rem;
 }
 
+/* === 확인 버튼 === */
 .alert-btn {
   padding: 0.8rem 1.6rem;
   border: none;
   border-radius: 0.6rem;
-  background: #80A5F6;
+
+  background: #80A5F6;              /* 포인트 컬러 */
   color: #fff;
   font-size: 1rem;
   cursor: pointer;
+
   transition: background 0.2s ease;
 }
-
 .alert-btn:active {
-  background: #35b1e0;
+  background: #35b1e0;              /* 클릭 시 색상 변경 */
 }
 
+/* === 등장 애니메이션 (밑에서 위로) === */
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-/* === 반응형 === */
+/* === 반응형 스타일 === */
 @media (min-width: 480px) {
   .alert-box {
-    max-width: 500px;           /* 작은 태블릿 이상 */
+    max-width: 500px;               /* 작은 태블릿 이상 */
     padding: 2.2rem 2rem;
   }
-  .alert-message {
-    font-size: 1.15rem;
-  }
+  .alert-message { font-size: 1.15rem; }
   .alert-btn {
     font-size: 1.05rem;
     padding: 0.9rem 1.8rem;
@@ -63,13 +76,9 @@
 
 @media (min-width: 768px) {
   .alert-box {
-    max-width: 600px;           /* 태블릿 이상 */
+    max-width: 600px;               /* 태블릿 이상 */
     padding: 2.5rem 2.2rem;
   }
-  .alert-message {
-    font-size: 1.2rem;
-  }
-  .alert-btn {
-    font-size: 1.1rem;
-  }
+  .alert-message { font-size: 1.2rem; }
+  .alert-btn { font-size: 1.1rem; }
 }

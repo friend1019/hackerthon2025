@@ -289,8 +289,8 @@
   font-size: 1.7rem !important;
 }
 .badge-c {
-  --a: 40deg;
-  --dur: 30s;
+  --a: 100deg;
+  --dur: 27s;
   animation-direction: reverse;
   width: 2.6rem !important;
   height: 2.6rem !important;

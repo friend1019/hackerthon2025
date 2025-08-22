@@ -8,7 +8,6 @@ import PumList from "./COMPONENTS/HOME/9pum";
 import Festival from "./COMPONENTS/HOME/Festival";
 import AiCourse from "./COMPONENTS/AI/AiCourse";
 import AiCourseDetail from "./COMPONENTS/AI/AiCourseDetail";
-import LoadingSpinner from "./COMPONENTS/COMMON/LoadingSpinner";
 import CourseSpinner from "./COMPONENTS/STEPS/CourseSpinner";
 import MapContainer from "./COMPONENTS/AI/MapContainer";
 import Aramegil from "./COMPONENTS/HOME/Aramegil";
@@ -19,7 +18,6 @@ function AppRouter() {
       {/* 여기에 라우트 정의 */}
       <Route path="/" element={<Home />} />
 
-      <Route path="/loading" element={<LoadingSpinner />} />
       <Route path="/course-loading" element={<CourseSpinner />} />
 
       <Route path="/recommend" element={<RecommendCourse />} />
