@@ -5,7 +5,7 @@
    ========================================================================== */
 
 :root {
-  --bg: #0f0f10;
+  --bg: #141414;
   --glass: rgba(153, 185, 225, 0.2);
   --glass-border: rgba(255, 255, 255, 0.12);
   --ring: rgba(255, 255, 255, 0.09);
@@ -80,17 +80,7 @@
   box-shadow: 0 1.2rem 4rem rgba(0, 0, 0, 0.35),
     inset 0 0.1rem 0 rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(0.8rem);
-  background: radial-gradient(
-      circle at 100% 85%,
-      rgba(128, 165, 246, 0.3),
-      transparent 30%
-    ),
-    radial-gradient(
-      circle at 10% 35%,
-      rgba(128, 165, 246, 0.3),
-      transparent 30%
-    ),
-    var(--glass);
+  background: #141414 var(--glass);
   height: 30rem;
   min-height: 30rem;
   overflow: hidden;

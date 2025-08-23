@@ -1,4 +1,3 @@
-// src/api/kmaClient.js
 // KMA 단기예보/초단기실황을 호출해 HomeWeather가 쓰는 포맷으로 가공
 
 const BASE = "https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0";
@@ -189,17 +188,17 @@ async function fetchVilageFcst(nx, ny, override) {
 }
 
 /* ===========================
- * 해석/가공
+ * 해석/가공 공통
  * =========================== */
 function interpretWeatherKorean({ SKY, PTY }) {
   const p = Number(PTY);
-  if ([1,4,5].includes(p)) return "비";
-  if ([2,6].includes(p)) return "비/눈";
   if ([3,7].includes(p)) return "눈";
+  if ([2,6].includes(p)) return "비/눈";
+  if ([1,4,5].includes(p)) return "비";
   const s = Number(SKY);
-  if (s === 1) return "맑음";
-  if (s === 3) return "구름많음";
   if (s === 4) return "흐림";
+  if (s === 3) return "구름많음";
+  if (s === 1) return "맑음";
   return "흐림";
 }
 
@@ -251,6 +250,41 @@ function baselineTmxTmn(items, currentTemp = null) {
 }
 
 /* ===========================
+ * (신규) 시간대 요약: 강수 우선 → SKY 보강
+ * 오전: 00:00~11:59, 오후: 12:00~23:59
+ * 눈(3,7) > 비/눈(2,6) > 비(1,4,5) > SKY(4>3>1)
+ * =========================== */
+function summarizeSkyPeriod(items, startHour, endHour) {
+  // 해당 구간의 PTY/SKY만 모으기
+  const inRange = (t) => {
+    const hh = Number(String(t).slice(0, 2));
+    return hh >= startHour && hh < endHour; // endHour 미만
+  };
+
+  const ptys = items
+    .filter(it => it.category === "PTY" && inRange(it.fcstTime))
+    .map(it => Number(it.fcstValue));
+
+  // 강수 우선 판단
+  if (ptys.some(p => [3,7].includes(p))) return "눈";
+  if (ptys.some(p => [2,6].includes(p))) return "비/눈";
+  if (ptys.some(p => [1,4,5].includes(p))) return "비";
+
+  // 강수 없으면 SKY 최악값(흐림>구름많음>맑음)
+  const skys = items
+    .filter(it => it.category === "SKY" && inRange(it.fcstTime))
+    .map(it => Number(it.fcstValue));
+
+  if (skys.length) {
+    if (skys.some(s => s === 4)) return "흐림";
+    if (skys.some(s => s === 3)) return "구름많음";
+    if (skys.some(s => s === 1)) return "맑음";
+  }
+  // 데이터가 부족하면 보수적으로 '흐림'
+  return "흐림";
+}
+
+/* ===========================
  * 오늘 TMX/TMN을 전날 23시 발표본으로 보강
  * =========================== */
 async function patchTodayMinMaxFromYesterday(nx, ny, todayYmd) {
@@ -293,8 +327,18 @@ export async function getSeosanWeatherFromKMA() {
       const items = byDate.get(date) ?? [];
       // 오늘은 현재기온으로 확장, 그 외는 순수 기준
       const { tmx, tmn } = baselineTmxTmn(items, date === today ? T1H : null);
-      const skyAm = interpretWeatherKorean({ SKY: findNear(items, "SKY", "0900"), PTY: findNear(items, "PTY", "0900") });
-      const skyPm = interpretWeatherKorean({ SKY: findNear(items, "SKY", "1500"), PTY: findNear(items, "PTY", "1500") });
+
+      let skyAm, skyPm;
+      if (date === today) {
+        // 기존: 대표시각 근처로 표시
+        skyAm = interpretWeatherKorean({ SKY: findNear(items, "SKY", "0900"), PTY: findNear(items, "PTY", "0900") });
+        skyPm = interpretWeatherKorean({ SKY: findNear(items, "SKY", "1500"), PTY: findNear(items, "PTY", "1500") });
+      } else {
+        // 새 규칙: 구간 전체 훑어서 강수 우선
+        skyAm = summarizeSkyPeriod(items, 0, 12);   // 00:00~11:59
+        skyPm = summarizeSkyPeriod(items, 12, 24);  // 12:00~23:59
+      }
+
       return {
         date,
         tempMax: tmx ?? "-",
