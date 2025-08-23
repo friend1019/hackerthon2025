@@ -269,6 +269,48 @@
   top: 0rem; /* ⬅︎ 동그라미 위로 */
 }
 
+/* 주간 영역: 요일 | 오전 | 오후 | 최고 | 최저 (5열 그리드) */
+.hw-week__header,
+.hw-week__row {
+  display: grid;
+  grid-template-columns: 35px 20px 35px 20px 20px;
+  align-items: center;
+  column-gap: 0px;
+  padding: 4px 0;
+  margin: 0 auto;
+}
+
+.hw-week__header {
+  font-size: 9px;
+  opacity: 0.8;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  margin-bottom: 4px;
+}
+
+.hw-week__hday,
+.hw-week__date {
+  font-weight: 600;
+  text-align: left;
+}
+
+.hw-week__am img,
+.hw-week__pm img {
+  width: 14px;
+  height: 14px;
+  display: block;
+}
+
+.hw-week__max,
+.hw-week__min {
+  font-size: 10px;
+  text-align: left;
+}
+
+.hw-week__sep {
+  margin: 0 4px;
+  opacity: 0.6;
+}
+
 /* ===================== Status ===================== */
 
 .hw-loading,
@@ -324,26 +366,26 @@
   }
   /* ✅ 좌우 균형 패치 */
   .hw-now__top {
-    padding: 1.2rem 1rem;        /* 내부 padding으로 대체 */
+    padding: 1.2rem 1rem; /* 내부 padding으로 대체 */
     border-radius: 1.6rem 1.6rem 0 0;
   }
   .hw-now__main {
-    padding: 1rem;               /* 내부 padding으로 대체 */
+    padding: 1rem; /* 내부 padding으로 대체 */
     border-radius: 0 0 1.6rem 1.6rem;
     column-gap: clamp(0.8rem, 2.6vw, 1.2rem);
     row-gap: clamp(0.4rem, 1.8vw, 0.8rem);
   }
 
   .hw-now__temp {
-    font-size: clamp(4.6rem, 12vw, 6rem);
+    font-size: 5rem;
   }
   .hw-now__deg {
-    font-size: clamp(2.4rem, 7vw, 3rem);
+    font-size: 3rem;
     top: -2rem;
   }
   .hw-now__bigicon {
-    width: 11rem;
-    height: 11rem;
+    width: 9rem;
+    height: 9rem;
   }
   .hw-now__badge {
     width: min(80%, 28rem);
@@ -369,6 +411,10 @@
   }
 
   /* (선택) 오른쪽 열에도 약간 padding 주면 완전 대칭 */
-  .hw-side { padding: 0 0.2rem; }
-  .hw-week { padding: 0.8rem 0.8rem; }
+  .hw-side {
+    padding: 0 0.2rem;
+  }
+  .hw-week {
+    padding: 0.8rem 0.8rem;
+  }
 }

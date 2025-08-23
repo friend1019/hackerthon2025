@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import api from "../../API/axios.js";
+import { getSeosanWeatherFromKMA } from "../../API/kmaClient"; // ← 경로 확인(소문자 api)
 import "../../CSS/HOME/HomeWeather.css";
 
 import Sun1 from "../../IMAGE/icons/sun1.svg";
@@ -31,6 +31,7 @@ const MAIN_ICON = {
   구름많음: Cloud1,
   흐림: Cloud1,
   비: Rain1,
+  "비/눈": Snow1,        // 혼합 강수
   빗방울: Rain1,
   눈: Snow1,
   빗방울눈날림: Snow1,
@@ -42,6 +43,7 @@ const SUB_ICON = {
   구름많음: Cloud2,
   흐림: Cloud2,
   비: Rain2,
+  "비/눈": Snow2,        // 혼합 강수
   빗방울: Rain2,
   눈: Snow2,
   빗방울눈날림: Snow2,
@@ -50,6 +52,12 @@ const SUB_ICON = {
 };
 
 // ---------- 유틸들 ----------
+
+// 온도 포맷(숫자면 'NN°', 아니면 '-')
+const fmtTemp = (v) => {
+  const n = Number(v);
+  return Number.isFinite(n) ? `${Math.round(n)}°` : "-";
+};
 
 // 하늘 상태 정규화
 const normalizeSky = (skyRaw = "") => {
@@ -168,8 +176,8 @@ export default function HomeWeather() {
   useEffect(() => {
     (async () => {
       try {
-        const res = await api.get("/weather/seosan", { timeout: 8000 });
-        setData(res.data);
+        const payload = await getSeosanWeatherFromKMA();
+        setData(payload);
       } catch (e) {
         console.error("weather api error:", e);
         setErr("실시간 날씨를 불러오지 못했어요. 임시 데이터로 표시합니다.");
@@ -212,8 +220,8 @@ export default function HomeWeather() {
 
           {/* 최고/최저 — 오늘 기준 */}
           <div className="hw-now__minmax">
-            <div>최고기온 {today?.tempMax ?? "-"}</div>
-            <div>최저기온 {today?.tempMin ?? "-"}</div>
+            <div>최고기온 {fmtTemp(today?.tempMax)}</div>
+            <div>최저기온 {fmtTemp(today?.tempMin)}</div>
           </div>
 
           {/* 오른쪽 큰 아이콘 */}
@@ -251,24 +259,39 @@ export default function HomeWeather() {
         </div>
       </aside>
 
-      {/* 우측 하단: 주간(3일) — 요일만 표시 */}
+      {/* 우측 하단: 주간(3일) — 오전/오후 + 최고/최저 */}
       <article className="hw-week">
-        {upcoming3.map((d, i) => (
-          <div className="hw-week__row" key={`${d?.date || "nodate"}-${i}`}>
-            <div className="hw-week__date">
-              {d?.date ? getDayOfWeek(d.date) : "-"}
+        {/* 헤더 라벨 */}
+        <div className="hw-week__header">
+          <div className="hw-week__hcell hw-week__hday">요일</div>
+          <div className="hw-week__hcell">오전</div>
+          <div className="hw-week__hcell">오후</div>
+          <div className="hw-week__hcell">최고</div>
+          <div className="hw-week__hcell">최저</div>
+        </div>
+
+        {upcoming3.map((d, i) => {
+          const dow = d?.date ? getDayOfWeek(d.date) : "-";
+          return (
+            <div className="hw-week__row" key={`${d?.date || "nodate"}-${i}`}>
+              <div className="hw-week__date">{dow}</div>
+              <div className="hw-week__am">
+                <img
+                  src={SUB_ICON[d?.skyAm] || SUB_ICON["default"]}
+                  alt={`${dow} 오전`}
+                />
+              </div>
+              <div className="hw-week__pm">
+                <img
+                  src={SUB_ICON[d?.skyPm] || SUB_ICON["default"]}
+                  alt={`${dow} 오후`}
+                />
+              </div>
+              <div className="hw-week__max">{fmtTemp(d?.tempMax)}</div>
+              <div className="hw-week__min">{fmtTemp(d?.tempMin)}</div>
             </div>
-            <div className="hw-week__icons">
-              <img src={SUB_ICON[d?.skyPm] || SUB_ICON["default"]} alt="pm" />
-            </div>
-            <div className="hw-week__temps">
-              <span>{d?.tempMax ?? "-"}</span>
-              <span className="hw-week__deg">°</span>
-              <span>{d?.tempMin ?? "-"}</span>
-              <span className="hw-week__deg">°</span>
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </article>
     </section>
   );
