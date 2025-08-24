@@ -1,3 +1,4 @@
+// src/API/kmaClient.js
 // KMA 단기예보/초단기실황을 호출해 HomeWeather가 쓰는 포맷으로 가공
 
 const BASE = "https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0";
@@ -53,7 +54,9 @@ function toXY(lat, lon) {
 /* ===========================
  * 시간 유틸 (KST 고정)
  * =========================== */
-function pad2(n) { return String(n).padStart(2, "0"); }
+function pad2(n) {
+  return String(n).padStart(2, "0");
+}
 function toKST(d = new Date()) {
   return new Date(d.toLocaleString("en-US", { timeZone: "Asia/Seoul" }));
 }
@@ -88,7 +91,10 @@ function latestVilageBase(now = new Date()) {
   let baseTime = "0200";
   const hh = k.getHours();
   for (const h of hours) {
-    if (hh >= h) { baseTime = pad2(h) + "00"; break; }
+    if (hh >= h) {
+      baseTime = pad2(h) + "00";
+      break;
+    }
   }
   if (hh < 2) {
     const y = new Date(k.getTime() - 86400000);
@@ -98,11 +104,24 @@ function latestVilageBase(now = new Date()) {
   return { baseDate, baseTime };
 }
 function prevVilageBase(baseDate, baseTime) {
-  const order = ["2300","2000","1700","1400","1100","0800","0500","0200"];
+  const order = [
+    "2300",
+    "2000",
+    "1700",
+    "1400",
+    "1100",
+    "0800",
+    "0500",
+    "0200",
+  ];
   const i = order.indexOf(baseTime);
   if (i === -1) return { baseDate, baseTime };
   if (i < order.length - 1) return { baseDate, baseTime: order[i + 1] };
-  const d = new Date(+baseDate.slice(0,4), +baseDate.slice(4,6)-1, +baseDate.slice(6,8));
+  const d = new Date(
+    +baseDate.slice(0, 4),
+    +baseDate.slice(4, 6) - 1,
+    +baseDate.slice(6, 8)
+  );
   d.setDate(d.getDate() - 1);
   return { baseDate: yyyymmdd_kst(d), baseTime: "2300" };
 }
@@ -122,9 +141,16 @@ function latestUltraNcstBase(now = new Date()) {
   return { baseDate, baseTime };
 }
 function prevUltraBase(baseDate, baseTime) {
-  let h = +baseTime.slice(0,2) - 1;
-  let d = new Date(+baseDate.slice(0,4), +baseDate.slice(4,6)-1, +baseDate.slice(6,8));
-  if (h < 0) { h = 23; d.setDate(d.getDate() - 1); }
+  let h = +baseTime.slice(0, 2) - 1;
+  let d = new Date(
+    +baseDate.slice(0, 4),
+    +baseDate.slice(4, 6) - 1,
+    +baseDate.slice(6, 8)
+  );
+  if (h < 0) {
+    h = 23;
+    d.setDate(d.getDate() - 1);
+  }
   return { baseDate: yyyymmdd_kst(d), baseTime: pad2(h) + "30" };
 }
 
@@ -141,7 +167,11 @@ async function fetchJSON(url) {
     const json = await res.json();
     console.log("[KMA] JSON 응답:", json);
     const resultCode = json?.response?.header?.resultCode;
-    if (resultCode === "03") { const e = new Error("NO_DATA"); e.noData = true; throw e; }
+    if (resultCode === "03") {
+      const e = new Error("NO_DATA");
+      e.noData = true;
+      throw e;
+    }
     const items = json?.response?.body?.items?.item;
     if (!items) throw new Error("KMA JSON 응답에 items가 없습니다.");
     return items;
@@ -150,10 +180,16 @@ async function fetchJSON(url) {
   const text = await res.text();
   console.log("[KMA] 원시 응답(텍스트 앞부분):", text.slice(0, 500));
   if (text.includes("<OpenAPI_ServiceResponse")) {
-    const reasonCode = (text.match(/<returnReasonCode>(.*?)<\/returnReasonCode>/)?.[1]) || "";
-    const authMsg    = (text.match(/<returnAuthMsg>(.*?)<\/returnAuthMsg>/)?.[1]) || "";
-    const msg        = (text.match(/<returnReasonMessage>(.*?)<\/returnReasonMessage>/)?.[1]) || "";
-    throw new Error(`KMA OpenAPI 오류: code=${reasonCode} auth="${authMsg}" msg="${msg}". (키/파라미터 확인)`);
+    const reasonCode =
+      text.match(/<returnReasonCode>(.*?)<\/returnReasonCode>/)?.[1] || "";
+    const authMsg =
+      text.match(/<returnAuthMsg>(.*?)<\/returnAuthMsg>/)?.[1] || "";
+    const msg =
+      text.match(/<returnReasonMessage>(.*?)<\/returnReasonMessage>/)?.[1] ||
+      "";
+    throw new Error(
+      `KMA OpenAPI 오류: code=${reasonCode} auth="${authMsg}" msg="${msg}". (키/파라미터 확인)`
+    );
   }
   throw new Error(`KMA 응답이 JSON이 아닙니다. content-type="${ct}"`);
 }
@@ -165,8 +201,15 @@ async function fetchUltraNcst(nx, ny) {
   let { baseDate, baseTime } = latestUltraNcstBase();
   for (let i = 0; i < 3; i++) {
     const url = `${BASE}/getUltraSrtNcst?serviceKey=${KEY}&numOfRows=60&pageNo=1&dataType=JSON&base_date=${baseDate}&base_time=${baseTime}&nx=${nx}&ny=${ny}`;
-    try { return await fetchJSON(url); }
-    catch (e) { if (e.noData) { ({ baseDate, baseTime } = prevUltraBase(baseDate, baseTime)); continue; } throw e; }
+    try {
+      return await fetchJSON(url);
+    } catch (e) {
+      if (e.noData) {
+        ({ baseDate, baseTime } = prevUltraBase(baseDate, baseTime));
+        continue;
+      }
+      throw e;
+    }
   }
   throw new Error("초단기실황 NO_DATA 지속");
 }
@@ -178,9 +221,13 @@ async function fetchVilageFcst(nx, ny, override) {
 
   for (let i = 0; i < 4; i++) {
     const url = `${BASE}/getVilageFcst?serviceKey=${KEY}&numOfRows=1000&pageNo=1&dataType=JSON&base_date=${base.baseDate}&base_time=${base.baseTime}&nx=${nx}&ny=${ny}`;
-    try { return await fetchJSON(url); }
-    catch (e) {
-      if (e.noData) { base = prevVilageBase(base.baseDate, base.baseTime); continue; }
+    try {
+      return await fetchJSON(url);
+    } catch (e) {
+      if (e.noData) {
+        base = prevVilageBase(base.baseDate, base.baseTime);
+        continue;
+      }
       throw e;
     }
   }
@@ -192,9 +239,9 @@ async function fetchVilageFcst(nx, ny, override) {
  * =========================== */
 function interpretWeatherKorean({ SKY, PTY }) {
   const p = Number(PTY);
-  if ([3,7].includes(p)) return "눈";
-  if ([2,6].includes(p)) return "비/눈";
-  if ([1,4,5].includes(p)) return "비";
+  if ([3, 7].includes(p)) return "눈";
+  if ([2, 6].includes(p)) return "비/눈";
+  if ([1, 4, 5].includes(p)) return "비";
   const s = Number(SKY);
   if (s === 4) return "흐림";
   if (s === 3) return "구름많음";
@@ -214,9 +261,11 @@ function groupByDate(items) {
 }
 
 function findNear(items, category, hhmm) {
-  const arr = items.filter(it => it.category === category);
+  const arr = items.filter((it) => it.category === category);
   if (!arr.length) return null;
-  arr.sort((a, b) => Math.abs(+a.fcstTime - +hhmm) - Math.abs(+b.fcstTime - +hhmm));
+  arr.sort(
+    (a, b) => Math.abs(+a.fcstTime - +hhmm) - Math.abs(+b.fcstTime - +hhmm)
+  );
   return arr[0]?.fcstValue ?? null;
 }
 
@@ -225,14 +274,21 @@ function findNear(items, category, hhmm) {
  * 현재 실황(T1H)은 기준이 있을 때만 확장용으로 반영
  */
 function baselineTmxTmn(items, currentTemp = null) {
-  const tmxRaw = toNumOrNull(items.find(it => it.category === "TMX")?.fcstValue);
-  const tmnRaw = toNumOrNull(items.find(it => it.category === "TMN")?.fcstValue);
+  const tmxRaw = toNumOrNull(
+    items.find((it) => it.category === "TMX")?.fcstValue
+  );
+  const tmnRaw = toNumOrNull(
+    items.find((it) => it.category === "TMN")?.fcstValue
+  );
 
   const t3hValues = items
-    .filter(it => it.category === "T3H")
-    .filter(it => typeof it.fcstTime === "string" && /^[0-2][0-9]00$/.test(it.fcstTime))
-    .map(it => toNumOrNull(it.fcstValue))
-    .filter(n => n !== null);
+    .filter((it) => it.category === "T3H")
+    .filter(
+      (it) =>
+        typeof it.fcstTime === "string" && /^[0-2][0-9]00$/.test(it.fcstTime)
+    )
+    .map((it) => toNumOrNull(it.fcstValue))
+    .filter((n) => n !== null);
 
   let maxBase = tmxRaw ?? (t3hValues.length ? Math.max(...t3hValues) : null);
   let minBase = tmnRaw ?? (t3hValues.length ? Math.min(...t3hValues) : null);
@@ -255,48 +311,72 @@ function baselineTmxTmn(items, currentTemp = null) {
  * 눈(3,7) > 비/눈(2,6) > 비(1,4,5) > SKY(4>3>1)
  * =========================== */
 function summarizeSkyPeriod(items, startHour, endHour) {
-  // 해당 구간의 PTY/SKY만 모으기
   const inRange = (t) => {
     const hh = Number(String(t).slice(0, 2));
-    return hh >= startHour && hh < endHour; // endHour 미만
+    return hh >= startHour && hh < endHour;
   };
 
   const ptys = items
-    .filter(it => it.category === "PTY" && inRange(it.fcstTime))
-    .map(it => Number(it.fcstValue));
+    .filter((it) => it.category === "PTY" && inRange(it.fcstTime))
+    .map((it) => Number(it.fcstValue));
 
-  // 강수 우선 판단
-  if (ptys.some(p => [3,7].includes(p))) return "눈";
-  if (ptys.some(p => [2,6].includes(p))) return "비/눈";
-  if (ptys.some(p => [1,4,5].includes(p))) return "비";
+  if (ptys.some((p) => [3, 7].includes(p))) return "눈";
+  if (ptys.some((p) => [2, 6].includes(p))) return "비/눈";
+  if (ptys.some((p) => [1, 4, 5].includes(p))) return "비";
 
-  // 강수 없으면 SKY 최악값(흐림>구름많음>맑음)
   const skys = items
-    .filter(it => it.category === "SKY" && inRange(it.fcstTime))
-    .map(it => Number(it.fcstValue));
+    .filter((it) => it.category === "SKY" && inRange(it.fcstTime))
+    .map((it) => Number(it.fcstValue));
 
   if (skys.length) {
-    if (skys.some(s => s === 4)) return "흐림";
-    if (skys.some(s => s === 3)) return "구름많음";
-    if (skys.some(s => s === 1)) return "맑음";
+    if (skys.some((s) => s === 4)) return "흐림";
+    if (skys.some((s) => s === 3)) return "구름많음";
+    if (skys.some((s) => s === 1)) return "맑음";
   }
-  // 데이터가 부족하면 보수적으로 '흐림'
   return "흐림";
 }
 
 /* ===========================
- * 오늘 TMX/TMN을 전날 23시 발표본으로 보강
+ * (신규) 오늘 보강 유틸
  * =========================== */
-async function patchTodayMinMaxFromYesterday(nx, ny, todayYmd) {
-  const ymdYesterday = yyyymmdd_yesterday_kst();
-  // 전날 23시 고정으로 먼저 시도
-  const items = await fetchVilageFcst(nx, ny, { baseDate: ymdYesterday, baseTime: "2300" });
-  const byDate = groupByDate(items);
-  const todayItems = byDate.get(todayYmd) ?? [];
-  if (!todayItems.length) return { tmx: null, tmn: null }; // 안전장치
+function itemsOfDate(items, yyyymmdd) {
+  return items.filter((it) => it.fcstDate === yyyymmdd);
+}
+function mergeDailyItems(...arrs) {
+  const key = (it) => `${it.category}_${it.fcstDate}_${it.fcstTime}`;
+  const map = new Map();
+  for (const arr of arrs) {
+    for (const it of arr) {
+      const k = key(it);
+      if (!map.has(k)) map.set(k, it);
+    }
+  }
+  return Array.from(map.values());
+}
 
-  // 전날 23시 발표본에 있는 오늘의 TMX/TMN 기준값 산출 (현재기온 확장 X)
-  const { tmx, tmn } = baselineTmxTmn(todayItems, null);
+// 오늘 TMX/TMN 보강: 전날 23시 + 오늘 02·05·08시까지 순차 시도(병합)
+async function patchTodayMinMaxFromYesterday(nx, ny, todayYmd) {
+  const bases = [
+    { baseDate: yyyymmdd_yesterday_kst(), baseTime: "2300" },
+    { baseDate: yyyymmdd_kst(), baseTime: "0200" },
+    { baseDate: yyyymmdd_kst(), baseTime: "0500" },
+    { baseDate: yyyymmdd_kst(), baseTime: "0800" },
+  ];
+
+  const got = [];
+  for (const b of bases) {
+    try {
+      const items = await fetchVilageFcst(nx, ny, b);
+      got.push(itemsOfDate(items, todayYmd));
+    } catch (e) {
+      console.warn("[KMA] 보강용 fetch 실패:", b, e?.message);
+    }
+  }
+
+  const merged = mergeDailyItems(...got);
+  if (!merged.length) return { tmx: null, tmn: null };
+
+  const { tmx, tmn } = baselineTmxTmn(merged, null);
   return { tmx, tmn };
 }
 
@@ -308,8 +388,8 @@ export async function getSeosanWeatherFromKMA() {
 
   // 1) 현재(초단기실황)
   const ultra = await fetchUltraNcst(nx, ny);
-  const T1H = ultra.find(it => it.category === "T1H")?.obsrValue ?? null;
-  const PTY_NCST = ultra.find(it => it.category === "PTY")?.obsrValue ?? 0;
+  const T1H = ultra.find((it) => it.category === "T1H")?.obsrValue ?? null;
+  const PTY_NCST = ultra.find((it) => it.category === "PTY")?.obsrValue ?? 0;
 
   // 2) 단기예보(기본: 최신 발표본)
   const baseVilage = await fetchVilageFcst(nx, ny);
@@ -318,25 +398,32 @@ export async function getSeosanWeatherFromKMA() {
   if (!dates.length) throw new Error("단기예보 데이터 없음");
 
   const todayYmd = yyyymmdd_kst();
-  const today = dates.includes(todayYmd) ? todayYmd : (dates.find(d => d > todayYmd) ?? dates[0]);
+  const today = dates.includes(todayYmd)
+    ? todayYmd
+    : dates.find((d) => d > todayYmd) ?? dates[0];
 
   // 3) 주간 예보(오늘 포함 이후)
   let weeklyForecast = dates
-    .filter(d => d >= today)
-    .map(date => {
+    .filter((d) => d >= today)
+    .map((date) => {
       const items = byDate.get(date) ?? [];
-      // 오늘은 현재기온으로 확장, 그 외는 순수 기준
       const { tmx, tmn } = baselineTmxTmn(items, date === today ? T1H : null);
 
       let skyAm, skyPm;
       if (date === today) {
-        // 기존: 대표시각 근처로 표시
-        skyAm = interpretWeatherKorean({ SKY: findNear(items, "SKY", "0900"), PTY: findNear(items, "PTY", "0900") });
-        skyPm = interpretWeatherKorean({ SKY: findNear(items, "SKY", "1500"), PTY: findNear(items, "PTY", "1500") });
+        // 오늘은 대표시각 근처(09/15시) 유지
+        skyAm = interpretWeatherKorean({
+          SKY: findNear(items, "SKY", "0900"),
+          PTY: findNear(items, "PTY", "0900"),
+        });
+        skyPm = interpretWeatherKorean({
+          SKY: findNear(items, "SKY", "1500"),
+          PTY: findNear(items, "PTY", "1500"),
+        });
       } else {
-        // 새 규칙: 구간 전체 훑어서 강수 우선
-        skyAm = summarizeSkyPeriod(items, 0, 12);   // 00:00~11:59
-        skyPm = summarizeSkyPeriod(items, 12, 24);  // 12:00~23:59
+        // 내일 이후: 시간대 전체 훑어서 강수 우선
+        skyAm = summarizeSkyPeriod(items, 0, 12); // 00:00~11:59
+        skyPm = summarizeSkyPeriod(items, 12, 24); // 12:00~23:59
       }
 
       return {
@@ -348,22 +435,28 @@ export async function getSeosanWeatherFromKMA() {
       };
     });
 
-  // 4) 오늘 TMX/TMN이 여전히 비었으면 → 전날 23시 발표본으로 보강
-  const todayIdx = weeklyForecast.findIndex(d => d.date === today);
+  // 4) 오늘 TMX/TMN 보강 적용
+  const todayIdx = weeklyForecast.findIndex((d) => d.date === today);
   if (todayIdx >= 0) {
+    const w = weeklyForecast[todayIdx];
     const needPatch =
-      (weeklyForecast[todayIdx].tempMax === "-" || weeklyForecast[todayIdx].tempMax === null) ||
-      (weeklyForecast[todayIdx].tempMin === "-" || weeklyForecast[todayIdx].tempMin === null);
+      w.tempMax === "-" ||
+      w.tempMax == null ||
+      w.tempMin === "-" ||
+      w.tempMin == null;
 
     if (needPatch) {
       try {
         const patched = await patchTodayMinMaxFromYesterday(nx, ny, today);
-        if (patched.tmx !== null) weeklyForecast[todayIdx].tempMax = patched.tmx;
-        if (patched.tmn !== null) weeklyForecast[todayIdx].tempMin = patched.tmn;
+        if (patched.tmx != null) w.tempMax = patched.tmx;
+        if (patched.tmn != null) w.tempMin = patched.tmn;
       } catch (e) {
-        console.warn("[KMA] 전날 23시 보강 실패:", e);
+        console.warn("[KMA] 오늘 보강 실패:", e);
       }
     }
+    // 최후 안전망: 그래도 없으면 T1H로 임시 채움(화면 공백 방지)
+    if (w.tempMax === "-" || w.tempMax == null) w.tempMax = T1H ?? "-";
+    if (w.tempMin === "-" || w.tempMin == null) w.tempMin = T1H ?? "-";
   }
 
   // --- 디버그 요약 ---
@@ -376,12 +469,19 @@ export async function getSeosanWeatherFromKMA() {
       PTY: PTY_NCST ?? 0,
     }),
   });
-  console.log("주간:", weeklyForecast.map(d => ({
-    date: d.date, max: d.tempMax, min: d.tempMin, am: d.skyAm, pm: d.skyPm
-  })));
+  console.log(
+    "주간:",
+    weeklyForecast.map((d) => ({
+      date: d.date,
+      max: d.tempMax,
+      min: d.tempMin,
+      am: d.skyAm,
+      pm: d.skyPm,
+    }))
+  );
   console.groupEnd();
 
-  // 5) HomeWeather 포맷 반환
+  // 5) HomeWeather 포맷 반환 (PTY_NCST 사용하여 ESLint 경고 제거)
   return {
     currentTemperature: T1H ?? "-",
     currentSky: interpretWeatherKorean({

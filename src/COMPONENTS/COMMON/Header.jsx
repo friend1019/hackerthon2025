@@ -1,6 +1,6 @@
 // src/COMPONENTS/COMMON/Header.jsx
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { FiMenu, FiSearch } from "react-icons/fi";
 
 /* 내부 유틸/컴포넌트 */
@@ -14,6 +14,50 @@ import DefaultStoreImg from "../../IMAGE/place/defaultImage.svg";
 /* 스타일 */
 import "../../CSS/COMMON/Header.css";
 
+/** 타자 애니메이션 placeholder 훅 (파일 내 정의) */
+function useTypewriterPlaceholder(
+  words,
+  { typeSpeed = 80, deleteSpeed = 50, hold = 1400, startDelay = 600 } = {}
+) {
+  const [text, setText] = useState("");
+  const idxRef = useRef(0);
+  const charRef = useRef(0);
+  const delRef = useRef(false);
+  const timerRef = useRef(null);
+
+  useEffect(() => {
+    const type = () => {
+      const w = words[idxRef.current];
+      const deleting = delRef.current;
+
+      if (!deleting) {
+        charRef.current += 1;
+        setText(w.slice(0, charRef.current));
+        if (charRef.current === w.length) {
+          delRef.current = true;
+          timerRef.current = setTimeout(type, hold);
+          return;
+        }
+      } else {
+        charRef.current -= 1;
+        setText(w.slice(0, charRef.current));
+        if (charRef.current === 0) {
+          delRef.current = false;
+          idxRef.current = (idxRef.current + 1) % words.length;
+        }
+      }
+      timerRef.current = setTimeout(type, deleting ? deleteSpeed : typeSpeed);
+    };
+
+    timerRef.current = setTimeout(type, startDelay);
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, [words, typeSpeed, deleteSpeed, hold, startDelay]);
+
+  return text;
+}
+
 /**
  * Header
  * - 상단 로고/검색/햄버거 메뉴 제공
@@ -21,12 +65,22 @@ import "../../CSS/COMMON/Header.css";
  */
 function Header() {
   const navigate = useNavigate();
+  const location = useLocation(); // ✅ 현재 경로 확인 (홈에서 검색 아이콘 숨김)
 
   /* === 상태 === */
   const [showSearch, setShowSearch] = useState(false);
   const [search, setSearch] = useState("");
   const [results, setResults] = useState([]);
   const [showDrawer, setShowDrawer] = useState(false);
+
+  /* === placeholder 애니메이션 문구 === */
+  const SUGGESTIONS = ["해미읍성", "간월암", "황금산", "삼길포항", "유기방가옥", "서산버드랜드"];
+  const typed = useTypewriterPlaceholder(SUGGESTIONS, {
+    typeSpeed: 80,
+    deleteSpeed: 50,
+    hold: 1400,
+    startDelay: 400,
+  });
 
   /* === 바디 스크롤 잠금: 검색/드로어 열릴 때 === */
   useEffect(() => {
@@ -40,21 +94,30 @@ function Header() {
     };
   }, [showSearch, showDrawer]);
 
+  /* ESC로 모달 닫기 */
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === "Escape") {
+        setShowSearch(false);
+        setShowDrawer(false);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
   /* === 통합 검색: 관광지 + 업소 (이름 기준 부분 일치) === */
   const handleSearch = async (keyword) => {
     if (!keyword.trim()) {
       setResults([]);
       return;
     }
-
     try {
-      // 관광지 + 업소 병렬 조회
       const [tourRes, storeRes] = await Promise.all([
         api.get("/tourist-places"),
         api.get("/store"),
       ]);
 
-      // 관광지 데이터 정규화
       const tourData = tourRes.data.map((item) => ({
         ...item,
         _type: "tourist",
@@ -64,7 +127,6 @@ function Header() {
         address: item.address,
       }));
 
-      // 업소 데이터 정규화 (이미지는 기본 이미지 사용)
       const storeData = storeRes.data.map((item) => ({
         ...item,
         _type: "store",
@@ -74,7 +136,6 @@ function Header() {
         address: item.address,
       }));
 
-      // 이름 기준 필터링 (부분 포함)
       const all = [...tourData, ...storeData];
       const filtered = all.filter(
         (place) => place.name && place.name.includes(keyword)
@@ -101,15 +162,18 @@ function Header() {
 
           {/* 우측 아이콘 내비게이션 */}
           <nav className="navbar-container">
-            <li className="nav-item">
-              <button
-                className="nav-link"
-                onClick={() => setShowSearch(true)}
-                aria-label="검색 열기"
-              >
-                <FiSearch className="nav-icon nav-search" />
-              </button>
-            </li>
+            {/* ✅ 홈이 아닐 때만 검색 아이콘 노출 */}
+            {location.pathname !== "/" && (
+              <li className="nav-item">
+                <button
+                  className="nav-link"
+                  onClick={() => setShowSearch(true)}
+                  aria-label="검색 열기"
+                >
+                  <FiSearch className="nav-icon nav-search" />
+                </button>
+              </li>
+            )}
 
             <li className="nav-item">
               <button
@@ -145,8 +209,8 @@ function Header() {
             {/* 검색 입력 */}
             <input
               type="text"
-              className="header-search-input"
-              placeholder="장소 검색어 입력"
+              className="header-search-input header-search-input--typewriter"
+              placeholder={typed || "서산 어디로 가볼까요?"}
               value={search}
               onChange={(e) => {
                 const v = e.target.value;
@@ -154,6 +218,8 @@ function Header() {
                 handleSearch(v);
               }}
               autoFocus
+              aria-label="여행지 검색"
+              autoComplete="off"
             />
 
             {/* 검색 결과 드롭다운 */}
@@ -198,6 +264,16 @@ function Header() {
                 ))}
               </div>
             )}
+
+            {/* 검색어는 있지만 결과가 없을 때 메시지 */}
+            {search && results.length === 0 && (
+              <div
+                className="header-search-dropdown"
+                style={{ padding: "1.2rem", color: "#aaa" }}
+              >
+                검색 결과가 없습니다
+              </div>
+            )}
           </div>
         </div>
       )}
@@ -231,7 +307,7 @@ function Header() {
             }}
           >
             <span className="side-drawer-menu-icon">🔄️</span>
-            <span>AI 코스 다시보기</span>
+            <span>내 코스 보기</span>
           </div>
 
           <div
@@ -257,7 +333,6 @@ function Header() {
           </div>
           <div className="side-drawer-menu-divider" />
 
-          {/* 아라메길 추가 시 이 영역 수정 */}
           <div
             className="side-drawer-menu-item"
             onClick={() => {

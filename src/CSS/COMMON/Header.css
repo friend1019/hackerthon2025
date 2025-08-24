@@ -10,7 +10,7 @@
   border-radius: 0.8rem;
   box-shadow: 0 2px 18px #0005;
   margin-top: -1rem;
-  max-height: 260px;
+  max-height: 26rem; /* 260px */
   overflow-y: auto;
   position: absolute;
   left: 0;
@@ -61,6 +61,10 @@
   font-size: 1rem;
   font-weight: 400;
 }
+.header-search-dropdown-type {
+  color: #aaa;
+  font-size: 0.95rem;
+}
 
 /* ==================== 🔍 검색 모달 ==================== */
 .header-search-modal {
@@ -92,6 +96,12 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+
+  /* ▼ 모달 너비 넓히기 (반응형) */
+  width: min(80rem, 94vw); /* 최대 800px, 화면 94vw */
+  max-width: 78vw;
+
+  /* 기존 위치 보정(필요 시 조절) */
   top: -30%;
 }
 /* 닫기 버튼 */
@@ -107,11 +117,12 @@
   z-index: 2600;
   padding: 0.7rem 1rem;
 }
+
 /* 검색 입력창 */
 .header-search-input {
   width: 100%;
   font-size: 1.6rem;              /* 모바일 줌 방지: 16px 이상 */
-  padding: 0.7rem 1.2rem;
+  padding: 0.9rem 1.2rem 0.9rem 2rem; /* ← 왼쪽여백(커서/글씨 간격) */
   border-radius: 0.8rem;
   border: none;
   margin: 1.5rem 0 1.2rem;
@@ -120,6 +131,19 @@
   outline: none;
   box-shadow: 0 2px 12px #0003;
 }
+
+/* placeholder만 약간 더 들여쓰기(선택적) */
+.header-search-input::placeholder {
+  color: #aaa;
+  opacity: 0.85;
+  text-indent: 0.4rem; /* placeholder만 약간 추가 여백 (입력값에는 영향 없음) */
+}
+
+/* 타자 애니메이션 전용 클래스(접근성용 보정 가능) */
+.header-search-input--typewriter::placeholder {
+  opacity: 0.9;
+}
+
 /* 검색 버튼 */
 .header-search-btn {
   width: 100%;
@@ -222,3 +246,11 @@
   font-weight: 500;
   vertical-align: middle;
 }
+
+/* 접근성: 모션 줄이기 환경 고려 */
+@media (prefers-reduced-motion: reduce) {
+  .header-search-input--typewriter::placeholder {
+    opacity: 1;
+  }
+}
+

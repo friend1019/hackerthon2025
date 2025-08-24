@@ -11,7 +11,7 @@
 .home-bg {
   position: relative;
   width: 100%;             /* 100vw → 100%: 수직 스크롤바 폭으로 인한 가로 스크롤 방지 */
-  min-height: 100vh;
+  min-height: 110vh;
   overflow: hidden;
   background: transparent;
 }

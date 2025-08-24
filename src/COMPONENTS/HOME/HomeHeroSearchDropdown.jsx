@@ -1,14 +1,65 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../API/axios";
 import DefaultStoreImg from "../../IMAGE/place/defaultImage.svg";
 import "../../CSS/HOME/HomeHero.css";
+
+const SUGGESTIONS = ["서산 어디로 가볼까요?","해미읍성", "간월암", "황금산", "삼길포항", "유기방가옥", "서산버드랜드"];
 
 export default function HomeHeroSearchDropdown() {
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  // --- 타자 애니메이션용 상태 ---
+  const [placeholderText, setPlaceholderText] = useState("");
+  const wordIndexRef = useRef(0);
+  const charIndexRef = useRef(0);
+  const deletingRef = useRef(false);
+  const typingTimerRef = useRef(null);
+
+  // 타자 애니메이션
+  useEffect(() => {
+    const type = () => {
+      const word = SUGGESTIONS[wordIndexRef.current];
+      const isDeleting = deletingRef.current;
+
+      if (!isDeleting) {
+        // 타이핑 중
+        charIndexRef.current += 1;
+        setPlaceholderText(word.slice(0, charIndexRef.current));
+
+        if (charIndexRef.current === word.length) {
+          // 끝까지 찍었으면 잠시 대기 후 삭제 모드
+          deletingRef.current = true;
+          typingTimerRef.current = setTimeout(type, 1200);
+          return;
+        }
+      } else {
+        // 지우는 중
+        charIndexRef.current -= 1;
+        setPlaceholderText(word.slice(0, charIndexRef.current));
+
+        if (charIndexRef.current === 0) {
+          // 다음 단어로
+          deletingRef.current = false;
+          wordIndexRef.current = (wordIndexRef.current + 1) % SUGGESTIONS.length;
+        }
+      }
+
+      // 속도 조절
+      const speed = isDeleting ? 70 : 150; // 지울 때 더 빠르게
+      typingTimerRef.current = setTimeout(type, speed);
+    };
+
+    // 시작
+    typingTimerRef.current = setTimeout(type, 600);
+
+    return () => {
+      if (typingTimerRef.current) clearTimeout(typingTimerRef.current);
+    };
+  }, []);
 
   const handleSearch = async (keyword) => {
     setSearch(keyword);
@@ -53,8 +104,8 @@ export default function HomeHeroSearchDropdown() {
   return (
     <div className="hero-search" style={{ position: "relative" }}>
       <input
-        className="hero-search-input"
-        placeholder="서산 어디로 가볼까요?"
+        className="hero-search-input hero-search-input--typewriter"
+        placeholder={placeholderText || ""}
         aria-label="여행지 검색"
         value={search}
         onChange={(e) => handleSearch(e.target.value)}
@@ -65,50 +116,66 @@ export default function HomeHeroSearchDropdown() {
           <path fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.471 6.471 0 0 0 1.57-4.23A6.5 6.5 0 1 0 9.5 16a6.471 6.471 0 0 0 4.23-1.57l.27.28v.79L20 21.5 21.5 20 15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
         </svg>
       </button>
+
       {search && (
-        <div className="hero-search-dropdown" style={{
-          position: "absolute",
-          left: 0,
-          top: "4.6rem",
-          width: "100%",
-          background: "#222",
-          borderRadius: "0.8rem",
-          boxShadow: "0 2px 18px #0005",
-          zIndex: 1,
-          maxHeight: 260,
-          overflowY: "auto",
-        }}>
+        <div
+          className="hero-search-dropdown"
+          style={{
+            position: "absolute",
+            left: 0,
+            top: "4.6rem",
+            width: "100%",
+            background: "#222",
+            borderRadius: "0.8rem",
+            boxShadow: "0 2px 18px #0005",
+            zIndex: 1,
+            maxHeight: 260,
+            overflowY: "auto",
+          }}
+        >
           {loading && (
             <div style={{ color: "#fff", padding: "1.2rem", textAlign: "center" }}>검색 중...</div>
           )}
           {!loading && results.length === 0 && (
             <div style={{ color: "#aaa", padding: "1.2rem", textAlign: "center" }}>검색 결과가 없습니다</div>
           )}
-          {!loading && results.map((item, idx) => (
-            <div
-              key={idx}
-              className="hero-search-dropdown-item"
-              style={{ display: "flex", alignItems: "center", gap: "1.1rem", padding: "1.1rem 1.2rem", cursor: "pointer" }}
-              onClick={() => {
-                const path =
-                  item._type === "store"
-                    ? `/store/${item.id}`
-                    : `/place/${item.id}`;
-                navigate(path);
-              }}
-            >
-              <img
-                src={item.imageUrl || (item._type === "store" ? DefaultStoreImg : "")}
-                alt={item.name}
-                style={{ width: "2.7rem", height: "2.7rem", objectFit: "cover", borderRadius: "0.7rem", background: "#eee" }}
-              />
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ color: "#4bcdfd", fontWeight: 600 }}>{item.name}</div>
-                <div style={{ color: "#eee", fontSize: "1rem" }}>{item.address}</div>
-                <div style={{ color: "#aaa", fontSize: "0.95rem" }}>{item._type === "store" ? "업소" : "관광지"}</div>
+          {!loading &&
+            results.map((item, idx) => (
+              <div
+                key={idx}
+                className="hero-search-dropdown-item"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "1.1rem",
+                  padding: "1.1rem 1.2rem",
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  const path = item._type === "store" ? `/store/${item.id}` : `/place/${item.id}`;
+                  navigate(path);
+                }}
+              >
+                <img
+                  src={item.imageUrl || (item._type === "store" ? DefaultStoreImg : "")}
+                  alt={item.name}
+                  style={{
+                    width: "3rem",
+                    height: "3rem",
+                    objectFit: "cover",
+                    borderRadius: "0.7rem",
+                    background: "#eee",
+                  }}
+                />
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ color: "#4bcdfd", fontWeight: 600, fontSize: "1.5rem" }}>{item.name}</div>
+                  <div style={{ color: "#eee", fontSize: "1.2rem" }}>{item.address}</div>
+                  <div style={{ color: "#aaa", fontSize: "1rem" }}>
+                    {item._type === "store" ? "업소" : "관광지"}
+                  </div>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
       )}
     </div>

@@ -55,16 +55,39 @@ const categoryTabs = [
 
 /* ===================== AnimatedPhrase ===================== */
 const phrases = [
-  { text: "⛰️🌊 원하는 테마를 선택하고", style: { fontWeight: 500, color: "#fff" } },
-  { text: "🧑‍🤝‍🧑 누구와 함께하는 여행인가요?", style: { fontWeight: 500, color: "#fff" } },
-  { text: "✨ 이제, 준비는 끝났어요 — 함께 떠나볼까요?", style: { fontWeight: 500, color: "#fff" } },
+  {
+    text: "🌤 먼저, 현재 서산의 날씨를 확인해보세요.",
+    style: { fontWeight: 500, color: "#fff" },
+  },
+  {
+    text: "⛰️🌊 원하는 테마를 선택하고",
+    style: { fontWeight: 500, color: "#fff" },
+  },
+
+  {
+    text: "🧑‍🤝‍🧑 누구와 함께하는 여행인가요?",
+    style: { fontWeight: 500, color: "#fff" },
+  },
+  {
+    text: "🤖 그러면 AI가 맞춤 코스 3가지를 추천해드립니다.",
+    style: { fontWeight: 500, color: "#fff" },
+  },
+
+  {
+    text: "👉 원하시는 코스를 선택해 자세히 확인하실 수 있어요.",
+    style: { fontWeight: 500, color: "#fff" },
+  },
+  {
+    text: "✨ 이제, 준비는 끝났어요 — 함께 떠나볼까요?",
+    style: { fontWeight: 500, color: "#fff" },
+  },
 ];
 
 const AnimatedPhrase = () => {
   const [hideArr, setHideArr] = useState(Array(phrases.length).fill(false));
   const [cycle, setCycle] = useState(0);
   const lineHeight = 3.2;
-  const opacityArr = [1, 0.7, 0.5, 0.3, 0.1];
+  const opacityArr = [1, 0.8, 0.7, 0.5, 0.3, 0.1];
 
   useEffect(() => {
     const timeouts = [];
@@ -89,9 +112,15 @@ const AnimatedPhrase = () => {
   }, [cycle]);
 
   return (
-    <div style={{ position: "relative", height: `${phrases.length * lineHeight}rem` }}>
+    <div
+      style={{
+        position: "relative",
+        height: `${phrases.length * lineHeight}rem`,
+      }}
+    >
       {phrases.map((p, idx) => {
-        const visibleIdx = hideArr.slice(0, idx + 1).filter((h) => !h).length - 1;
+        const visibleIdx =
+          hideArr.slice(0, idx + 1).filter((h) => !h).length - 1;
         const y = hideArr[idx] ? -lineHeight : visibleIdx * lineHeight;
         const opacity = hideArr[idx] ? 0 : opacityArr[visibleIdx] || 0.5;
         return (
@@ -122,21 +151,34 @@ const AnimatedPhrase = () => {
 const CategorySection = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("recommended");
-  const tabData = categoryTabs.find((tab) => tab.key === activeTab) ?? categoryTabs[0];
+  const tabData =
+    categoryTabs.find((tab) => tab.key === activeTab) ?? categoryTabs[0];
 
   return (
     <div className="category-section">
       <div className="category-desc">
         함께 보면 좋아요{" "}
-        <span role="img" aria-label="hand">🙌</span>
+        <span role="img" aria-label="hand">
+          🙌
+        </span>
       </div>
 
       {/* 라운드 카테고리 리스트 */}
       <div className="category-round-list">
         {[
           { key: "9kyung", label: "서산9경", emoji: "⛰️", link: "/9kyung" },
-          { key: "festival", label: "페스티벌", emoji: "🎇", link: "/festival" },
-          { key: "aramegil", label: "아라메길", emoji: "🚶", link: "/aramegil" },
+          {
+            key: "festival",
+            label: "페스티벌",
+            emoji: "🎇",
+            link: "/festival",
+          },
+          {
+            key: "aramegil",
+            label: "아라메길",
+            emoji: "🚶",
+            link: "/aramegil",
+          },
           { key: "9mi", label: "서산9미", emoji: "🦀", link: "/9mi" },
           { key: "9pum", label: "서산9품", emoji: "🧄", link: "/9pum" },
         ].map((item) => (
@@ -146,7 +188,11 @@ const CategorySection = () => {
             onClick={() => navigate(item.link)}
             type="button"
           >
-            <span className="category-round-icon" aria-label={item.label} role="img">
+            <span
+              className="category-round-icon"
+              aria-label={item.label}
+              role="img"
+            >
               {item.emoji}
             </span>
             <span className="category-round-label">{item.label}</span>
@@ -202,7 +248,11 @@ const CategorySection = () => {
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.35, delay: idx * 0.07 }}
               >
-                <img src={place.img} alt={place.name} className="category-place-img" />
+                <img
+                  src={place.img}
+                  alt={place.name}
+                  className="category-place-img"
+                />
                 <div className="category-place-label">{place.name}</div>
               </motion.div>
             ))}
@@ -214,7 +264,10 @@ const CategorySection = () => {
       <div className="tip-bar-2025">
         <div className="tip-bar-2025-label">서산책 Tip!</div>
         <div className="tip-bar-2025-line" />
-        <button className="tip-bar-2025-btn" onClick={() => navigate("/recommend")}>
+        <button
+          className="tip-bar-2025-btn"
+          onClick={() => navigate("/recommend")}
+        >
           <span className="tip-bar-2025-btn-icon">
             <img
               src={twostars}
