@@ -1,27 +1,39 @@
-# dependencies
-/node_modules
-/.pnp
+# --- Dependencies
+node_modules/
+.pnp/
 .pnp.js
 
-# testing
-/coverage
+# --- Test coverage
+coverage/
 
-# production
-/build
-/dist
+# --- Build artifacts
+build/
+dist/
 
-# misc
+# --- OS / Editors
 .DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.idea/
+*.iml
+.vscode/
 
+# --- Env files (모든 변형)
+.env*
+!.env.example   # 예시 파일은 커밋 허용
+
+# --- Logs / caches
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+*.log
+.eslintcache
 
-.env*
+# --- Docker
+docker-data/
+**/*.pid
 
-.firebase/
-.firebase.json
+# --- Firebase
+.firebase/        # 배포 캐시/토큰 등 로컬 전용
+# firebase.json과 .firebaserc는 보통 커밋하는 파일입니다.
+# (정 배제하고 싶다면 아래 주석을 풀지만, 배포 파이프라인이 깨질 수 있음)
+# firebase.json
+# .firebaserc
