@@ -92,6 +92,7 @@
 }
 .side-drawer-menu-item {
   font-weight: 100;
+  cursor: pointer;
 }
 .side-drawer-menu-icon {
   margin-right: 1.3rem;
